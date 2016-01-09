@@ -2,6 +2,7 @@ GEM
   remote: https://rubygems.org/
   specs:
     ansi (1.5.0)
+    awesome_print (1.6.1)
     aws-sdk (2.2.9)
       aws-sdk-resources (= 2.2.9)
     aws-sdk-core (2.2.9)
@@ -56,6 +57,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  awesome_print
   aws-sdk (~> 2)
   itamae
   serverspec
