@@ -23,6 +23,7 @@ GEM
       net-ssh (>= 2.6.5)
     net-ssh (3.0.2)
     net-telnet (0.1.1)
+    rake (10.4.2)
     rspec (3.4.0)
       rspec-core (~> 3.4.0)
       rspec-expectations (~> 3.4.0)
@@ -60,6 +61,7 @@ DEPENDENCIES
   awesome_print
   aws-sdk (~> 2)
   itamae
+  rake
   serverspec
 
 BUNDLED WITH
