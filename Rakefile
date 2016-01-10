@@ -17,15 +17,31 @@ namespace :ec2 do
     ap Bootstrapping::Ec2.new.delete args.instance_id
   end
 
-  desc 'EC2の参照'
-  task :describe do
+  desc 'EC2の一覧'
+  task :list do
     ap Bootstrapping::Ec2.new.instances
   end
 
-  desc 'EC2の詳細参照'
-  task :verbose_describe do
+  desc 'EC2の詳細一覧'
+  task :verbose_list do
     ap Bootstrapping::Ec2.new.verbose_instances
   end
+
+  desc 'EC2の参照'
+  task :describe, [:instance_name] do |task, args|
+    ap Bootstrapping::Ec2.new.instance args.instance_name
+  end
+
+  desc 'EC2の詳細参照'
+  task :verbose_describe, [:instance_name] do |task, args|
+    ap Bootstrapping::Ec2.new.verbose_instance args.instance_name
+  end
+
+  desc 'EC2のIPアドレス取得'
+  task :ip_address, [:instance_name] do |task, args|
+    puts Bootstrapping::Ec2.new.ip_address args.instance_name
+  end
+
 end
 
 namespace :cf do

@@ -35,6 +35,23 @@ module Bootstrapping
       @client.terminate_instances(options)
     end
 
+    def instance(instance_name)
+      instances.detect { |instance| instance[:name] == instance_name }
+    end
+
+    def verbose_instance(instance_name)
+      verbose_instances.detect do |instance|
+        name_tag = instance.tags.detect { |tag| tag.key == 'Name' }
+        name = name_tag.value if name_tag
+        name == instance_name
+      end
+    end
+
+    def ip_address(instance_name)
+      a_instance = instance(instance_name)
+      a_instance[:public_ip_address] if a_instance
+    end
+
     def instances
       instances = verbose_instances
       instances.reduce([]) do |result, instance|
