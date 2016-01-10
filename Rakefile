@@ -1,8 +1,28 @@
 require 'bundler/setup'
 Bundler.require
+Aws.config[:region] = 'ap-northeast-1'.freeze
 
+require './bootstrapping/ec2/ec2.rb'
 require './orchestration/cloud_formation/cloud_formation.rb'
 
+
+namespace :ec2 do
+  desc 'EC2の作成'
+  task :create do
+    ap Bootstrapping::Ec2.new.create
+  end
+
+  desc 'EC2の参照'
+  task :describe do
+    ap Bootstrapping::Ec2.new.instance
+  end
+
+  desc 'IPアドレスの取得'
+  task :ip_address do
+    ap Bootstrapping::Ec2.new.ip_address
+  end
+
+end
 
 namespace :cf do
   namespace :cloud_trail do
@@ -39,3 +59,47 @@ namespace :cf do
   end
 end
 
+module Color
+  module_function
+
+  def green(str)
+    "\e[32m" + str + "\e[0m"
+  end
+
+  def yellow(str)
+    "\e[33m" + str + "\e[0m"
+  end
+
+  def red(str)
+    "\e[31m" + str + "\e[0m"
+  end
+end
+
+module Command
+  extend Color
+
+  def self.text(cmd)
+    result = execute(cmd)
+    puts result
+    result
+  end
+
+  def self.json(cmd)
+    result = execute(cmd)
+    ap JSON.parse(result)
+    result
+  end
+
+  private
+  def self.execute(cmd)
+    one_line_command = cmd.gsub(/(\r\n|\r|\n)/, '').gsub(/([\t| |　]+)/, ' ')
+    puts Color::green("\n> " + one_line_command)
+    stdout, stderr, status = Open3.capture3(one_line_command)
+    unless status.success?
+      puts Color::red(stderr)
+      raise(StandardError, Color::yellow('"' + one_line_command + '"'))
+    end
+    stdout.strip
+  end
+
+end
