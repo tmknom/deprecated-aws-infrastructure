@@ -2,6 +2,7 @@ require 'bundler/setup'
 Bundler.require
 Aws.config[:region] = 'ap-northeast-1'.freeze
 
+require './bootstrapping/ami/ami.rb'
 require './bootstrapping/ec2/ec2.rb'
 require './configuration/configuration.rb'
 require './orchestration/cloud_formation/cloud_formation.rb'
@@ -14,10 +15,18 @@ namespace :configuration do
   end
 end
 
+namespace :ami do
+  desc 'AMIの作成'
+  task :create, [:instance_name] do |task, args|
+    ap Bootstrapping::Ami.new.create args.instance_name
+  end
+end
+
 namespace :ec2 do
   desc 'EC2の作成'
-  task :create do
-    ap Bootstrapping::Ec2.new.create
+  task :create, [:image_id] do |task, args|
+    image_id = args.image_id || 'ami-383c1956'
+    ap Bootstrapping::Ec2.new.create image_id
   end
 
   desc 'EC2の削除'
