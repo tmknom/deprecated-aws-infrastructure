@@ -47,6 +47,11 @@ module Bootstrapping
       end
     end
 
+    def instance_id(instance_name)
+      a_instance = instance(instance_name)
+      a_instance[:instance_id] if a_instance
+    end
+
     def ip_address(instance_name)
       a_instance = instance(instance_name)
       a_instance[:public_ip_address] if a_instance
@@ -72,7 +77,7 @@ module Bootstrapping
       options ={filters: [
           {
               name: 'instance-state-name',
-              values: ['running'],
+              values: ['running', 'stopped'],
           }]}
       resp = @client.describe_instances(options)
       reservations = resp.reservations
