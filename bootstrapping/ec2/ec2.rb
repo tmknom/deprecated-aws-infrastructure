@@ -75,7 +75,11 @@ module Bootstrapping
               values: ['running'],
           }]}
       resp = @client.describe_instances(options)
-      resp.reservations.first.instances
+      reservations = resp.reservations
+      reservations.reduce([]) do |result, reservation|
+        result << reservation.instances.first
+        result
+      end
     end
   end
 
