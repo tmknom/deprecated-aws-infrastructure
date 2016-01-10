@@ -19,14 +19,13 @@ namespace :ec2 do
 
   desc 'EC2の参照'
   task :describe do
-    ap Bootstrapping::Ec2.new.instance
+    ap Bootstrapping::Ec2.new.instances
   end
 
-  desc 'IPアドレスの取得'
-  task :ip_address do
-    ap Bootstrapping::Ec2.new.ip_address
+  desc 'EC2の詳細参照'
+  task :verbose_describe do
+    ap Bootstrapping::Ec2.new.verbose_instances
   end
-
 end
 
 namespace :cf do
