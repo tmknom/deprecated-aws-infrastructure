@@ -3,8 +3,16 @@ Bundler.require
 Aws.config[:region] = 'ap-northeast-1'.freeze
 
 require './bootstrapping/ec2/ec2.rb'
+require './configuration/configuration.rb'
 require './orchestration/cloud_formation/cloud_formation.rb'
 
+namespace :configuration do
+  desc 'Railsサーバの作成'
+  task :rails, [:instance_name] do |task, args|
+    ip_address = Bootstrapping::Ec2.new.ip_address args.instance_name
+    Configuration::Fabric.new.rails ip_address
+  end
+end
 
 namespace :ec2 do
   desc 'EC2の作成'
