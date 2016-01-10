@@ -12,6 +12,11 @@ namespace :ec2 do
     ap Bootstrapping::Ec2.new.create
   end
 
+  desc 'EC2の削除'
+  task :delete, [:instance_id] do |task, args|
+    ap Bootstrapping::Ec2.new.delete args.instance_id
+  end
+
   desc 'EC2の参照'
   task :describe do
     ap Bootstrapping::Ec2.new.instance

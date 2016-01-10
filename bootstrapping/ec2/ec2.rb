@@ -26,6 +26,14 @@ module Bootstrapping
       resp.instances.first
     end
 
+    def delete(instance_id)
+      options ={
+          instance_ids: [instance_id],
+      }
+      resp = @client.terminate_instances(options)
+      resp
+    end
+
     def instance
       options ={filters: [
           {
