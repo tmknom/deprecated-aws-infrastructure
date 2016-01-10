@@ -5,10 +5,10 @@ module Bootstrapping
       @client = Aws::EC2::Client.new
     end
 
-    def create
+    def create(image_id)
       # http://docs.aws.amazon.com/sdkforruby/api/Aws/EC2/Client.html#run_instances-instance_method
       options = {
-          image_id: 'ami-383c1956',
+          image_id: image_id,
           min_count: 1,
           max_count: 1,
           key_name: 'initialize',

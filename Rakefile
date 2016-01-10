@@ -24,8 +24,9 @@ end
 
 namespace :ec2 do
   desc 'EC2の作成'
-  task :create do
-    ap Bootstrapping::Ec2.new.create
+  task :create, [:image_id] do |task, args|
+    image_id = args.image_id || 'ami-383c1956'
+    ap Bootstrapping::Ec2.new.create image_id
   end
 
   desc 'EC2の削除'
