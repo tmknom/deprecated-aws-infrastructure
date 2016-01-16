@@ -24,3 +24,11 @@ execute 'set cron monit' do
     echo '0 */1 * * * /usr/bin/monit monitor all' >> /var/spool/cron/root
   EOL
 end
+
+execute 'upstart monit' do
+  not_if 'initctl list | grep "monit start/running"'
+  command <<-EOL
+    initctl reload-configuration
+    initctl start monit
+  EOL
+end
