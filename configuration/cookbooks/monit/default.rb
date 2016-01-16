@@ -9,3 +9,10 @@ remote_file '/etc/init/monit.conf' do
   group 'root'
   mode '0600'
 end
+
+remote_file '/etc/monit.d/sshd.conf' do
+  source 'files/etc/monit.d/sshd.conf'
+  owner 'root'
+  group 'root'
+  mode '0600'
+end
