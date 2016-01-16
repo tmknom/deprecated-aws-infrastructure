@@ -1,0 +1,7 @@
+include_recipe '../cookbooks/sudo/default.rb'
+include_recipe '../cookbooks/user/default.rb'
+include_recipe '../cookbooks/sshd/default.rb'
+include_recipe '../cookbooks/cloud_init/default.rb'
+include_recipe '../cookbooks/swap/default.rb'
+include_recipe '../cookbooks/rpm_repository/default.rb'
+include_recipe '../cookbooks/rpm_package/default.rb'
