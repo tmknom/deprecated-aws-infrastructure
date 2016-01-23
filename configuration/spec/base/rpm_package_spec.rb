@@ -1,19 +1,11 @@
 require 'spec_helper'
 
 describe 'rpm package' do
-  describe package('wget') do
+  describe package('git') do
     it { should be_installed }
   end
 
   describe package('jq') do
-    it { should be_installed }
-  end
-
-  describe package('zip') do
-    it { should be_installed }
-  end
-
-  describe package('unzip') do
     it { should be_installed }
   end
 
