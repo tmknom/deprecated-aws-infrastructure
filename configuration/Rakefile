@@ -1,0 +1,26 @@
+require 'rake'
+require 'rspec/core/rake_task'
+
+task :spec => 'spec:all'
+task :default => :spec
+
+ROLES = {
+    'base' => [:base],
+}
+
+namespace :spec do
+  targets = ROLES[ENV['ROLE']]
+
+  task :all => targets
+  task :default => :all
+
+  targets.each do |target|
+    original_target = target.to_s
+    desc "Run serverspec tests to #{original_target}"
+    RSpec::Core::RakeTask.new(target.to_sym) do |t|
+      ENV['TARGET_HOST'] = original_target
+      t.pattern = "spec/#{original_target}/*_spec.rb"
+    end
+  end
+end
+
