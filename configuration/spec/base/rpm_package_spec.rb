@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe 'rpm package' do
+  describe package('git') do
+    it { should be_installed }
+  end
+
   describe package('jq') do
     it { should be_installed }
   end

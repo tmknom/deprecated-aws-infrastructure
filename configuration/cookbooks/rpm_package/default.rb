@@ -1,4 +1,4 @@
-INSTALL_PACKAGES = %w(jq tree telnet sysstat strace)
+INSTALL_PACKAGES = %w(git jq tree telnet sysstat strace)
 
 execute 'yum all update' do
   command 'yum update -y'
