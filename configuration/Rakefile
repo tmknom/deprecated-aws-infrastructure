@@ -6,6 +6,7 @@ task :default => :spec
 
 ROLES = {
     'base' => [:base],
+    'rails' => [:rails, :base],
 }
 
 namespace :spec do

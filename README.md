@@ -16,6 +16,12 @@ ssh -l <user_name> -i <key_path> -p <port> <ip_address>
 itamae ssh configuration/roles/base.rb -u ec2-user -p 22 -i ~/.ssh/aws/initialize.pem -h <ip_address>
 ```
 
+#### railsロール
+
+```bash
+itamae ssh configuration/roles/rails.rb -u ec2-user -p <port>> -i ~/.ssh/aws/initialize.pem -h <ip_address>
+```
+
 ### Serverspec
 
 #### パスワード聞いてほしい場合
