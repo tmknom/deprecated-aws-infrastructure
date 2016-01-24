@@ -5,7 +5,7 @@ RBENV_SHELL = '/etc/profile.d/rbenv.sh'
 RBENV = "#{RBENV_DIR}/bin/rbenv"
 
 # https://github.com/rbenv/ruby-build/wiki#suggested-build-environment
-%w(gcc bzip2 openssl-devel libyaml-devel libffi-devel readline-devel zlib-devel gdbm-devel ncurses-devel).each do |pkg|
+%w(gcc gcc-c++ bzip2 openssl-devel libyaml-devel libffi-devel readline-devel zlib-devel gdbm-devel ncurses-devel).each do |pkg|
   package pkg
 end
 
