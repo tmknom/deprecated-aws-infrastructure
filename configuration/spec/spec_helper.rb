@@ -39,3 +39,8 @@ set :ssh_options, options
 def command_by_user(cmd, user)
   command("su -l #{user} -c '#{cmd}'")
 end
+
+# 指定したSQLをコマンド実行
+def sql_command(sql)
+  command("mysql -u root -e \"#{sql}\"")
+end
