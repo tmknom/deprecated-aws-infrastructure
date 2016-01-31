@@ -7,13 +7,13 @@ resource "aws_vpc" "vpc" {
   enable_dns_hostnames = "${var.enable_dns_hostnames}"
   enable_dns_support = "${var.enable_dns_support}"
   tags {
-    Name = "${var.vpc_name}"
+    Name = "${var.environment}-vpc"
   }
 }
 
 resource "aws_internet_gateway" "igw" {
   vpc_id = "${aws_vpc.vpc.id}"
   tags {
-    Name = "${var.vpc_name}-igw"
+    Name = "${var.environment}-igw"
   }
 }
