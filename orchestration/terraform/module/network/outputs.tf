@@ -21,3 +21,11 @@ output "internet_gateway_id" {
 output "internet_gateway_name" {
   value = "${aws_internet_gateway.igw.tags.Name}"
 }
+
+output "public_route_table_id" {
+  value = "${aws_route_table.public.id}"
+}
+
+output "public_route_table_name" {
+  value = "${aws_route_table.public.tags.Name}"
+}
