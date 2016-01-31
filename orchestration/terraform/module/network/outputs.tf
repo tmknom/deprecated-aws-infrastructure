@@ -29,3 +29,11 @@ output "public_route_table_id" {
 output "public_route_table_name" {
   value = "${aws_route_table.public.tags.Name}"
 }
+
+output "private_route_table_id" {
+  value = "${aws_route_table.private.id}"
+}
+
+output "private_route_table_name" {
+  value = "${aws_route_table.private.tags.Name}"
+}

@@ -33,3 +33,11 @@ resource "aws_route" "public_internet_gateway" {
   destination_cidr_block = "${var.default_route}"
   gateway_id = "${aws_internet_gateway.igw.id}"
 }
+
+resource "aws_route_table" "private" {
+  vpc_id = "${aws_vpc.vpc.id}"
+  tags {
+    Name = "${var.environment}-private-rtb"
+    Environment = "${var.environment}"
+  }
+}
