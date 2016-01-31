@@ -9,3 +9,7 @@ output "vpc_cidr" {
 output "vpc_name" {
   value = "${aws_vpc.vpc.tags.Name}"
 }
+
+output "internet_gateway_name" {
+  value = "${aws_internet_gateway.igw.tags.Name}"
+}
