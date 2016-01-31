@@ -27,3 +27,9 @@ resource "aws_route_table" "public" {
     Environment = "${var.environment}"
   }
 }
+
+resource "aws_route" "public_internet_gateway" {
+  route_table_id = "${aws_route_table.public.id}"
+  destination_cidr_block = "${var.default_route}"
+  gateway_id = "${aws_internet_gateway.igw.id}"
+}
