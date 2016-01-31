@@ -8,6 +8,7 @@ resource "aws_vpc" "vpc" {
   enable_dns_support = "${var.enable_dns_support}"
   tags {
     Name = "${var.environment}-vpc"
+    Environment = "${var.environment}"
   }
 }
 
@@ -15,5 +16,6 @@ resource "aws_internet_gateway" "igw" {
   vpc_id = "${aws_vpc.vpc.id}"
   tags {
     Name = "${var.environment}-igw"
+    Environment = "${var.environment}"
   }
 }
