@@ -54,6 +54,12 @@ resource "aws_subnet" "public" {
   map_public_ip_on_launch = true
 }
 
+resource "aws_route_table_association" "public" {
+  count = "${length(compact(split(",", var.public_subnets)))}"
+  subnet_id = "${element(aws_subnet.public.*.id, count.index)}"
+  route_table_id = "${aws_route_table.public.id}"
+}
+
 resource "aws_subnet" "private" {
   vpc_id = "${aws_vpc.vpc.id}"
   count = "${length(compact(split(",", var.private_subnets)))}"
@@ -63,4 +69,10 @@ resource "aws_subnet" "private" {
     Name = "${var.environment}-private-${count.index}-subnet"
     Environment = "${var.environment}"
   }
+}
+
+resource "aws_route_table_association" "private" {
+  count = "${length(compact(split(",", var.private_subnets)))}"
+  subnet_id = "${element(aws_subnet.private.*.id, count.index)}"
+  route_table_id = "${aws_route_table.private.id}"
 }
