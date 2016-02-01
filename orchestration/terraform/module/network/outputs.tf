@@ -37,3 +37,19 @@ output "private_route_table_id" {
 output "private_route_table_name" {
   value = "${aws_route_table.private.tags.Name}"
 }
+
+output "public_subnet_ids" {
+  value = "${join(",", aws_subnet.public.*.id)}"
+}
+
+output "public_subnet_names" {
+  value = "${join(",",aws_subnet.public.*.tags.Name)}"
+}
+
+output "private_subnet_ids" {
+  value = "${join(",", aws_subnet.private.*.id)}"
+}
+
+output "private_subnet_names" {
+  value = "${join(",",aws_subnet.private.*.tags.Name)}"
+}
