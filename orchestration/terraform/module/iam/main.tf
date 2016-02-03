@@ -2,6 +2,14 @@ provider "aws" {
   region = "${var.region}"
 }
 
+resource "aws_iam_group_membership" "group_user" {
+  name = "${var.role_name}-membership"
+  users = [
+    "${aws_iam_user.user.name}",
+  ]
+  group = "${aws_iam_group.user_group.name}"
+}
+
 resource "aws_iam_user" "user" {
   name = "${var.user_name}"
   path = "/"
