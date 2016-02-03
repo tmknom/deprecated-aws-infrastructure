@@ -1,3 +1,6 @@
+variable "user_name" {
+}
+
 variable "role_name" {
 }
 
