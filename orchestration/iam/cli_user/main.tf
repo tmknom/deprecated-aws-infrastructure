@@ -1,5 +1,5 @@
-module "iam" {
-  source = "../../terraform/module/iam"
+module "iam_user" {
+  source = "../../terraform/module/iam_user"
 
   user_name = "cli-admin"
   role_name = "cli-admin"
