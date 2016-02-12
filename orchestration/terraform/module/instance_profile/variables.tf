@@ -11,7 +11,3 @@ variable "assume_role_policy_json" {
 variable "policy_json" {
   default = "policy.json"
 }
-
-variable "region" {
-  default = "ap-northeast-1"
-}

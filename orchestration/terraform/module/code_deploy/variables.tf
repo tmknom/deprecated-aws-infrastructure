@@ -14,7 +14,3 @@ variable "ec2_tag_filter_key" {
 
 variable "role_arn" {
 }
-
-variable "region" {
-  default = "ap-northeast-1"
-}

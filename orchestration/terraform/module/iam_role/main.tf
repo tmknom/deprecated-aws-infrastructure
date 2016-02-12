@@ -1,7 +1,3 @@
-provider "aws" {
-  region = "${var.region}"
-}
-
 resource "aws_iam_policy_attachment" "attachment" {
   name = "${var.role_name}Attachment"
   policy_arn = "${aws_iam_policy.policy.arn}"

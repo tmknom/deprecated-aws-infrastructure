@@ -30,7 +30,3 @@ variable "availability_zones" {
     "1" = "ap-northeast-1c"
   }
 }
-
-variable "region" {
-  default = "ap-northeast-1"
-}

@@ -16,7 +16,3 @@ variable "description" {
 variable "protocol" {
   default = "tcp"
 }
-
-variable "region" {
-  default = "ap-northeast-1"
-}
