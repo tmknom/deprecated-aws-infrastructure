@@ -7,19 +7,19 @@ output "user_name" {
 }
 
 output "group_arn" {
-  value = "${aws_iam_group.user_group.arn}"
+  value = "${aws_iam_group.group.arn}"
 }
 
 output "group_name" {
-  value = "${aws_iam_group.user_group.name}"
+  value = "${aws_iam_group.group.name}"
 }
 
 output "policy_arn" {
-  value = "${aws_iam_policy.user_policy.arn}"
+  value = "${aws_iam_policy.policy.arn}"
 }
 
 output "policy_name" {
-  value = "${aws_iam_policy.user_policy.name}"
+  value = "${aws_iam_policy.policy.name}"
 }
 
 output "path" {
