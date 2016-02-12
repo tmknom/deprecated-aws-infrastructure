@@ -1,6 +1,9 @@
 variable "role_name" {
 }
 
+variable "path" {
+}
+
 variable "assume_role_policy_json" {
 }
 
