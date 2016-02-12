@@ -12,7 +12,7 @@ resource "aws_iam_group_membership" "group_user" {
 
 resource "aws_iam_user" "user" {
   name = "${var.user_name}"
-  path = "/"
+  path = "${var.path}"
 }
 
 resource "aws_iam_policy_attachment" "user_attachment" {
@@ -25,11 +25,11 @@ resource "aws_iam_policy_attachment" "user_attachment" {
 
 resource "aws_iam_group" "user_group" {
   name = "${var.role_name}-group"
-  path = "/"
+  path = "${var.path}"
 }
 
 resource "aws_iam_policy" "user_policy" {
   name = "${var.role_name}-policy"
-  path = "/"
+  path = "${var.path}"
   policy = "${file("${var.policy_json}")}"
 }

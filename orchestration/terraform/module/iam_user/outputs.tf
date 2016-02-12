@@ -21,3 +21,7 @@ output "policy_arn" {
 output "policy_name" {
   value = "${aws_iam_policy.user_policy.name}"
 }
+
+output "path" {
+  value = "${aws_iam_user.user.path}"
+}
