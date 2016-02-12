@@ -1,7 +1,7 @@
 variable "user_name" {
 }
 
-variable "role_name" {
+variable "role" {
 }
 
 variable "path" {
