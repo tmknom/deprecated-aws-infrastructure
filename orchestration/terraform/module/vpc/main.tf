@@ -19,8 +19,9 @@ resource "aws_internet_gateway" "igw" {
 resource "aws_route_table" "public" {
   vpc_id = "${aws_vpc.vpc.id}"
   tags {
-    Name = "${var.environment}-PublicRouteTable"
+    Name = "${var.environment}-${var.public_network}-RouteTable"
     Environment = "${var.environment}"
+    Network = "${var.public_network}"
   }
 }
 
@@ -33,8 +34,9 @@ resource "aws_route" "public_internet_gateway" {
 resource "aws_route_table" "private" {
   vpc_id = "${aws_vpc.vpc.id}"
   tags {
-    Name = "${var.environment}-PrivateRouteTable"
+    Name = "${var.environment}-${var.private_network}-RouteTable"
     Environment = "${var.environment}"
+    Network = "${var.private_network}"
   }
 }
 
@@ -44,8 +46,9 @@ resource "aws_subnet" "public" {
   cidr_block = "${element(split(",", var.public_subnets), count.index)}"
   availability_zone = "${lookup(var.availability_zones, count.index % 2)}"
   tags {
-    Name = "${var.environment}-PublicSubnet-${count.index}"
+    Name = "${var.environment}-${var.public_network}-Subnet-${count.index}"
     Environment = "${var.environment}"
+    Network = "${var.public_network}"
   }
   map_public_ip_on_launch = true
 }
@@ -62,8 +65,9 @@ resource "aws_subnet" "private" {
   cidr_block = "${element(split(",", var.private_subnets), count.index)}"
   availability_zone = "${lookup(var.availability_zones, count.index % 2)}"
   tags {
-    Name = "${var.environment}-PrivateSubnet-${count.index}"
+    Name = "${var.environment}-${var.private_network}-Subnet-${count.index}"
     Environment = "${var.environment}"
+    Network = "${var.private_network}"
   }
 }
 
