@@ -1,5 +1,5 @@
-module "production_vpc" {
-  source = "../../terraform/module/network"
+module "vpc" {
+  source = "../../terraform/module/vpc"
 
   environment = "production"
   vpc_cidr = "172.17.0.0/16"
