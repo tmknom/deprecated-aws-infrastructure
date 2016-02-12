@@ -7,7 +7,7 @@ resource "aws_iam_policy_attachment" "attachment" {
 }
 
 resource "aws_iam_role" "role" {
-  name = "${var.role_name}"
+  name = "${var.role_name}Role"
   path = "${var.path}"
   assume_role_policy = "${file("${var.assume_role_policy_json}")}"
 }
