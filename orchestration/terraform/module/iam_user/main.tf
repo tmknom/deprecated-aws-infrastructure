@@ -1,7 +1,3 @@
-provider "aws" {
-  region = "${var.region}"
-}
-
 resource "aws_iam_group_membership" "membership" {
   name = "${var.role}Membership"
   users = [
