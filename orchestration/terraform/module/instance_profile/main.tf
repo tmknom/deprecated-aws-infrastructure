@@ -11,6 +11,6 @@ module "iam_role" {
 }
 
 resource "aws_iam_instance_profile" "instance_profile" {
-  name = "${var.role_name}-profile"
+  name = "${var.role_name}InstanceProfile"
   roles = ["${module.iam_role.role_name}"]
 }
