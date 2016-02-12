@@ -2,8 +2,7 @@ module "iam_role" {
   source = "../terraform/module/iam_role"
 
   role_name = "code_deploy"
-  assume_role_policy_json = "assume_role_policy.json"
-  policy_json = "policy.json"
+  path = "/internal/"
 }
 
 module "code_deploy" {
