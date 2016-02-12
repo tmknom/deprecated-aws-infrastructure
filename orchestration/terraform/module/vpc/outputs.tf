@@ -15,41 +15,41 @@ output "vpc_name" {
 }
 
 output "internet_gateway_id" {
-  value = "${aws_internet_gateway.igw.id}"
+  value = "${aws_internet_gateway.internet_gateway.id}"
 }
 
 output "internet_gateway_name" {
-  value = "${aws_internet_gateway.igw.tags.Name}"
+  value = "${aws_internet_gateway.internet_gateway.tags.Name}"
 }
 
 output "public_route_table_id" {
-  value = "${aws_route_table.public.id}"
+  value = "${aws_route_table.public_route_table.id}"
 }
 
 output "public_route_table_name" {
-  value = "${aws_route_table.public.tags.Name}"
+  value = "${aws_route_table.public_route_table.tags.Name}"
 }
 
 output "private_route_table_id" {
-  value = "${aws_route_table.private.id}"
+  value = "${aws_route_table.private_route_table.id}"
 }
 
 output "private_route_table_name" {
-  value = "${aws_route_table.private.tags.Name}"
+  value = "${aws_route_table.private_route_table.tags.Name}"
 }
 
 output "public_subnet_ids" {
-  value = "${join(",", aws_subnet.public.*.id)}"
+  value = "${join(",", aws_subnet.public_subnet.*.id)}"
 }
 
 output "public_subnet_names" {
-  value = "${join(",",aws_subnet.public.*.tags.Name)}"
+  value = "${join(",",aws_subnet.public_subnet.*.tags.Name)}"
 }
 
 output "private_subnet_ids" {
-  value = "${join(",", aws_subnet.private.*.id)}"
+  value = "${join(",", aws_subnet.private_subnet.*.id)}"
 }
 
 output "private_subnet_names" {
-  value = "${join(",",aws_subnet.private.*.tags.Name)}"
+  value = "${join(",",aws_subnet.private_subnet.*.tags.Name)}"
 }

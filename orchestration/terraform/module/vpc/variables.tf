@@ -12,6 +12,14 @@ variable "private_subnets" {
   default = ""
 }
 
+variable "public_network" {
+  default = "Public"
+}
+
+variable "private_network" {
+  default = "Private"
+}
+
 variable "enable_dns_hostnames" {
   default = true
 }
