@@ -24,8 +24,7 @@ variable "availability_zone" {
   default = "ap-northeast-1c"
 }
 
-variable "db_subnet_group_name" {
-  default = "default"
+variable "subnet_ids" {
 }
 
 variable "security_group_id" {

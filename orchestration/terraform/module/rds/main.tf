@@ -7,7 +7,7 @@ resource "aws_db_instance" "db_instance" {
   password = "${var.master_user_password}"
 
   availability_zone = "${var.availability_zone}"
-  db_subnet_group_name = "${var.db_subnet_group_name}"
+  db_subnet_group_name = "${aws_db_subnet_group.db_subnet_group.name}"
   vpc_security_group_ids = ["${var.security_group_id}"]
 
   parameter_group_name = "${var.parameter_group_name}"
@@ -30,6 +30,16 @@ resource "aws_db_instance" "db_instance" {
 
   tags {
     Name = "${var.rds_name}-${var.environment}-DbInstance"
+    Environment = "${var.environment}"
+  }
+}
+
+resource "aws_db_subnet_group" "db_subnet_group" {
+  name = "${lower(var.rds_name)}-${lower(var.environment)}-db-subnet-group"
+  description = "Db subnet group for ${var.rds_name} ${var.environment}"
+  subnet_ids = ["${split(",", var.subnet_ids)}"]
+  tags {
+    Name = "${var.rds_name}-${var.environment}-Subnet"
     Environment = "${var.environment}"
   }
 }
