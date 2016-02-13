@@ -86,3 +86,7 @@ variable "copy_tags_to_snapshot" {
 variable "auto_minor_version_upgrade" {
   default = true
 }
+
+variable "db_parameter_group_family" {
+  default = "mysql5.6"
+}

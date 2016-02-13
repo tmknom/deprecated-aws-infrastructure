@@ -10,7 +10,7 @@ resource "aws_db_instance" "db_instance" {
   db_subnet_group_name = "${aws_db_subnet_group.db_subnet_group.name}"
   vpc_security_group_ids = ["${var.security_group_id}"]
 
-  parameter_group_name = "${var.parameter_group_name}"
+  parameter_group_name = "${aws_db_parameter_group.db_parameter_group.name}"
 
   engine = "${var.engine}"
   engine_version = "${var.engine_version}"
@@ -40,6 +40,17 @@ resource "aws_db_subnet_group" "db_subnet_group" {
   subnet_ids = ["${split(",", var.subnet_ids)}"]
   tags {
     Name = "${var.environment}-${var.rds_name}-DbSubnetGroup"
+    Environment = "${var.environment}"
+  }
+}
+
+resource "aws_db_parameter_group" "db_parameter_group" {
+  name = "${lower(var.environment)}-${lower(var.rds_name)}-${var.engine}"
+  family = "${var.db_parameter_group_family}"
+  description = "${var.environment} ${var.rds_name} parameter group"
+
+  tags {
+    Name = "${var.environment}-${var.rds_name}-DbParameterGroup"
     Environment = "${var.environment}"
   }
 }
