@@ -97,4 +97,9 @@ resource "aws_db_parameter_group" "db_parameter_group" {
     value = "1"
     apply_method = "${var.apply_pending_reboot}"
   }
+
+  parameter {
+    name = "tx_isolation"
+    value = "READ-COMMITTED"
+  }
 }
