@@ -53,4 +53,30 @@ resource "aws_db_parameter_group" "db_parameter_group" {
     Name = "${var.environment}-${var.rds_name}-DbParameterGroup"
     Environment = "${var.environment}"
   }
+
+
+  parameter {
+    name = "character_set_client"
+    value = "${var.db_character_set}"
+  }
+
+  parameter {
+    name = "character_set_connection"
+    value = "${var.db_character_set}"
+  }
+
+  parameter {
+    name = "character_set_database"
+    value = "${var.db_character_set}"
+  }
+
+  parameter {
+    name = "character_set_results"
+    value = "${var.db_character_set}"
+  }
+
+  parameter {
+    name = "character_set_server"
+    value = "${var.db_character_set}"
+  }
 }

@@ -90,3 +90,7 @@ variable "auto_minor_version_upgrade" {
 variable "db_parameter_group_family" {
   default = "mysql5.6"
 }
+
+variable "db_character_set" {
+  default = "utf8"
+}
