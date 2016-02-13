@@ -1,5 +1,6 @@
 variable "aws_default_region" {} # .bash_profileに環境変数定義 : TF_VAR_aws_default_region
 variable "aws_account_id" {}     # .bash_profileに環境変数定義 : TF_VAR_aws_account_id
+variable "application_name" {}   # .bash_profileに環境変数定義 : TF_VAR_application_name
 
 module "iam_user" {
   source = "../../../terraform/module/iam_user"
@@ -15,5 +16,6 @@ resource "template_file" "policy_json" {
   vars {
     region = "${var.aws_default_region}"
     aws_account_id = "${var.aws_account_id}"
+    application_name = "${var.application_name}"
   }
 }
