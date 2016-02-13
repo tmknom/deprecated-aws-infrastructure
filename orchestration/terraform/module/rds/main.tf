@@ -114,4 +114,15 @@ resource "aws_db_parameter_group" "db_parameter_group" {
     name = "long_query_time"
     value = "0.5"
   }
+
+
+  parameter {
+    name = "max_heap_table_size"
+    value = "${32 * 1024 * 1024}"
+  }
+
+  parameter {
+    name = "tmp_table_size"
+    value = "${32 * 1024 * 1024}"
+  }
 }
