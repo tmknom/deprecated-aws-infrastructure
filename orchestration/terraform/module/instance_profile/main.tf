@@ -4,7 +4,7 @@ module "iam_role" {
   role_name = "${var.role_name}"
   path = "${var.path}"
   assume_role_policy_json = "${var.assume_role_policy_json}"
-  policy_json = "${var.policy_json}"
+  policy = "${var.policy}"
 }
 
 resource "aws_iam_instance_profile" "instance_profile" {
