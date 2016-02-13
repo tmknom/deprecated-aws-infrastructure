@@ -137,4 +137,25 @@ resource "aws_db_parameter_group" "db_parameter_group" {
     value = 1
     apply_method = "${var.apply_pending_reboot}"
   }
+
+
+  parameter {
+    name = "thread_cache_size"
+    value = 32
+  }
+
+  parameter {
+    name = "innodb_lock_wait_timeout"
+    value = 2
+  }
+
+  parameter {
+    name = "slow_launch_time"
+    value = 1
+  }
+
+  parameter {
+    name = "innodb_max_dirty_pages_pct"
+    value = 95
+  }
 }
