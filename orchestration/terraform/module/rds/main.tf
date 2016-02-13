@@ -125,4 +125,16 @@ resource "aws_db_parameter_group" "db_parameter_group" {
     name = "tmp_table_size"
     value = "${32 * 1024 * 1024}"
   }
+
+
+  parameter {
+    name = "innodb_buffer_pool_dump_at_shutdown"
+    value = 1
+  }
+
+  parameter {
+    name = "innodb_buffer_pool_load_at_startup"
+    value = 1
+    apply_method = "${var.apply_pending_reboot}"
+  }
 }
