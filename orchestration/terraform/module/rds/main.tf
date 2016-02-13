@@ -1,5 +1,5 @@
 resource "aws_db_instance" "db_instance" {
-  identifier = "${lower(var.rds_name)}-${lower(var.environment)}-db-instance"
+  identifier = "${lower(var.environment)}-${lower(var.rds_name)}"
   port = "${var.db_port}"
 
   name = "${var.db_name}"
@@ -29,17 +29,17 @@ resource "aws_db_instance" "db_instance" {
   auto_minor_version_upgrade = "${var.auto_minor_version_upgrade}"
 
   tags {
-    Name = "${var.rds_name}-${var.environment}-DbInstance"
+    Name = "${var.environment}-${var.rds_name}-DbInstance"
     Environment = "${var.environment}"
   }
 }
 
 resource "aws_db_subnet_group" "db_subnet_group" {
-  name = "${lower(var.rds_name)}-${lower(var.environment)}-db-subnet-group"
-  description = "Db subnet group for ${var.rds_name} ${var.environment}"
+  name = "${lower(var.environment)}-${lower(var.rds_name)}-db-subnet-group"
+  description = "Db subnet group for ${var.environment} ${var.rds_name}"
   subnet_ids = ["${split(",", var.subnet_ids)}"]
   tags {
-    Name = "${var.rds_name}-${var.environment}-Subnet"
+    Name = "${var.environment}-${var.rds_name}-DbSubnetGroup"
     Environment = "${var.environment}"
   }
 }
