@@ -90,4 +90,11 @@ resource "aws_db_parameter_group" "db_parameter_group" {
     name = "collation_server"
     value = "${var.db_collation}"
   }
+
+
+  parameter {
+    name = "skip-character-set-client-handshake"
+    value = "1"
+    apply_method = "${var.apply_pending_reboot}"
+  }
 }

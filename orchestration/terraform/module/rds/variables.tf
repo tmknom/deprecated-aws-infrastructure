@@ -98,3 +98,11 @@ variable "db_character_set" {
 variable "db_collation" {
   default = "utf8_general_ci"
 }
+
+variable "apply_immediate" {
+  default = "immediate"
+}
+
+variable "apply_pending_reboot" {
+  default = "pending-reboot"
+}
