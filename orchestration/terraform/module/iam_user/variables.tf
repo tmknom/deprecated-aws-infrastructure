@@ -7,6 +7,5 @@ variable "role" {
 variable "path" {
 }
 
-variable "policy_json" {
-  default = "policy.json"
+variable "policy" {
 }

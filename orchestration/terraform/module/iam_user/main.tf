@@ -27,5 +27,5 @@ resource "aws_iam_group" "group" {
 resource "aws_iam_policy" "policy" {
   name = "${var.role}Policy"
   path = "${var.path}"
-  policy = "${file("${var.policy_json}")}"
+  policy = "${var.policy}"
 }
