@@ -1,9 +1,6 @@
 variable "application_name" {
 }
 
-variable "deployment_group_name" {
-}
-
 variable "deployment_config_name" {
   default = "CodeDeployDefault.OneAtATime"
 }
