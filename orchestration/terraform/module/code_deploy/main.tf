@@ -1,6 +1,6 @@
 resource "aws_codedeploy_deployment_group" "deployment_group" {
   app_name = "${aws_codedeploy_app.application.name}"
-  deployment_group_name = "${var.deployment_group_name}"
+  deployment_group_name = "${aws_codedeploy_app.application.name}DeploymentGroup"
   service_role_arn = "${var.role_arn}"
   deployment_config_name = "${var.deployment_config_name}"
   ec2_tag_filter {
