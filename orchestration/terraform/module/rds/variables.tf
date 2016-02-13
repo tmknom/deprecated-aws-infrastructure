@@ -94,3 +94,7 @@ variable "db_parameter_group_family" {
 variable "db_character_set" {
   default = "utf8"
 }
+
+variable "db_collation" {
+  default = "utf8_general_ci"
+}

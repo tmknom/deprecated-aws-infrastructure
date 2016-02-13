@@ -79,4 +79,15 @@ resource "aws_db_parameter_group" "db_parameter_group" {
     name = "character_set_server"
     value = "${var.db_character_set}"
   }
+
+
+  parameter {
+    name = "collation_connection"
+    value = "${var.db_collation}"
+  }
+
+  parameter {
+    name = "collation_server"
+    value = "${var.db_collation}"
+  }
 }
