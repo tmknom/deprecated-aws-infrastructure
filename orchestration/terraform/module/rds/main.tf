@@ -102,4 +102,16 @@ resource "aws_db_parameter_group" "db_parameter_group" {
     name = "tx_isolation"
     value = "READ-COMMITTED"
   }
+
+
+  # http://bekkou68.hatenablog.com/entry/2014/09/16/200122
+  parameter {
+    name = "slow_query_log"
+    value = "1"
+  }
+
+  parameter {
+    name = "long_query_time"
+    value = "0.5"
+  }
 }
