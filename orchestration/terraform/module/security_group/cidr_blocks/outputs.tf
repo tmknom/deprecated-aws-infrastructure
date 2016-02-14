@@ -1,11 +1,11 @@
 output "id" {
-  value = "${aws_security_group.security_group.id}"
+  value = "${module.security_group.id}"
 }
 
 output "name" {
-  value = "${aws_security_group.security_group.name}"
+  value = "${module.security_group.name}"
 }
 
 output "vpc_id" {
-  value = "${aws_security_group.security_group.vpc_id}"
+  value = "${module.security_group.vpc_id}"
 }

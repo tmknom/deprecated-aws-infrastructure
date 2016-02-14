@@ -1,24 +1,18 @@
-resource "aws_security_group" "security_group" {
-  name = "${var.name}SecurityGroup"
+module "security_group" {
+  source = "../common"
 
-  ingress {
-    from_port = "${var.port}"
-    to_port = "${var.port}"
-    cidr_blocks = ["${var.cidr_block}"]
-    protocol = "${var.protocol}"
-  }
-
-  egress {
-    from_port = 0
-    to_port = 0
-    cidr_blocks = ["0.0.0.0/0"]
-    protocol = "-1"
-  }
-
+  name = "${var.name}"
   vpc_id = "${var.vpc_id}"
   description = "${var.description}"
+}
 
-  tags {
-    Name = "${var.name}SecurityGroup"
-  }
+resource "aws_security_group_rule" "ingress" {
+  type = "ingress"
+
+  from_port = "${var.port}"
+  to_port = "${var.port}"
+  protocol = "${var.protocol}"
+  cidr_blocks = ["${var.cidr_block}"]
+
+  security_group_id = "${module.security_group.id}"
 }
