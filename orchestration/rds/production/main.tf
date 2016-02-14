@@ -1,19 +1,24 @@
 variable "application_name" {}    # .bash_profileに環境変数定義 : TF_VAR_application_name
-variable "vpc_id" {}              # .bash_profileに環境変数定義 : TF_VAR_vpc_id
 variable "db_port" {}             # .bash_profileに環境変数定義 : TF_VAR_db_port
 variable "db_name" {}             # .bash_profileに環境変数定義 : TF_VAR_db_name
 variable "db_master_user_name" {} # .bash_profileに環境変数定義 : TF_VAR_db_master_user_name
 variable "db_initial_password" {} # .bash_profileに環境変数定義 : TF_VAR_db_initial_password
-variable "db_subnet_ids" {}       # .bash_profileに環境変数定義 : TF_VAR_db_subnet_ids
+
+variable "vpc_id" {}                      # .bash_profileに環境変数定義 : TF_VAR_vpc_id
+variable "db_subnet_ids" {}               # .bash_profileに環境変数定義 : TF_VAR_db_subnet_ids
 variable "db_source_security_group_id" {} # .bash_profileに環境変数定義 : TF_VAR_db_source_security_group_id
+
+variable "environment" {
+  default = "Production"
+}
 
 module "security_group" {
   source = "../../terraform/module/security_group/source_security_group_id"
 
-  name = "MySQL"
+  name = "${var.environment}-${var.application_name}-MySQL"
   source_security_group_id = "${var.db_source_security_group_id}"
   vpc_id = "${var.vpc_id}"
-  description = "allow MySQL"
+  description = "allow ${var.environment} ${var.application_name} MySQL"
 
   port = "${var.db_port}"
 }
@@ -22,7 +27,7 @@ module "rds" {
   source = "../../terraform/module/rds"
 
   rds_name = "${var.application_name}"
-  environment = "Production"
+  environment = "${var.environment}"
 
   db_port = "${var.db_port}"
 
