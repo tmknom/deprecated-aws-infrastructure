@@ -8,7 +8,7 @@ variable "policy" {
 }
 
 variable "group" {
-  default = "S3Log"
+  default = "Log"
 }
 
 variable "acl" {
