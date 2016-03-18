@@ -12,7 +12,7 @@ variable "group" {
 }
 
 variable "acl" {
-  default = "private"
+  default = "log-delivery-write"
 }
 
 variable "environment" {
