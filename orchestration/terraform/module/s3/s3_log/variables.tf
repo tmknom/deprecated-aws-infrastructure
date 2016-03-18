@@ -8,11 +8,11 @@ variable "policy" {
 }
 
 variable "group" {
-  default = "Log"
+  default = "S3Log"
 }
 
 variable "acl" {
-  default = "private"
+  default = "log-delivery-write"
 }
 
 variable "environment" {

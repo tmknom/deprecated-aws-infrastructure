@@ -1,11 +1,11 @@
 variable "s3_suffix" {} # .bash_profileに環境変数定義 : TF_VAR_s3_suffix
 
 variable "identifier" {
-  default = "s3-log"
+  default = "terraform"
 }
 
-module "s3_log" {
-  source = "../../terraform/module/s3/s3_log"
+module "s3_administration" {
+  source = "../../terraform/module/s3/administration"
 
   identifier = "${var.identifier}"
   suffix = "${var.s3_suffix}"
