@@ -8,7 +8,7 @@
  * 管理コンソールでユーザ作成＆アクセストークン払い出し
  * AWS CLIのインストール＆セットアップ
 3. 環境変数を定義
- * ```direnv edit .``` コマンドで設定
+ * [direnvの導入](/document/design/direnv/README.md)
 
 
 ## terraformの準備
