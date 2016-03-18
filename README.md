@@ -47,3 +47,23 @@ ROLE=<role> \
 HOST_IP=<ip_address> \
 bundle exec rake spec
 ```
+
+## インストール
+
+```bash
+$ git cloen git@github.com:tmknom/aws-infrastructure.git
+$ cd aws-infrastructure
+```
+
+## 初期セットアップ
+
+* [AWSアカウント取得後にやること](/document/initialization/README.md)
+
+## 依存ツール
+
+* AWS CLI
+* Itamae
+* Serverspec
+* Fabric
+* terraform
+
