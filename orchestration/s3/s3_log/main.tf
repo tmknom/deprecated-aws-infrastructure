@@ -4,8 +4,8 @@ variable "identifier" {
   default = "s3-log"
 }
 
-module "log_bucket" {
-  source = "../../terraform/module/s3/log"
+module "s3_log" {
+  source = "../../terraform/module/s3/s3_log"
 
   identifier = "${var.identifier}"
   suffix = "${var.s3_suffix}"

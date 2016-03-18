@@ -1,4 +1,4 @@
-resource "aws_s3_bucket" "log_bucket" {
+resource "aws_s3_bucket" "bucket" {
   bucket = "${var.identifier}-${var.suffix}"
   acl = "${var.acl}"
   policy = "${var.policy}"
