@@ -4,6 +4,7 @@ module "security_group" {
   name = "${var.name}"
   vpc_id = "${var.vpc_id}"
   description = "${var.description}"
+  environment = "${var.environment}"
 }
 
 resource "aws_security_group_rule" "ingress" {

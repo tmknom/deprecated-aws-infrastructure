@@ -13,6 +13,9 @@ variable "vpc_id" {
 variable "description" {
 }
 
+variable "environment" {
+}
+
 variable "protocol" {
   default = "tcp"
 }

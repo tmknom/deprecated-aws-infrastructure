@@ -95,3 +95,12 @@ $ fab build_vpc_testing
 $ fab build_vpc_production
 ```
 
+
+## セキュリティグループの作成
+
+### 本番環境
+
+```bash
+$ fab build_sg_production
+```
+
