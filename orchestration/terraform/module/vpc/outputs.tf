@@ -2,6 +2,10 @@ output "environment" {
   value = "${var.environment}"
 }
 
+output "region_name" {
+  value = "${var.region_name}"
+}
+
 output "vpc_id" {
   value = "${aws_vpc.vpc.id}"
 }
