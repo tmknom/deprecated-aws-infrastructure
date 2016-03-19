@@ -19,6 +19,7 @@ def terraform_plan_destroy(resource_dir):
 @task
 def terraform_apply(resource_dir):
   '''terraform applyコマンド実行'''
+  terraform_plan(resource_dir)
   if not confirm("実行するとリソースを更新します。本当に実行しますか？"):
     abort('リソースの更新を中止しました。')
   execute_terraform(resource_dir, 'apply')
@@ -26,6 +27,7 @@ def terraform_apply(resource_dir):
 @task
 def terraform_destroy(resource_dir):
   '''terraform destroyコマンド実行'''
+  terraform_plan_destroy(resource_dir)
   if not confirm("実行するとリソースを破棄します。本当に実行しますか？"):
     abort('リソースの破棄を中止しました。')
   execute_terraform(resource_dir, 'destroy -force')
