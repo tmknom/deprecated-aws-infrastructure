@@ -16,6 +16,12 @@ def build_sg_production():
   terraform_apply('security_group/production')
 
 @task
+def build_sg_testing():
+  '''テスト環境のセキュリティグループ構築'''
+  set_testing_vpc_id()
+  terraform_apply('security_group/testing')
+
+@task
 def build_vpc_production():
   '''本番環境のVPC構築'''
   terraform_apply('vpc/production/tokyo')
