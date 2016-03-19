@@ -7,38 +7,38 @@ BUCKET_IDENTIFIER = 'terraform'
 REGION = 'ap-northeast-1'
 
 @task
-def terraform_plan(resource_dir):
+def terraform_plan(resource_dir, tf_vars = ''):
   '''terraform planコマンド実行'''
-  execute_terraform(resource_dir, 'plan')
+  execute_terraform(resource_dir, tf_vars, 'plan')
 
 @task
-def terraform_plan_destroy(resource_dir):
+def terraform_plan_destroy(resource_dir, tf_vars = ''):
   '''terraform plan -destroyコマンド実行'''
-  execute_terraform(resource_dir, 'plan -destroy')
+  execute_terraform(resource_dir, tf_vars, 'plan -destroy')
 
 @task
-def terraform_apply(resource_dir):
+def terraform_apply(resource_dir, tf_vars = ''):
   '''terraform applyコマンド実行'''
-  terraform_plan(resource_dir)
+  terraform_plan(resource_dir, tf_vars)
   if not confirm("実行するとリソースを更新します。本当に実行しますか？"):
     abort('リソースの更新を中止しました。')
-  execute_terraform(resource_dir, 'apply')
+  execute_terraform(resource_dir, tf_vars, 'apply')
 
 @task
-def terraform_destroy(resource_dir):
+def terraform_destroy(resource_dir, tf_vars = ''):
   '''terraform destroyコマンド実行'''
-  terraform_plan_destroy(resource_dir)
+  terraform_plan_destroy(resource_dir, tf_vars)
   if not confirm("実行するとリソースを破棄します。本当に実行しますか？"):
     abort('リソースの破棄を中止しました。')
-  execute_terraform(resource_dir, 'destroy -force')
+  execute_terraform(resource_dir, tf_vars, 'destroy -force')
 
 
-def execute_terraform(resource_dir, command):
+def execute_terraform(resource_dir, tf_vars, command):
   with lcd('%s' % (resource_dir)):
     remote_config(resource_dir)
     local('terraform remote pull')
     local('terraform get')
-    local('terraform %s' % (command))
+    local('%s terraform %s' % (tf_vars, command))
     local('terraform remote push')
 
 def remote_config(resource_dir):

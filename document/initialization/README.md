@@ -98,6 +98,12 @@ $ fab build_vpc_production
 
 ## セキュリティグループの作成
 
+### テスト環境
+
+```bash
+$ fab build_sg_testing
+```
+
 ### 本番環境
 
 ```bash

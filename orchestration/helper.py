@@ -2,15 +2,16 @@
 
 from fabric.api import *
 
-def set_production_vpc_id():
-  set_vpc_id('Production')
+def get_production_tf_vars():
+  return get_tf_vars('Production')
 
-def set_testing_vpc_id():
-  set_vpc_id('Testing')
+def get_testing_tf_vars():
+  return get_tf_vars('Testing')
 
-def set_vpc_id(environment):
+def get_tf_vars(environment):
   vpc_id = get_vpc_id(environment)
-  local('export TF_VAR_vpc_id=%s' % (vpc_id))
+  result = 'TF_VAR_vpc_id=%s' % (vpc_id)
+  return result
 
 def get_vpc_id(environment):
   command = "aws ec2 describe-vpcs " \
