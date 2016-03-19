@@ -8,6 +8,11 @@ from fabric.api import *
 from terraform.cli.cli_helper import *
 
 @task
+def update_instance_profile():
+  '''InstanceProfileの更新'''
+  terraform_apply('instance_profile/rails')
+
+@task
 def update_user_cli():
   '''CLIユーザの更新'''
   terraform_apply('iam_user/cli/administrator')

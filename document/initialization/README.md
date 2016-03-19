@@ -74,3 +74,10 @@ $ rm ~/.aws/credentials.bak
 動作確認後、最初に手動で作成したユーザは削除する。
 すぐに削除しない場合も、アクセスキーは無効にしておくこと。
 
+
+## InstanceProfileの作成
+
+```bash
+$ fab update_instance_profile
+```
+
