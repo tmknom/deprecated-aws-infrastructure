@@ -8,6 +8,11 @@ from fabric.api import *
 from terraform.cli.cli_helper import *
 
 @task
+def update_user_cli():
+  '''CLIユーザの更新'''
+  terraform_apply('iam_user/cli/administrator')
+
+@task
 def update_s3_log():
   '''s3-log バケットの更新'''
   terraform_apply('s3/s3_log')
