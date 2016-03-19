@@ -13,6 +13,11 @@ def build_vpc_production():
   terraform_apply('vpc/production/tokyo')
 
 @task
+def build_vpc_testing():
+  '''テスト環境のVPC構築'''
+  terraform_apply('vpc/testing/tokyo')
+
+@task
 def build_instance_profile():
   '''InstanceProfileの構築'''
   terraform_apply('instance_profile/rails')
