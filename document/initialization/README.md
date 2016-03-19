@@ -42,8 +42,8 @@ $ fab terraform_plan:s3/terraform
 最初にバケットを作成して、それからCloudTrail自体を作成する。
 
 ```bash
-$ fab update_s3_cloud_trail
-$ fab update_cloud_trail
+$ fab build_s3_cloud_trail
+$ fab build_cloud_trail
 ```
 
 
@@ -54,7 +54,7 @@ $ fab update_cloud_trail
 ユーザ作成後、管理コンソールからアクセスキーを払い出す。
 
 ```bash
-$ fab update_user_cli
+$ fab build_user_cli
 ```
 
 払い出したアクセスキーを設定する。
@@ -78,6 +78,6 @@ $ rm ~/.aws/credentials.bak
 ## InstanceProfileの作成
 
 ```bash
-$ fab update_instance_profile
+$ fab build_instance_profile
 ```
 

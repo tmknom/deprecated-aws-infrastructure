@@ -1,6 +1,6 @@
 # -*- encoding:utf-8 -*-
 #
-# 各種リソースの更新スクリプト
+# 各種リソースの構築スクリプト
 #
 #####################################################################
 
@@ -8,32 +8,32 @@ from fabric.api import *
 from terraform.cli.cli_helper import *
 
 @task
-def update_instance_profile():
-  '''InstanceProfileの更新'''
+def build_instance_profile():
+  '''InstanceProfileの構築'''
   terraform_apply('instance_profile/rails')
 
 @task
-def update_user_cli():
-  '''CLIユーザの更新'''
+def build_user_cli():
+  '''CLIユーザの構築'''
   terraform_apply('iam_user/cli/administrator')
 
 @task
-def update_s3_log():
-  '''s3-log バケットの更新'''
+def build_s3_log():
+  '''s3-log バケットの構築'''
   terraform_apply('s3/s3_log')
 
 @task
-def update_s3_terraform():
-  '''terraform バケットの更新'''
+def build_s3_terraform():
+  '''terraform バケットの構築'''
   terraform_apply('s3/terraform')
 
 @task
-def update_s3_cloud_trail():
-  '''cloud-trail バケットの更新'''
+def build_s3_cloud_trail():
+  '''cloud-trail バケットの構築'''
   terraform_apply('s3/cloud_trail')
 
 @task
-def update_cloud_trail():
-  '''CloudTrailの更新'''
+def build_cloud_trail():
+  '''CloudTrailの構築'''
   terraform_apply('cloud_trail')
 
