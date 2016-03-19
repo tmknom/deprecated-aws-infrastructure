@@ -35,6 +35,7 @@ def execute_terraform(resource_dir, command):
   with lcd('%s' % (resource_dir)):
     remote_config(resource_dir)
     local('terraform remote pull')
+    local('terraform get')
     local('terraform %s' % (command))
     local('terraform remote push')
 
