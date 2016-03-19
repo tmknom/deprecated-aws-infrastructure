@@ -1,11 +1,14 @@
+variable "environment" {
+  default = "Production"
+}
+
+# === ここから下は本番環境とテスト環境で同一内容 ===
+
+
 variable "administrator_ip_address" {} # .bash_profileに環境変数定義 : TF_VAR_administrator_ip_address
 variable "ssh_port" {}                 # .bash_profileに環境変数定義 : TF_VAR_ssh_port
 
 variable "vpc_id" {} # 実行時に動的に環境変数定義 : TF_VAR_vpc_id
-
-variable "environment" {
-  default = "Production"
-}
 
 module "ssh" {
   source = "../../terraform/module/security_group/cidr_blocks"
