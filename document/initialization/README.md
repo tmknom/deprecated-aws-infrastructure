@@ -110,3 +110,10 @@ $ fab build_sg_testing
 $ fab build_sg_production
 ```
 
+
+## CodeDeployの作成
+
+```bash
+$ fab build_code_deploy
+```
+
