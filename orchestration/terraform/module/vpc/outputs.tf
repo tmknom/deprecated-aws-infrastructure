@@ -2,6 +2,10 @@ output "environment" {
   value = "${var.environment}"
 }
 
+output "region_name" {
+  value = "${var.region_name}"
+}
+
 output "vpc_id" {
   value = "${aws_vpc.vpc.id}"
 }
@@ -30,6 +34,14 @@ output "public_route_table_name" {
   value = "${aws_route_table.public_route_table.tags.Name}"
 }
 
+output "protected_route_table_id" {
+  value = "${aws_route_table.protected_route_table.id}"
+}
+
+output "protected_route_table_name" {
+  value = "${aws_route_table.protected_route_table.tags.Name}"
+}
+
 output "private_route_table_id" {
   value = "${aws_route_table.private_route_table.id}"
 }
@@ -44,6 +56,14 @@ output "public_subnet_ids" {
 
 output "public_subnet_names" {
   value = "${join(",",aws_subnet.public_subnet.*.tags.Name)}"
+}
+
+output "protected_subnet_ids" {
+  value = "${join(",", aws_subnet.protected_subnet.*.id)}"
+}
+
+output "protected_subnet_names" {
+  value = "${join(",",aws_subnet.protected_subnet.*.tags.Name)}"
 }
 
 output "private_subnet_ids" {

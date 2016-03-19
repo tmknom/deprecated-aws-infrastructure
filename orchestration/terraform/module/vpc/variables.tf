@@ -1,10 +1,20 @@
 variable "environment" {
 }
 
+variable "region_name" {
+}
+
 variable "vpc_cidr" {
 }
 
+variable "availability_zones" {
+}
+
 variable "public_subnets" {
+  default = ""
+}
+
+variable "protected_subnets" {
   default = ""
 }
 
@@ -14,6 +24,10 @@ variable "private_subnets" {
 
 variable "public_network" {
   default = "Public"
+}
+
+variable "protected_network" {
+  default = "Protected"
 }
 
 variable "private_network" {
@@ -30,11 +44,4 @@ variable "enable_dns_support" {
 
 variable "default_route" {
   default = "0.0.0.0/0"
-}
-
-variable "availability_zones" {
-  default = {
-    "0" = "ap-northeast-1a"
-    "1" = "ap-northeast-1c"
-  }
 }
