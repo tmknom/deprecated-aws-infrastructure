@@ -12,14 +12,14 @@ from helper import *
 @task
 def build_sg_production():
   '''本番環境のセキュリティグループ構築'''
-  set_production_vpc_id()
-  terraform_apply('security_group/production')
+  tf_vars = get_production_tf_vars()
+  terraform_apply('security_group/production', tf_vars)
 
 @task
 def build_sg_testing():
   '''テスト環境のセキュリティグループ構築'''
-  set_testing_vpc_id()
-  terraform_apply('security_group/testing')
+  tf_vars = get_testing_tf_vars()
+  terraform_apply('security_group/testing', tf_vars)
 
 @task
 def build_vpc_production():
