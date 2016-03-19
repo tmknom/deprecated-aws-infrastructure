@@ -32,6 +32,11 @@ def build_vpc_testing():
   terraform_apply('vpc/testing/tokyo')
 
 @task
+def build_code_deploy():
+  '''CodeDeploy構築'''
+  terraform_apply('code_deploy')
+
+@task
 def build_instance_profile():
   '''InstanceProfileの構築'''
   terraform_apply('instance_profile/rails')
