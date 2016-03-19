@@ -8,6 +8,11 @@ from fabric.api import *
 from terraform.cli.cli_helper import *
 
 @task
+def build_vpc_production():
+  '''本番環境のVPC構築'''
+  terraform_apply('vpc/production/tokyo')
+
+@task
 def build_instance_profile():
   '''InstanceProfileの構築'''
   terraform_apply('instance_profile/rails')
