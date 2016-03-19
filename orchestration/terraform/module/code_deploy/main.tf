@@ -1,11 +1,39 @@
-resource "aws_codedeploy_deployment_group" "deployment_group" {
+resource "aws_codedeploy_deployment_group" "production" {
+  deployment_group_name = "production-${aws_codedeploy_app.application.name}"
+
   app_name = "${aws_codedeploy_app.application.name}"
-  deployment_group_name = "${aws_codedeploy_app.application.name}DeploymentGroup"
   service_role_arn = "${var.role_arn}"
   deployment_config_name = "${var.deployment_config_name}"
+
   ec2_tag_filter {
-    key = "${var.ec2_tag_filter_key}"
+    key = "DeploymentGroup"
     value = "${aws_codedeploy_app.application.name}"
+    type = "KEY_AND_VALUE"
+  }
+
+  ec2_tag_filter {
+    key = "Environment"
+    value = "Production"
+    type = "KEY_AND_VALUE"
+  }
+}
+
+resource "aws_codedeploy_deployment_group" "testing" {
+  deployment_group_name = "testing-${aws_codedeploy_app.application.name}"
+
+  app_name = "${aws_codedeploy_app.application.name}"
+  service_role_arn = "${var.role_arn}"
+  deployment_config_name = "${var.deployment_config_name}"
+
+  ec2_tag_filter {
+    key = "DeploymentGroup"
+    value = "${aws_codedeploy_app.application.name}"
+    type = "KEY_AND_VALUE"
+  }
+
+  ec2_tag_filter {
+    key = "Environment"
+    value = "Testing"
     type = "KEY_AND_VALUE"
   }
 }
