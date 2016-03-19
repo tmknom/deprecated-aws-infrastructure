@@ -1,5 +1,5 @@
 module "vpc" {
-  source = "../../terraform/module/vpc"
+  source = "../../../terraform/module/vpc"
 
   environment = "Production"
   region_name = "Tokyo"
