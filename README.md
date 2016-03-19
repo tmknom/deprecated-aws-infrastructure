@@ -67,3 +67,10 @@ $ cd aws-infrastructure
 * Fabric
 * terraform
 
+## 設計ドキュメント
+
+* [IAMユーザの設計](/document/design/iam-user/README.md)
+* [ネットワーク設計](/document/design/network/README.md)
+* [S3の設計](/document/design/s3/README.md)
+* [direnvの導入](/document/design/direnv/README.md)
+
