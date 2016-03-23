@@ -1,7 +1,7 @@
 module "security_group" {
   source = "../common"
 
-  name = "${var.name}"
+  role = "${var.role}"
   vpc_id = "${var.vpc_id}"
   description = "${var.description}"
   environment = "${var.environment}"

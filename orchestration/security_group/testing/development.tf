@@ -4,7 +4,7 @@
 module "initialize" {
   source = "../../terraform/module/security_group/cidr_blocks"
 
-  name = "Initialize"
+  role = "Initialize"
   description = "allow initialize base ami"
   environment = "${var.environment}"
 

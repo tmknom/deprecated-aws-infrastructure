@@ -1,5 +1,5 @@
 resource "aws_security_group" "security_group" {
-  name = "${var.environment}-${var.name}-SecurityGroup"
+  name = "${var.environment}-${var.role}-SecurityGroup"
 
   egress {
     from_port = 0
@@ -12,7 +12,8 @@ resource "aws_security_group" "security_group" {
   description = "${var.description}"
 
   tags {
-    Name = "${var.environment}-${var.name}-SecurityGroup"
+    Name = "${var.environment}-${var.role}-SecurityGroup"
+    Role = "${var.role}"
     Environment = "${var.environment}"
   }
 }
