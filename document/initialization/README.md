@@ -111,7 +111,18 @@ $ fab build_sg_production
 ```
 
 
+## RDSの作成
+
+### 本番環境
+
+```bash
+$ fab build_rds_production
+```
+
+
 ## CodeDeployの作成
+
+コマンド実行後、デプロイを手動で実行し、GitHubの認証を通しておく。
 
 ```bash
 $ fab build_code_deploy
