@@ -28,6 +28,7 @@ $ direnv edit .
 # AWSアカウント設定
 export AWS_ACCOUNT_ID='xxxxxxxx'
 export AWS_ACCOUNT_ID_MD5=$(echo $AWS_ACCOUNT_ID | md5)
+export AWS_DEFAULT_REGION='ap-northeast-1'
 
 # AWSユーザ設定
 export AWS_LOGIN_USER='xxxx'
@@ -36,6 +37,9 @@ export AWS_CLI_USER='cli-xxxx'
 # SSH設定
 export SSH_PORT='xxxx'
 
+# DB設定
+export PRODUCTION_DATABASE_PORT='xxxx'
+export PRODUCTION_DATABASE_USER='xxxx'
 
 #
 # terraform環境変数
@@ -55,6 +59,11 @@ export TF_VAR_ssh_port="$SSH_PORT"
 
 # 管理者IPアドレス設定
 export TF_VAR_administrator_ip_address="XX.XX.XX.XX/32"
+
+# DB設定
+export TF_VAR_db_port="$PRODUCTION_DATABASE_PORT"
+export TF_VAR_db_master_user_name="$PRODUCTION_DATABASE_USER"
+export TF_VAR_db_initial_password="xxxxxxxx"
 ```
 
 ## 設定内容の確認
