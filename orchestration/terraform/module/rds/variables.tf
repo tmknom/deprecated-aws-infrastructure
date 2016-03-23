@@ -1,16 +1,8 @@
-variable "rds_name" {
-}
-
 variable "environment" {
 }
 
 
 variable "db_port" {
-  default = "3306"
-}
-
-
-variable "db_name" {
 }
 
 variable "master_user_name" {
@@ -21,7 +13,6 @@ variable "master_user_password" {
 
 
 variable "availability_zone" {
-  default = "ap-northeast-1c"
 }
 
 variable "subnet_ids" {
@@ -37,7 +28,6 @@ variable "parameter_group_name" {
 
 
 variable "engine" {
-  default = "mysql"
 }
 
 variable "engine_version" {
