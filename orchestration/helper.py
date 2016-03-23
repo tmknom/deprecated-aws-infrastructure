@@ -17,7 +17,9 @@ def get_testing_db_tf_vars():
 
 def get_tf_vars(environment):
   vpc_id = get_vpc_id(environment)
-  result = 'TF_VAR_vpc_id=%s' % (vpc_id)
+  availability_zones = get_availability_zones()
+  result = ' TF_VAR_vpc_id=%s' % (vpc_id) \
+         + ' TF_VAR_availability_zones=%s' % (availability_zones)
   return result
 
 def get_db_tf_vars(environment):
@@ -56,6 +58,12 @@ def get_subnet_ids(environment, network):
           + " | jq '.Subnets' | jq 'map(.SubnetId)' "
   result = local(command, capture=True)
   return json.loads(result)
+
+def get_availability_zones():
+  command = "aws ec2 describe-availability-zones " \
+          + " | jq '.AvailabilityZones' | jq 'map(.ZoneName)' "
+  result = local(command, capture=True)
+  return ','.join(json.loads(result))
 
 def get_vpc_id(environment):
   command = "aws ec2 describe-vpcs " \
