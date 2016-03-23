@@ -22,6 +22,18 @@ def build_sg_testing():
   terraform_apply('security_group/testing', tf_vars)
 
 @task
+def build_rds_production():
+  '''本番環境のRDS構築'''
+  tf_vars = get_production_db_tf_vars()
+  terraform_apply('rds/production', tf_vars)
+
+@task
+def build_rds_testing():
+  '''テスト環境のRDS構築'''
+  tf_vars = get_testing_db_tf_vars()
+  terraform_apply('rds/testing', tf_vars)
+
+@task
 def build_vpc_production():
   '''本番環境のVPC構築'''
   terraform_apply('vpc/production/tokyo')
