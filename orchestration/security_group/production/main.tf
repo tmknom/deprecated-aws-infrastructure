@@ -13,7 +13,7 @@ variable "vpc_id" {} # 実行時に動的に環境変数定義 : TF_VAR_vpc_id
 module "ssh" {
   source = "../../terraform/module/security_group/cidr_blocks"
 
-  name = "SSH"
+  role = "SSH"
   description = "allow ssh only administrator"
   environment = "${var.environment}"
 
@@ -25,7 +25,7 @@ module "ssh" {
 module "rails" {
   source = "../../terraform/module/security_group/cidr_blocks"
 
-  name = "Rails"
+  role = "Rails"
   description = "allow http anywhere"
   environment = "${var.environment}"
 

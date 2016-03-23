@@ -1,4 +1,4 @@
-variable "name" {
+variable "role" {
 }
 
 variable "vpc_id" {
