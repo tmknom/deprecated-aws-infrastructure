@@ -1,8 +1,7 @@
 resource "aws_db_instance" "db_instance" {
-  identifier = "${lower(var.environment)}-${lower(var.rds_name)}"
+  identifier = "${lower(var.environment)}-${lower(var.engine)}"
   port = "${var.db_port}"
 
-  name = "${var.db_name}"
   username = "${var.master_user_name}"
   password = "${var.master_user_password}"
 
@@ -29,28 +28,31 @@ resource "aws_db_instance" "db_instance" {
   auto_minor_version_upgrade = "${var.auto_minor_version_upgrade}"
 
   tags {
-    Name = "${var.environment}-${var.rds_name}-DbInstance"
+    Name = "${var.environment}-${var.engine}-DbInstance"
+    Role = "${var.engine}"
     Environment = "${var.environment}"
   }
 }
 
 resource "aws_db_subnet_group" "db_subnet_group" {
-  name = "${lower(var.environment)}-${lower(var.rds_name)}-db-subnet-group"
-  description = "Db subnet group for ${var.environment} ${var.rds_name}"
+  name = "${lower(var.environment)}-${lower(var.engine)}-db-subnet-group"
+  description = "Db subnet group for ${var.environment} ${var.engine}"
   subnet_ids = ["${split(",", var.subnet_ids)}"]
   tags {
-    Name = "${var.environment}-${var.rds_name}-DbSubnetGroup"
+    Name = "${var.environment}-${var.engine}-DbSubnetGroup"
+    Role = "${var.engine}"
     Environment = "${var.environment}"
   }
 }
 
 resource "aws_db_parameter_group" "db_parameter_group" {
-  name = "${lower(var.environment)}-${lower(var.rds_name)}-${var.engine}"
+  name = "${lower(var.environment)}-${lower(var.engine)}-db-parameter-group"
   family = "${var.db_parameter_group_family}"
-  description = "${var.environment} ${var.rds_name} parameter group"
+  description = "${var.environment} ${var.engine} parameter group"
 
   tags {
-    Name = "${var.environment}-${var.rds_name}-DbParameterGroup"
+    Name = "${var.environment}-${var.engine}-DbParameterGroup"
+    Role = "${var.engine}"
     Environment = "${var.environment}"
   }
 
