@@ -1,5 +1,5 @@
 variable "environment" {
-  default = "Production"
+  default = "Testing"
 }
 
 # === ここから下は本番環境とテスト環境で同一内容 ===
