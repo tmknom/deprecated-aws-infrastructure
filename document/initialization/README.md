@@ -75,6 +75,17 @@ $ rm ~/.aws/credentials.bak
 すぐに削除しない場合も、アクセスキーは無効にしておくこと。
 
 
+### AWS外部用システムユーザ
+
+ユーザ作成後、管理コンソールからアクセスキーを払い出す。
+
+CircleCIの管理画面から、払い出したアクセスキーを設定する。
+
+```bash
+$ fab build_user_external
+```
+
+
 ## InstanceProfileの作成
 
 ```bash

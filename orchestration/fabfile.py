@@ -62,6 +62,11 @@ def build_user_cli():
   terraform_apply('iam_user/cli/administrator')
 
 @task
+def build_user_external():
+  '''AWS外部用システムユーザの構築'''
+  terraform_apply('iam_user/external/circle_ci')
+
+@task
 def build_s3_log():
   '''s3-log バケットの構築'''
   terraform_apply('s3/s3_log')
