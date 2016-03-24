@@ -50,6 +50,7 @@ export DATABASE_PASSWORD='xxxxxxxx'
 # AWSアカウント設定
 export TF_VAR_aws_account_id="$AWS_ACCOUNT_ID"
 export TF_VAR_s3_suffix=$(echo $AWS_ACCOUNT_ID_MD5 | cut -c 1-12)
+export TF_VAR_aws_default_region="$AWS_DEFAULT_REGION"
 
 # AWSユーザ設定
 export TF_VAR_aws_login_user="$AWS_LOGIN_USER"
