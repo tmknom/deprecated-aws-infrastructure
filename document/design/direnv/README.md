@@ -38,8 +38,9 @@ export AWS_CLI_USER='cli-xxxx'
 export SSH_PORT='xxxx'
 
 # DB設定
-export PRODUCTION_DATABASE_PORT='xxxx'
-export PRODUCTION_DATABASE_USER='xxxx'
+export DATABASE_PORT='xxxx'
+export DATABASE_USER='xxxx'
+export DATABASE_PASSWORD='xxxxxxxx'
 
 #
 # terraform環境変数
@@ -61,8 +62,8 @@ export TF_VAR_ssh_port="$SSH_PORT"
 export TF_VAR_administrator_ip_address="XX.XX.XX.XX/32"
 
 # DB設定
-export TF_VAR_db_port="$PRODUCTION_DATABASE_PORT"
-export TF_VAR_db_master_user_name="$PRODUCTION_DATABASE_USER"
+export TF_VAR_db_port="$DATABASE_PORT"
+export TF_VAR_db_master_user_name="$DATABASE_USER"
 export TF_VAR_db_initial_password="xxxxxxxx"
 ```
 
