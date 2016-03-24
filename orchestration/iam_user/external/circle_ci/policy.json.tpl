@@ -8,7 +8,7 @@
         "codedeploy:GetApplicationRevision"
       ],
       "Resource": [
-        "arn:aws:codedeploy:${region}:${aws_account_id}:application:${application_name}"
+        "arn:aws:codedeploy:${region}:${aws_account_id}:application:*"
       ]
     },
     {
@@ -18,7 +18,7 @@
         "codedeploy:GetDeployment"
       ],
       "Resource": [
-        "arn:aws:codedeploy:${region}:${aws_account_id}:deploymentgroup:${application_name}/*"
+        "arn:aws:codedeploy:${region}:${aws_account_id}:deploymentgroup:*/*"
       ]
     },
     {
