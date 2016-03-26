@@ -139,6 +139,12 @@ $ fab build_rds_production
 
 ## EC2の作成
 
+### テスト環境
+
+```bash
+$ fab build_ec2_testing
+```
+
 ### 本番環境
 
 ```bash
