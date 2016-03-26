@@ -4,18 +4,10 @@ import json
 from fabric.api import *
 
 ROLE_SSH = 'SSH'
+ROLE_RAILS = 'Rails'
 
-def get_production_tf_vars():
-  return get_tf_vars('Production')
-
-def get_testing_tf_vars():
-  return get_tf_vars('Testing')
-
-def get_production_db_tf_vars():
-  return get_db_tf_vars('Production')
-
-def get_testing_db_tf_vars():
-  return get_db_tf_vars('Testing')
+NETWORK_PUBLIC = 'Public'
+NETWORK_PRIVATE = 'Private'
 
 def get_tf_vars(environment):
   vpc_id = get_vpc_id(environment)
@@ -44,7 +36,7 @@ def get_created():
   return datetime.now().strftime("%s")
 
 def get_ec2_subnet_ids(environment):
-  subnet_ids = get_subnet_ids(environment, 'Public')
+  subnet_ids = get_subnet_ids(environment, NETWORK_PUBLIC)
   return subnet_ids[1]
 
 def get_latest_ami_id(role, aws_account_id):
@@ -72,7 +64,7 @@ def get_db_tf_vars(environment):
   return result
 
 def get_db_source_security_group_id(environment):
-  return get_security_group_id(environment, 'Rails')
+  return get_security_group_id(environment, ROLE_RAILS)
 
 def get_security_group_id(environment, role):
   command = "aws ec2 describe-security-groups " \
@@ -86,7 +78,7 @@ def get_security_group_id(environment, role):
   return result
 
 def get_db_subnet_ids(environment):
-  subnet_ids = get_subnet_ids(environment, 'Private')
+  subnet_ids = get_subnet_ids(environment, NETWORK_PRIVATE)
   return ','.join(subnet_ids)
 
 def get_subnet_ids(environment, network):
