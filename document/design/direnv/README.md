@@ -39,8 +39,8 @@ export SSH_PORT='xxxx'
 
 # DB設定
 export DATABASE_PORT='xxxx'
-export DATABASE_USER='xxxx'
-export DATABASE_PASSWORD='xxxxxxxx'
+export DATABASE_MASTER_USER_NAME='xxxx'
+export DATABASE_MASTER_USER_PASSWORD='xxxxxxxx'
 
 #
 # terraform環境変数
@@ -64,7 +64,8 @@ export TF_VAR_administrator_ip_address="XX.XX.XX.XX/32"
 
 # DB設定
 export TF_VAR_db_port="$DATABASE_PORT"
-export TF_VAR_db_master_user_name="$DATABASE_USER"
+export TF_VAR_db_master_user_name="$DATABASE_MASTER_USER_NAME"
+# DB設定：初期パスはtfstateファイルに平文で書かれる
 export TF_VAR_db_initial_password="xxxxxxxx"
 ```
 
