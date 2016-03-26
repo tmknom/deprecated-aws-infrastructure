@@ -28,26 +28,26 @@ def build_ec2_testing():
 @task
 def build_sg_production():
   '''本番環境のセキュリティグループ構築'''
-  tf_vars = get_production_tf_vars()
+  tf_vars = get_tf_vars(ENV_PRODUCTION)
   terraform_apply('security_group/production', tf_vars)
 
 @task
 def build_sg_testing():
   '''テスト環境のセキュリティグループ構築'''
-  tf_vars = get_testing_tf_vars()
+  tf_vars = get_tf_vars(ENV_TESTING)
   terraform_apply('security_group/testing', tf_vars)
 
 @task
 def build_rds_production():
   '''本番環境のRDS構築'''
-  tf_vars = get_production_db_tf_vars()
+  tf_vars = get_db_tf_vars(ENV_PRODUCTION)
   terraform_apply('rds/production', tf_vars)
   change_password('production-mysql')
 
 @task
 def build_rds_testing():
   '''テスト環境のRDS構築'''
-  tf_vars = get_testing_db_tf_vars()
+  tf_vars = get_db_tf_vars(ENV_TESTING)
   terraform_apply('rds/testing', tf_vars)
   change_password('testing-mysql')
 

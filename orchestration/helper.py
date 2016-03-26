@@ -5,18 +5,6 @@ from fabric.api import *
 
 ROLE_SSH = 'SSH'
 
-def get_production_tf_vars():
-  return get_tf_vars('Production')
-
-def get_testing_tf_vars():
-  return get_tf_vars('Testing')
-
-def get_production_db_tf_vars():
-  return get_db_tf_vars('Production')
-
-def get_testing_db_tf_vars():
-  return get_db_tf_vars('Testing')
-
 def get_tf_vars(environment):
   vpc_id = get_vpc_id(environment)
   availability_zones = get_availability_zones()
