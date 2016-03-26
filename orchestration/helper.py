@@ -3,6 +3,8 @@
 import json
 from fabric.api import *
 
+ROLE_SSH = 'SSH'
+
 def get_production_tf_vars():
   return get_tf_vars('Production')
 
@@ -20,6 +22,45 @@ def get_tf_vars(environment):
   availability_zones = get_availability_zones()
   result = ' TF_VAR_vpc_id=%s' % (vpc_id) \
          + ' TF_VAR_availability_zones=%s' % (availability_zones)
+  return result
+
+def get_ec2_tf_vars(environment, role):
+  aws_account_id = get_aws_account_id()
+  ami_id = get_latest_ami_id(role, aws_account_id)
+  subnet_id = get_ec2_subnet_ids(environment)
+  security_group_id = get_security_group_id(environment, role)
+  ssh_security_group_id = get_security_group_id(environment, ROLE_SSH)
+  created = get_created()
+
+  result = ' TF_VAR_ami_id=%s' % (ami_id) \
+         + ' TF_VAR_subnet_id=%s' % (subnet_id) \
+         + ' TF_VAR_security_group_id=%s' % (security_group_id) \
+         + ' TF_VAR_ssh_security_group_id=%s' % (ssh_security_group_id) \
+         + ' TF_VAR_created=%s' % (created)
+  return result
+
+def get_created():
+  from datetime import datetime
+  return datetime.now().strftime("%s")
+
+def get_ec2_subnet_ids(environment):
+  subnet_ids = get_subnet_ids(environment, 'Public')
+  return subnet_ids[1]
+
+def get_latest_ami_id(role, aws_account_id):
+  command = 'aws ec2 describe-images' \
+          + ' --filters ' \
+          + ' "Name=owner-id,Values=' + aws_account_id + '"' \
+          + ' "Name=tag:Role,Values=' + role + '"' \
+          + ' --query \'' \
+          + ' sort_by(Images[].{ ' \
+          + ' AmiId: ImageId, ' \
+          + ' Created:Tags[?Key==`Created`].Value|[0] ' \
+          + ' }, &Created) ' \
+          + ' | reverse(@) ' \
+          + ' | [0] \' ' \
+          + ' | jq -r .AmiId '
+  result = local(command, capture=True)
   return result
 
 def get_db_tf_vars(environment):
@@ -71,6 +112,14 @@ def get_vpc_id(environment):
           + " 'Name=tag-key,Values=Environment' " \
           + " 'Name=tag-value,Values=%s' " % (environment) \
           + " | jq -r '.Vpcs[0].VpcId' "
+  result = local(command, capture=True)
+  return result
+
+def get_aws_account_id():
+  command = "aws cloudtrail describe-trails" \
+          + " | jq '.trailList[] | select(.IsMultiRegionTrail == true)' " \
+          + " | jq -r '.TrailARN' " \
+          + " | cut -d: -f5 "
   result = local(command, capture=True)
   return result
 

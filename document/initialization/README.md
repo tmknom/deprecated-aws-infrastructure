@@ -137,6 +137,15 @@ $ fab build_rds_production
 ```
 
 
+## EC2の作成
+
+### 本番環境
+
+```bash
+$ fab build_ec2_production
+```
+
+
 ## CodeDeployの作成
 
 コマンド実行後、デプロイを手動で実行し、GitHubの認証を通しておく。
