@@ -3,7 +3,9 @@
 from fabric.api import *
 
 
+@task
 def change_password(db_instance_identifier):
+  '''RDSのパスワード変更'''
   db_password = __get_env('DATABASE_PASSWORD')
   __execute_modify_password(db_instance_identifier, db_password)
 

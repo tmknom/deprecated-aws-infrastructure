@@ -7,7 +7,6 @@
 from fabric.api import *
 
 from terraform.cli.cli_helper import *
-from rds.cli.password_changer import *
 from helper import *
 
 ENV_PRODUCTION = 'Production'
@@ -42,14 +41,22 @@ def build_rds_production():
   '''本番環境のRDS構築'''
   tf_vars = get_db_tf_vars(ENV_PRODUCTION)
   terraform_apply('rds/production', tf_vars)
-  change_password('production-mysql')
 
 @task
 def build_rds_testing():
   '''テスト環境のRDS構築'''
   tf_vars = get_db_tf_vars(ENV_TESTING)
   terraform_apply('rds/testing', tf_vars)
-  change_password('testing-mysql')
+
+@task
+def change_password_rds_production():
+  '''本番環境のRDSのパスワード変更'''
+  local('fab change_password:%s -f rds/cli/password_changer.py' % ('production-mysql'))
+
+@task
+def change_password_rds_testing():
+  '''テスト環境のRDSのパスワード変更'''
+  local('fab change_password:%s -f rds/cli/password_changer.py' % ('testing-mysql'))
 
 @task
 def build_vpc_production():
