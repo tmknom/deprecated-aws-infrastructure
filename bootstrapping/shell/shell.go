@@ -1,32 +1,51 @@
 package shell
 
 import (
-	"fmt"
-	"os"
-	"path/filepath"
-	"os/exec"
 	"bufio"
+	"bytes"
+	"fmt"
+	"io"
+	"os"
+	"os/exec"
+	"path/filepath"
 )
 
 type Shell struct {
 	Command exec.Cmd
 }
 
-func (s Shell) executeCommand() {
-	out, err := s.Command.StdoutPipe()
-
+func (s Shell) executeCommand() (err error) {
+	outReader, err := s.Command.StdoutPipe()
 	if err != nil {
-		fmt.Println(err)
 		return
 	}
 
+	errReader, err := s.Command.StderrPipe()
+	if err != nil {
+		return
+	}
+
+	var bufout, buferr bytes.Buffer
+	outReader2 := io.TeeReader(outReader, &bufout)
+	errReader2 := io.TeeReader(errReader, &buferr)
+
 	s.Command.Start()
-	scanner := bufio.NewScanner(out)
-	for scanner.Scan() {
-		fmt.Println(scanner.Text())
+	outScanner := bufio.NewScanner(outReader2)
+	for outScanner.Scan() {
+		fmt.Println(outScanner.Text())
+	}
+
+	errScanner := bufio.NewScanner(errReader2)
+	for errScanner.Scan() {
+		fmt.Println(errScanner.Text())
 	}
 
 	s.Command.Wait()
+	return
+}
+
+func (s Shell) cdConfigurationPath() {
+	os.Chdir(s.getProjectRoot() + "/configuration")
 }
 
 func (s Shell) cdProjectRoot() {
