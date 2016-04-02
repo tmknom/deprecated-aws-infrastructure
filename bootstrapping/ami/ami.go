@@ -20,10 +20,7 @@ func (ami Ami) Create(amiParam AmiParam) {
 	fmt.Println("Creating the AMI: " + amiParam.InstanceId)
 
 	input := ami.createImageInput(amiParam)
-	resp, _ := ami.createImage(input)
-	imageId := resp.ImageId
-
-	fmt.Println("AMI: " + *imageId)
+	ami.createImage(input)
 }
 
 func (ami Ami) createImage(input *ec2.CreateImageInput) (*ec2.CreateImageOutput, error) {

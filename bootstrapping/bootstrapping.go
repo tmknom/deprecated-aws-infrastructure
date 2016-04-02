@@ -69,6 +69,9 @@ func main() {
 	amiParam := createAmiParam(instance, amiName)
 	ami := ami.Ami{Ec2Api: *ec2Api}
 	ami.Create(amiParam)
+
+	// EC2インスタンスを削除
+	ec2Instance.Terminate(instance)
 }
 
 func createEc2InstanceParam(imageId string, ec2Api ec2Client.EC2) ec2.Ec2InstanceParam {

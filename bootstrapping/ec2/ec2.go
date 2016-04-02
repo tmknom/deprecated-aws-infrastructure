@@ -109,6 +109,24 @@ func (ei Ec2Instance) createStopInstancesInput(instance *ec2.Instance) *ec2.Stop
 	}
 }
 
+func (ei Ec2Instance) Terminate(instance *ec2.Instance) {
+	fmt.Println("Terminating the source AWS instance...")
+	input := ei.createTerminateInstancesInput(instance)
+	ei.terminateInstances(input)
+}
+
+func (ei Ec2Instance) terminateInstances(input *ec2.TerminateInstancesInput) (*ec2.TerminateInstancesOutput, error) {
+	return ei.Ec2Api.TerminateInstances(input)
+}
+
+func (ei Ec2Instance) createTerminateInstancesInput(instance *ec2.Instance) *ec2.TerminateInstancesInput {
+	return &ec2.TerminateInstancesInput{
+		InstanceIds: []*string{
+			aws.String(*(instance.InstanceId)),
+		},
+	}
+}
+
 func (ei Ec2Instance) waitUntilInstanceStopped(input *ec2.DescribeInstancesInput) {
 	ei.Ec2Api.WaitUntilInstanceStopped(input)
 }
