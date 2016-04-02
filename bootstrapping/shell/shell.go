@@ -37,7 +37,7 @@ func (s Shell) executeCommand() (err error) {
 
 	errScanner := bufio.NewScanner(errReader2)
 	for errScanner.Scan() {
-		fmt.Println(errScanner.Text())
+		fmt.Println("[stderr]" + errScanner.Text())
 	}
 
 	s.Command.Wait()
@@ -45,7 +45,7 @@ func (s Shell) executeCommand() (err error) {
 }
 
 func (s Shell) cdConfigurationPath() {
-	os.Chdir(s.getProjectRoot() + "/configuration")
+	os.Chdir("./configuration")
 }
 
 func (s Shell) cdProjectRoot() {

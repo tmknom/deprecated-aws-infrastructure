@@ -6,10 +6,10 @@ import (
 )
 
 type Itamae struct {
-	Recipe string
-	User string
-	Port string
-	Key string
+	Recipe    string
+	User      string
+	Port      string
+	Key       string
 	IpAddress string
 }
 

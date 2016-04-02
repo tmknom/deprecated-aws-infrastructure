@@ -22,8 +22,8 @@ const BASE_IMAGE_ID = "ami-f80e0596"
 const REGION = "ap-northeast-1"
 
 func main() {
-	ec2Api := createEc2Api()
 	role := "base"
+	ec2Api := createEc2Api()
 
 	// EC2インスタンスを起動
 	param := createEc2InstanceParam(BASE_IMAGE_ID, *ec2Api)
