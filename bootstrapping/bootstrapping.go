@@ -2,12 +2,14 @@ package main
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	ec2Client "github.com/aws/aws-sdk-go/service/ec2"
 
 	"./ec2"
+	"./shell"
 )
 
 const SUBNET_NAME = "Testing-Tokyo-Public-Subnet-1"
@@ -32,8 +34,15 @@ func main() {
 	}
 
 	publicIpAddress := ec2Instance.GetPublicIpAddress(instance)
-	fmt.Println(*publicIpAddress)
-	fmt.Println(*(instance.InstanceId))
+
+	// Itamaeでプロビジョニング
+	shell.Itamae{
+		Recipe : "configuration/roles/base.rb",
+		User : "ec2-user",
+		Port : "22",
+		Key : os.Getenv("SSH_INITIALIZE_KEY_PATH"),
+		IpAddress : *publicIpAddress,
+	}.Execute()
 }
 
 func createEc2InstanceParam(imageId string, ec2Api ec2Client.EC2) ec2.Ec2InstanceParam {
