@@ -58,6 +58,9 @@ func main() {
 		fmt.Println(specError.Error())
 		return
 	}
+
+	// EC2インスタンスを停止
+	ec2Instance.Stop(instance)
 }
 
 func createEc2InstanceParam(imageId string, ec2Api ec2Client.EC2) ec2.Ec2InstanceParam {
