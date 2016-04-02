@@ -1,16 +1,17 @@
 package ec2
 
 import (
+	"fmt"
+
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/ec2"
-	"github.com/aws/aws-sdk-go/service/ec2/ec2iface"
 )
 
 const BASE_INSTANCE_TYPE = "t2.micro"
 const BASE_VOLUME_SIZE = 8
 
 type Ec2Instance struct {
-	Ec2Api ec2iface.EC2API
+	Ec2Api ec2.EC2
 }
 
 type Ec2InstanceParam struct {
@@ -22,9 +23,20 @@ type Ec2InstanceParam struct {
 }
 
 func (ei Ec2Instance) Create(param Ec2InstanceParam) (*ec2.Instance, error) {
+	fmt.Println("Launching a source AWS instance...")
+
 	input := ei.createRunInstancesInput(param)
-	apiResult, err := ei.Ec2Api.RunInstances(input)
-	return apiResult.Instances[0], err
+	resp, err := ei.runInstances(input)
+	instance := resp.Instances[0]
+
+	fmt.Println("Waiting for instance to become ready...")
+	ei.wait(instance)
+
+	return instance, err
+}
+
+func (ei Ec2Instance) runInstances(input *ec2.RunInstancesInput) (*ec2.Reservation, error) {
+	return ei.Ec2Api.RunInstances(input)
 }
 
 func (ei Ec2Instance) createRunInstancesInput(param Ec2InstanceParam) *ec2.RunInstancesInput {
@@ -62,4 +74,11 @@ func (ei Ec2Instance) createRunInstancesInput(param Ec2InstanceParam) *ec2.RunIn
 	}
 
 	return runInstancesInput
+}
+
+func (ei Ec2Instance) wait(instance *ec2.Instance) {
+	waitInput := &ec2.DescribeInstanceStatusInput{
+		InstanceIds: []*string{aws.String(*(instance.InstanceId))},
+	}
+	ei.Ec2Api.WaitUntilInstanceStatusOk(waitInput)
 }

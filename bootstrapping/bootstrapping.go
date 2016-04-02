@@ -6,7 +6,6 @@ import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	ec2Client "github.com/aws/aws-sdk-go/service/ec2"
-	"github.com/aws/aws-sdk-go/service/ec2/ec2iface"
 
 	"./ec2"
 )
@@ -22,15 +21,16 @@ func main() {
 	ec2Api := createEc2Api()
 
 	// EC2インスタンスを起動
-	instance, err := createInstance(BASE_IMAGE_ID, ec2Api)
+	instance, err := createInstance(BASE_IMAGE_ID, *ec2Api)
 	if err != nil {
 		fmt.Println(err.Error())
 		return
 	}
 	fmt.Println(instance)
+	fmt.Println("end createInstance")
 }
 
-func createInstance(imageId string, ec2Api ec2iface.EC2API) (interface{}, error) {
+func createInstance(imageId string, ec2Api ec2Client.EC2) (interface{}, error) {
 	param := ec2.Ec2InstanceParam{
 		ImageId:                   imageId,
 		KeyName:                   INITIALIZE_KEY_NAME,
@@ -42,6 +42,6 @@ func createInstance(imageId string, ec2Api ec2iface.EC2API) (interface{}, error)
 	return ec2Instance.Create(param)
 }
 
-func createEc2Api() ec2iface.EC2API {
+func createEc2Api() *ec2Client.EC2 {
 	return ec2Client.New(session.New(), &aws.Config{Region: aws.String("ap-northeast-1")})
 }
