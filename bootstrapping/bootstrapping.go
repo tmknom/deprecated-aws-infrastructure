@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"time"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
@@ -11,6 +12,7 @@ import (
 	"./ami"
 	"./ec2"
 	"./shell"
+	"./tag"
 )
 
 const SUBNET_NAME = "Testing-Tokyo-Public-Subnet-1"
@@ -23,10 +25,12 @@ const REGION = "ap-northeast-1"
 
 func main() {
 	role := "base"
+	parentAmiId := BASE_IMAGE_ID
+
 	ec2Api := createEc2Api()
 
 	// EC2インスタンスを起動
-	param := createEc2InstanceParam(BASE_IMAGE_ID, *ec2Api)
+	param := createEc2InstanceParam(parentAmiId, *ec2Api)
 	ec2Instance := ec2.Ec2Instance{Ec2Api: *ec2Api}
 	instance, err := ec2Instance.Create(param)
 
@@ -68,7 +72,20 @@ func main() {
 	amiName := role
 	amiParam := createAmiParam(instance, amiName)
 	ami := ami.Ami{Ec2Api: *ec2Api}
-	ami.Create(amiParam)
+	imageId := ami.Create(amiParam)
+	fmt.Println(*imageId)
+
+	// AMIのタグの設定
+	currentTime := time.Now()
+	amiTagParam := tag.AmiTagParam{
+		AmiId:       *imageId,
+		Role:        role,
+		CurrentTime: currentTime,
+		ParentAmiId: parentAmiId,
+	}
+
+	tag := tag.Tag{Ec2Api: *ec2Api}
+	tag.Create(amiTagParam)
 
 	// EC2インスタンスを削除
 	ec2Instance.Terminate(instance)

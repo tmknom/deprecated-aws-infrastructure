@@ -16,11 +16,12 @@ type AmiParam struct {
 	Name       string
 }
 
-func (ami Ami) Create(amiParam AmiParam) {
+func (ami Ami) Create(amiParam AmiParam) *string {
 	fmt.Println("Creating the AMI: " + amiParam.InstanceId)
 
 	input := ami.createImageInput(amiParam)
-	ami.createImage(input)
+	resp, _ := ami.createImage(input)
+	return resp.ImageId
 }
 
 func (ami Ami) createImage(input *ec2.CreateImageInput) (*ec2.CreateImageOutput, error) {
