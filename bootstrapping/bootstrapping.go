@@ -8,6 +8,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws/session"
 	ec2Client "github.com/aws/aws-sdk-go/service/ec2"
 
+	"./ami"
 	"./ec2"
 	"./shell"
 )
@@ -22,6 +23,7 @@ const REGION = "ap-northeast-1"
 
 func main() {
 	ec2Api := createEc2Api()
+	role := "base"
 
 	// EC2インスタンスを起動
 	param := createEc2InstanceParam(BASE_IMAGE_ID, *ec2Api)
@@ -46,7 +48,7 @@ func main() {
 
 	// Serverspecでテスト
 	specError := shell.Serverspec{
-		Role:         "base",
+		Role:         role,
 		User:         os.Getenv("SSH_USER_NAME"),
 		SudoPassword: os.Getenv("SUDO_PASSWORD"),
 		Port:         os.Getenv("SSH_PORT"),
@@ -61,6 +63,12 @@ func main() {
 
 	// EC2インスタンスを停止
 	ec2Instance.Stop(instance)
+
+	// AMIの作成
+	amiName := role
+	amiParam := createAmiParam(instance, amiName)
+	ami := ami.Ami{Ec2Api: *ec2Api}
+	ami.Create(amiParam)
 }
 
 func createEc2InstanceParam(imageId string, ec2Api ec2Client.EC2) ec2.Ec2InstanceParam {
@@ -70,6 +78,13 @@ func createEc2InstanceParam(imageId string, ec2Api ec2Client.EC2) ec2.Ec2Instanc
 		SubnetId:                  ec2.Subnet{Ec2Api: ec2Api, Name: SUBNET_NAME}.GetSubnetId(),
 		SshSecurityGroupId:        ec2.SecurityGroup{Ec2Api: ec2Api, Name: SSH_SECURITY_GROUP_NAME}.GetSecurityGroupId(),
 		InitializeSecurityGroupId: ec2.SecurityGroup{Ec2Api: ec2Api, Name: INITIALIZE_SECURITY_GROUP_NAME}.GetSecurityGroupId(),
+	}
+}
+
+func createAmiParam(instance *ec2Client.Instance, name string) ami.AmiParam {
+	return ami.AmiParam{
+		InstanceId: *(instance.InstanceId),
+		Name:       name,
 	}
 }
 
