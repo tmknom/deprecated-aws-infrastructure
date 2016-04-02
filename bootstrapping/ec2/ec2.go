@@ -82,3 +82,17 @@ func (ei Ec2Instance) wait(instance *ec2.Instance) {
 	}
 	ei.Ec2Api.WaitUntilInstanceStatusOk(waitInput)
 }
+
+func (ei Ec2Instance) GetPublicIpAddress(instance *ec2.Instance) *string {
+	input := &ec2.DescribeInstancesInput{
+		InstanceIds: []*string{
+			aws.String(*(instance.InstanceId)),
+		},
+	}
+	resp, _ := ei.describeInstances(input)
+	return resp.Reservations[0].Instances[0].PublicIpAddress
+}
+
+func (ei Ec2Instance) describeInstances(input *ec2.DescribeInstancesInput) (*ec2.DescribeInstancesOutput, error) {
+	return ei.Ec2Api.DescribeInstances(input)
+}
