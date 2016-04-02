@@ -37,12 +37,27 @@ func main() {
 
 	// Itamaeでプロビジョニング
 	shell.Itamae{
-		Recipe : "configuration/roles/base.rb",
-		User : "ec2-user",
-		Port : "22",
-		Key : os.Getenv("SSH_INITIALIZE_KEY_PATH"),
-		IpAddress : *publicIpAddress,
+		Recipe:    "configuration/roles/base.rb",
+		User:      "ec2-user",
+		Port:      "22",
+		Key:       os.Getenv("SSH_INITIALIZE_KEY_PATH"),
+		IpAddress: *publicIpAddress,
 	}.Execute()
+
+	// Serverspecでテスト
+	specError := shell.Serverspec{
+		Role:         "base",
+		User:         os.Getenv("SSH_USER_NAME"),
+		SudoPassword: os.Getenv("SUDO_PASSWORD"),
+		Port:         os.Getenv("SSH_PORT"),
+		Key:          os.Getenv("SSH_KEY_PATH"),
+		IpAddress:    *publicIpAddress,
+	}.Execute()
+
+	if specError != nil {
+		fmt.Println(specError.Error())
+		return
+	}
 }
 
 func createEc2InstanceParam(imageId string, ec2Api ec2Client.EC2) ec2.Ec2InstanceParam {
