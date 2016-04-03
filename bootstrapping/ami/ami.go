@@ -34,3 +34,21 @@ func (ami Ami) createImageInput(param AmiParam) *ec2.CreateImageInput {
 		Name:       aws.String(param.Name),
 	}
 }
+
+func (ami Ami) GetSnapshotId(imageId string) *string {
+	input := ami.createDescribeImagesInput(imageId)
+	resp, _ := ami.describeImages(input)
+	return resp.Images[0].BlockDeviceMappings[0].Ebs.SnapshotId
+}
+
+func (ami Ami) describeImages(input *ec2.DescribeImagesInput) (*ec2.DescribeImagesOutput, error) {
+	return ami.Ec2Api.DescribeImages(input)
+}
+
+func (ami Ami) createDescribeImagesInput(imageId string) *ec2.DescribeImagesInput {
+	return &ec2.DescribeImagesInput{
+		ImageIds: []*string{
+			aws.String(imageId),
+		},
+	}
+}
