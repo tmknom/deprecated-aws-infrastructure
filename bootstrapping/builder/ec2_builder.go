@@ -38,13 +38,13 @@ func (eb Ec2Builder) getKeyName() string {
 }
 
 func (eb Ec2Builder) getSubnetId() string {
-	return ec2.Subnet{Ec2Api: *eb.Ec2Service, Name: SUBNET_NAME}.GetSubnetId()
+	return ec2.Subnet{Ec2Api: *eb.Ec2Service}.GetSubnetId(SUBNET_NAME)
 }
 
 func (eb Ec2Builder) getSshSecurityGroupId() string {
-	return ec2.SecurityGroup{Ec2Api: *eb.Ec2Service, Name: SSH_SECURITY_GROUP_NAME}.GetSecurityGroupId()
+	return ec2.SecurityGroup{Ec2Api: *eb.Ec2Service}.GetSecurityGroupId(SSH_SECURITY_GROUP_NAME)
 }
 
 func (eb Ec2Builder) getInitializeSecurityGroupId() string {
-	return ec2.SecurityGroup{Ec2Api: *eb.Ec2Service, Name: INITIALIZE_SECURITY_GROUP_NAME}.GetSecurityGroupId()
+	return ec2.SecurityGroup{Ec2Api: *eb.Ec2Service}.GetSecurityGroupId(INITIALIZE_SECURITY_GROUP_NAME)
 }

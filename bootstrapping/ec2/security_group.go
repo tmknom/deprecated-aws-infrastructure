@@ -7,11 +7,10 @@ import (
 
 type SecurityGroup struct {
 	Ec2Api ec2.EC2
-	Name   string
 }
 
-func (sg SecurityGroup) GetSecurityGroupId() string {
-	input := sg.createSecurityGroupInput()
+func (sg SecurityGroup) GetSecurityGroupId(name string) string {
+	input := sg.createSecurityGroupInput(name)
 	resp := sg.describeSecurityGroups(input)
 	return *(resp.SecurityGroups[0].GroupId)
 }
@@ -21,13 +20,13 @@ func (sg SecurityGroup) describeSecurityGroups(input *ec2.DescribeSecurityGroups
 	return resp
 }
 
-func (sg SecurityGroup) createSecurityGroupInput() *ec2.DescribeSecurityGroupsInput {
+func (sg SecurityGroup) createSecurityGroupInput(name string) *ec2.DescribeSecurityGroupsInput {
 	return &ec2.DescribeSecurityGroupsInput{
 		Filters: []*ec2.Filter{
 			{
 				Name: aws.String("tag:Name"),
 				Values: []*string{
-					aws.String(sg.Name),
+					aws.String(name),
 				},
 			},
 		},
