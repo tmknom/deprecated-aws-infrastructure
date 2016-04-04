@@ -5,7 +5,7 @@ import (
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
-	ec2Client "github.com/aws/aws-sdk-go/service/ec2"
+	svc "github.com/aws/aws-sdk-go/service/ec2"
 )
 
 const REGION = "ap-northeast-1"
@@ -16,10 +16,10 @@ type Builder struct {
 
 func (b Builder) Build(parentAmiId string) {
 	// Builderの作成
-	ec2Api := b.createEc2Api()
-	amiBuilder := AmiBuilder{Ec2Api: *ec2Api}
-	ec2Builder := Ec2Builder{Ec2Api: *ec2Api}
-	provisioner := Provisioner{Ec2Api: *ec2Api}
+	ec2Service := b.createEc2Service()
+	amiBuilder := AmiBuilder{Ec2Service: ec2Service}
+	ec2Builder := Ec2Builder{Ec2Service: ec2Service}
+	provisioner := Provisioner{}
 
 	// EC2インスタンスを起動
 	instanceId, publicIpAddress, err := ec2Builder.Build(parentAmiId)
@@ -46,6 +46,6 @@ func (b Builder) Build(parentAmiId string) {
 	ec2Builder.Destroy(instanceId)
 }
 
-func (b Builder) createEc2Api() *ec2Client.EC2 {
-	return ec2Client.New(session.New(), &aws.Config{Region: aws.String(REGION)})
+func (b Builder) createEc2Service() *svc.EC2 {
+	return svc.New(session.New(), &aws.Config{Region: aws.String(REGION)})
 }

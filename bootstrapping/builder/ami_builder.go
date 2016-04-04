@@ -3,7 +3,7 @@ package builder
 import (
 	"time"
 
-	ec2Client "github.com/aws/aws-sdk-go/service/ec2"
+	svc "github.com/aws/aws-sdk-go/service/ec2"
 
 	"../ami"
 	"../ec2"
@@ -11,25 +11,25 @@ import (
 )
 
 type AmiBuilder struct {
-	Ec2Api ec2Client.EC2
+	Ec2Service *svc.EC2
 }
 
 func (ab AmiBuilder) Build(instanceId string, role string, parentAmiId string) {
 	// EC2インスタンスを停止
-	ec2.Ec2Instance{Ec2Api: ab.Ec2Api}.Stop(instanceId)
+	ec2.Ec2Instance{Ec2Api: *ab.Ec2Service}.Stop(instanceId)
 
 	// AMIの作成
 	amiParam := ami.AmiParam{
 		InstanceId: instanceId,
 		Name:       role,
 	}
-	ami := ami.Ami{Ec2Api: ab.Ec2Api}
+	ami := ami.Ami{Ec2Api: *ab.Ec2Service}
 	imageId := ami.Create(amiParam)
 
 	// タグの設定の準備
 	snapshotId := ami.GetSnapshotId(*imageId)
 	currentTime := time.Now()
-	tagClient := tag.Tag{Ec2Api: ab.Ec2Api}
+	tagClient := tag.Tag{Ec2Api: *ab.Ec2Service}
 
 	// AMIのタグの設定
 	amiTagParam := tag.AmiTagParam{

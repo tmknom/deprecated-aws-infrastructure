@@ -1,16 +1,12 @@
 package builder
 
 import (
-	ec2Client "github.com/aws/aws-sdk-go/service/ec2"
-
 	"../shell"
 )
 
 const EC2_USER = "ec2-user"
 
-type Provisioner struct {
-	Ec2Api ec2Client.EC2
-}
+type Provisioner struct{}
 
 func (p Provisioner) Provision(config Config, publicIpAddress string) error {
 	recipe := "configuration/roles/" + config.Role + ".rb"
