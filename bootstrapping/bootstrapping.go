@@ -75,17 +75,26 @@ func main() {
 	imageId := ami.Create(amiParam)
 	fmt.Println(*imageId)
 
-	// AMIのタグの設定
+	// タグの設定の準備
+	snapshotId := ami.GetSnapshotId(*imageId)
 	currentTime := time.Now()
+	tagClient := tag.Tag{Ec2Api: *ec2Api}
+
+	// AMIのタグの設定
 	amiTagParam := tag.AmiTagParam{
 		AmiId:       *imageId,
 		Role:        role,
 		CurrentTime: currentTime,
 		ParentAmiId: parentAmiId,
 	}
+	tagClient.CreateAmiTag(amiTagParam)
 
-	tag := tag.Tag{Ec2Api: *ec2Api}
-	tag.Create(amiTagParam)
+	// スナップショットのタグの設定
+	snapshotTagParam := tag.SnapshotTagParam{
+		SnapshotId:  *snapshotId,
+		AmiTagParam: amiTagParam,
+	}
+	tagClient.CreateSnapshotTag(snapshotTagParam)
 
 	// EC2インスタンスを削除
 	ec2Instance.Terminate(instance)
