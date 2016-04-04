@@ -3,16 +3,15 @@ package main
 import (
 	"fmt"
 	"os"
-	"time"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	ec2Client "github.com/aws/aws-sdk-go/service/ec2"
 
 	"./ami"
+	"./builder"
 	"./ec2"
 	"./shell"
-	"./tag"
 )
 
 const SUBNET_NAME = "Testing-Tokyo-Public-Subnet-1"
@@ -69,32 +68,11 @@ func main() {
 	ec2Instance.Stop(instance)
 
 	// AMIの作成
-	amiName := role
-	amiParam := createAmiParam(instance, amiName)
-	ami := ami.Ami{Ec2Api: *ec2Api}
-	imageId := ami.Create(amiParam)
-	fmt.Println(*imageId)
-
-	// タグの設定の準備
-	snapshotId := ami.GetSnapshotId(*imageId)
-	currentTime := time.Now()
-	tagClient := tag.Tag{Ec2Api: *ec2Api}
-
-	// AMIのタグの設定
-	amiTagParam := tag.AmiTagParam{
-		AmiId:       *imageId,
-		Role:        role,
-		CurrentTime: currentTime,
-		ParentAmiId: parentAmiId,
-	}
-	tagClient.CreateAmiTag(amiTagParam)
-
-	// スナップショットのタグの設定
-	snapshotTagParam := tag.SnapshotTagParam{
-		SnapshotId:  *snapshotId,
-		AmiTagParam: amiTagParam,
-	}
-	tagClient.CreateSnapshotTag(snapshotTagParam)
+	builder.AmiBuilder{Ec2Api: *ec2Api}.Build(
+		*(instance.InstanceId),
+		role,
+		parentAmiId,
+	)
 
 	// EC2インスタンスを削除
 	ec2Instance.Terminate(instance)
