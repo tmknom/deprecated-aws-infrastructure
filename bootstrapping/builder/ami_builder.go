@@ -3,17 +3,21 @@ package builder
 import (
 	"time"
 
-	"github.com/aws/aws-sdk-go/service/ec2"
+	ec2Client "github.com/aws/aws-sdk-go/service/ec2"
 
 	"../ami"
+	"../ec2"
 	"../tag"
 )
 
 type AmiBuilder struct {
-	Ec2Api ec2.EC2
+	Ec2Api ec2Client.EC2
 }
 
 func (ab AmiBuilder) Build(instanceId string, role string, parentAmiId string) {
+	// EC2インスタンスを停止
+	ec2.Ec2Instance{Ec2Api: ab.Ec2Api}.Stop(instanceId)
+
 	// AMIの作成
 	amiParam := ami.AmiParam{
 		InstanceId: instanceId,

@@ -9,21 +9,25 @@ import (
 	ec2Client "github.com/aws/aws-sdk-go/service/ec2"
 
 	"./builder"
-	"./ec2"
-	"./shell"
 )
 
 const BASE_IMAGE_ID = "ami-f80e0596"
 const REGION = "ap-northeast-1"
 
 func main() {
-	role := "base"
 	parentAmiId := BASE_IMAGE_ID
+	provisioningConfig := builder.ProvisioningConfig{
+		Role:           "base",
+		Key:            os.Getenv("SSH_INITIALIZE_KEY_PATH"),
+		ItamaePort:     "22",
+		ServerspecPort: os.Getenv("SSH_PORT"),
+	}
 
 	// Builderの作成
 	ec2Api := createEc2Api()
-	ec2Builder := builder.Ec2Builder{Ec2Api: *ec2Api}
 	amiBuilder := builder.AmiBuilder{Ec2Api: *ec2Api}
+	ec2Builder := builder.Ec2Builder{Ec2Api: *ec2Api}
+	provisioner := builder.Provisioner{Ec2Api: *ec2Api}
 
 	// EC2インスタンスを起動
 	instanceId, publicIpAddress, err := ec2Builder.Build(parentAmiId)
@@ -32,37 +36,17 @@ func main() {
 		return
 	}
 
-	// Itamaeでプロビジョニング
-	shell.Itamae{
-		Recipe:    "configuration/roles/base.rb",
-		User:      "ec2-user",
-		Port:      "22",
-		Key:       os.Getenv("SSH_INITIALIZE_KEY_PATH"),
-		IpAddress: publicIpAddress,
-	}.Execute()
-
-	// Serverspecでテスト
-	specError := shell.Serverspec{
-		Role:         role,
-		User:         os.Getenv("SSH_USER_NAME"),
-		SudoPassword: os.Getenv("SUDO_PASSWORD"),
-		Port:         os.Getenv("SSH_PORT"),
-		Key:          os.Getenv("SSH_KEY_PATH"),
-		IpAddress:    publicIpAddress,
-	}.Execute()
-
-	if specError != nil {
-		fmt.Println(specError.Error())
-		return
+	provisionError := provisioner.Provision(provisioningConfig, publicIpAddress)
+	if provisionError != nil {
+		fmt.Println(provisionError.Error())
+		//ec2Builder.Destroy(instanceId)
+		//return
 	}
-
-	// EC2インスタンスを停止
-	ec2.Ec2Instance{Ec2Api: *ec2Api}.Stop(instanceId)
 
 	// AMIの作成
 	amiBuilder.Build(
 		instanceId,
-		role,
+		provisioningConfig.Role,
 		parentAmiId,
 	)
 
