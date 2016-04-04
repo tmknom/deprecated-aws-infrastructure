@@ -13,11 +13,6 @@ import (
 	"./shell"
 )
 
-const SUBNET_NAME = "Testing-Tokyo-Public-Subnet-1"
-const SSH_SECURITY_GROUP_NAME = "Testing-SSH-SecurityGroup"
-const INITIALIZE_SECURITY_GROUP_NAME = "Testing-Initialize-SecurityGroup"
-
-const INITIALIZE_KEY_NAME = "initialize"
 const BASE_IMAGE_ID = "ami-f80e0596"
 const REGION = "ap-northeast-1"
 
@@ -25,13 +20,13 @@ func main() {
 	role := "base"
 	parentAmiId := BASE_IMAGE_ID
 
+	// Builderの作成
 	ec2Api := createEc2Api()
+	ec2Builder := builder.Ec2Builder{Ec2Api: *ec2Api}
+	amiBuilder := builder.AmiBuilder{Ec2Api: *ec2Api}
 
 	// EC2インスタンスを起動
-	param := createEc2InstanceParam(parentAmiId, *ec2Api)
-	ec2Instance := ec2.Ec2Instance{Ec2Api: *ec2Api}
-	instanceId, publicIpAddress, err := ec2Instance.Create(param)
-
+	instanceId, publicIpAddress, err := ec2Builder.Build(parentAmiId)
 	if err != nil {
 		fmt.Println(err.Error())
 		return
@@ -62,27 +57,17 @@ func main() {
 	}
 
 	// EC2インスタンスを停止
-	ec2Instance.Stop(instanceId)
+	ec2.Ec2Instance{Ec2Api: *ec2Api}.Stop(instanceId)
 
 	// AMIの作成
-	builder.AmiBuilder{Ec2Api: *ec2Api}.Build(
+	amiBuilder.Build(
 		instanceId,
 		role,
 		parentAmiId,
 	)
 
 	// EC2インスタンスを削除
-	ec2Instance.Terminate(instanceId)
-}
-
-func createEc2InstanceParam(imageId string, ec2Api ec2Client.EC2) ec2.Ec2InstanceParam {
-	return ec2.Ec2InstanceParam{
-		ImageId:                   imageId,
-		KeyName:                   INITIALIZE_KEY_NAME,
-		SubnetId:                  ec2.Subnet{Ec2Api: ec2Api, Name: SUBNET_NAME}.GetSubnetId(),
-		SshSecurityGroupId:        ec2.SecurityGroup{Ec2Api: ec2Api, Name: SSH_SECURITY_GROUP_NAME}.GetSecurityGroupId(),
-		InitializeSecurityGroupId: ec2.SecurityGroup{Ec2Api: ec2Api, Name: INITIALIZE_SECURITY_GROUP_NAME}.GetSecurityGroupId(),
-	}
+	ec2Builder.Destroy(instanceId)
 }
 
 func createEc2Api() *ec2Client.EC2 {
