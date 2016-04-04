@@ -22,7 +22,7 @@ type Ec2InstanceParam struct {
 	InitializeSecurityGroupId string
 }
 
-func (ei Ec2Instance) Create(param Ec2InstanceParam) (*ec2.Instance, error) {
+func (ei Ec2Instance) Create(param Ec2InstanceParam) (instanceId string, publicIpAddress string, err error) {
 	fmt.Println("Launching a source AWS instance...")
 
 	input := ei.createRunInstancesInput(param)
@@ -33,7 +33,10 @@ func (ei Ec2Instance) Create(param Ec2InstanceParam) (*ec2.Instance, error) {
 	waitInput := ei.createDescribeInstanceStatusInput(instance)
 	ei.WaitUntilInstanceStatusOk(waitInput)
 
-	return instance, err
+	instanceId = *(instance.InstanceId)
+	publicIpAddress = *(ei.getPublicIpAddress(instanceId))
+
+	return instanceId, publicIpAddress, err
 }
 
 func (ei Ec2Instance) runInstances(input *ec2.RunInstancesInput) (*ec2.Reservation, error) {
@@ -87,13 +90,13 @@ func (ei Ec2Instance) createDescribeInstanceStatusInput(instance *ec2.Instance) 
 	}
 }
 
-func (ei Ec2Instance) Stop(instance *ec2.Instance) {
+func (ei Ec2Instance) Stop(instanceId string) {
 	fmt.Println("Stopping the source instance...")
-	input := ei.createStopInstancesInput(instance)
+	input := ei.createStopInstancesInput(instanceId)
 	ei.stopInstances(input)
 
 	fmt.Println("Waiting for the instance to stop...")
-	waitInput := ei.createDescribeInstancesInput(instance)
+	waitInput := ei.createDescribeInstancesInput(instanceId)
 	ei.waitUntilInstanceStopped(waitInput)
 }
 
@@ -101,17 +104,17 @@ func (ei Ec2Instance) stopInstances(input *ec2.StopInstancesInput) (*ec2.StopIns
 	return ei.Ec2Api.StopInstances(input)
 }
 
-func (ei Ec2Instance) createStopInstancesInput(instance *ec2.Instance) *ec2.StopInstancesInput {
+func (ei Ec2Instance) createStopInstancesInput(instanceId string) *ec2.StopInstancesInput {
 	return &ec2.StopInstancesInput{
 		InstanceIds: []*string{
-			aws.String(*(instance.InstanceId)),
+			aws.String(instanceId),
 		},
 	}
 }
 
-func (ei Ec2Instance) Terminate(instance *ec2.Instance) {
+func (ei Ec2Instance) Terminate(instanceId string) {
 	fmt.Println("Terminating the source AWS instance...")
-	input := ei.createTerminateInstancesInput(instance)
+	input := ei.createTerminateInstancesInput(instanceId)
 	ei.terminateInstances(input)
 }
 
@@ -119,10 +122,10 @@ func (ei Ec2Instance) terminateInstances(input *ec2.TerminateInstancesInput) (*e
 	return ei.Ec2Api.TerminateInstances(input)
 }
 
-func (ei Ec2Instance) createTerminateInstancesInput(instance *ec2.Instance) *ec2.TerminateInstancesInput {
+func (ei Ec2Instance) createTerminateInstancesInput(instanceId string) *ec2.TerminateInstancesInput {
 	return &ec2.TerminateInstancesInput{
 		InstanceIds: []*string{
-			aws.String(*(instance.InstanceId)),
+			aws.String(instanceId),
 		},
 	}
 }
@@ -131,10 +134,10 @@ func (ei Ec2Instance) waitUntilInstanceStopped(input *ec2.DescribeInstancesInput
 	ei.Ec2Api.WaitUntilInstanceStopped(input)
 }
 
-func (ei Ec2Instance) GetPublicIpAddress(instance *ec2.Instance) *string {
+func (ei Ec2Instance) getPublicIpAddress(instanceId string) *string {
 	input := &ec2.DescribeInstancesInput{
 		InstanceIds: []*string{
-			aws.String(*(instance.InstanceId)),
+			aws.String(instanceId),
 		},
 	}
 	resp, _ := ei.describeInstances(input)
@@ -145,8 +148,8 @@ func (ei Ec2Instance) describeInstances(input *ec2.DescribeInstancesInput) (*ec2
 	return ei.Ec2Api.DescribeInstances(input)
 }
 
-func (ei Ec2Instance) createDescribeInstancesInput(instance *ec2.Instance) *ec2.DescribeInstancesInput {
+func (ei Ec2Instance) createDescribeInstancesInput(instanceId string) *ec2.DescribeInstancesInput {
 	return &ec2.DescribeInstancesInput{
-		InstanceIds: []*string{aws.String(*(instance.InstanceId))},
+		InstanceIds: []*string{aws.String(instanceId)},
 	}
 }

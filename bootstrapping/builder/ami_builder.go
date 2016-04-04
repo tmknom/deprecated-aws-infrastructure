@@ -3,14 +3,14 @@ package builder
 import (
 	"time"
 
-	ec2Client "github.com/aws/aws-sdk-go/service/ec2"
+	"github.com/aws/aws-sdk-go/service/ec2"
 
 	"../ami"
 	"../tag"
 )
 
 type AmiBuilder struct {
-	Ec2Api ec2Client.EC2
+	Ec2Api ec2.EC2
 }
 
 func (ab AmiBuilder) Build(instanceId string, role string, parentAmiId string) {

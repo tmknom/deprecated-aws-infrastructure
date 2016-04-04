@@ -8,7 +8,6 @@ import (
 	"github.com/aws/aws-sdk-go/aws/session"
 	ec2Client "github.com/aws/aws-sdk-go/service/ec2"
 
-	"./ami"
 	"./builder"
 	"./ec2"
 	"./shell"
@@ -31,14 +30,12 @@ func main() {
 	// EC2インスタンスを起動
 	param := createEc2InstanceParam(parentAmiId, *ec2Api)
 	ec2Instance := ec2.Ec2Instance{Ec2Api: *ec2Api}
-	instance, err := ec2Instance.Create(param)
+	instanceId, publicIpAddress, err := ec2Instance.Create(param)
 
 	if err != nil {
 		fmt.Println(err.Error())
 		return
 	}
-
-	publicIpAddress := ec2Instance.GetPublicIpAddress(instance)
 
 	// Itamaeでプロビジョニング
 	shell.Itamae{
@@ -46,7 +43,7 @@ func main() {
 		User:      "ec2-user",
 		Port:      "22",
 		Key:       os.Getenv("SSH_INITIALIZE_KEY_PATH"),
-		IpAddress: *publicIpAddress,
+		IpAddress: publicIpAddress,
 	}.Execute()
 
 	// Serverspecでテスト
@@ -56,7 +53,7 @@ func main() {
 		SudoPassword: os.Getenv("SUDO_PASSWORD"),
 		Port:         os.Getenv("SSH_PORT"),
 		Key:          os.Getenv("SSH_KEY_PATH"),
-		IpAddress:    *publicIpAddress,
+		IpAddress:    publicIpAddress,
 	}.Execute()
 
 	if specError != nil {
@@ -65,17 +62,17 @@ func main() {
 	}
 
 	// EC2インスタンスを停止
-	ec2Instance.Stop(instance)
+	ec2Instance.Stop(instanceId)
 
 	// AMIの作成
 	builder.AmiBuilder{Ec2Api: *ec2Api}.Build(
-		*(instance.InstanceId),
+		instanceId,
 		role,
 		parentAmiId,
 	)
 
 	// EC2インスタンスを削除
-	ec2Instance.Terminate(instance)
+	ec2Instance.Terminate(instanceId)
 }
 
 func createEc2InstanceParam(imageId string, ec2Api ec2Client.EC2) ec2.Ec2InstanceParam {
@@ -85,13 +82,6 @@ func createEc2InstanceParam(imageId string, ec2Api ec2Client.EC2) ec2.Ec2Instanc
 		SubnetId:                  ec2.Subnet{Ec2Api: ec2Api, Name: SUBNET_NAME}.GetSubnetId(),
 		SshSecurityGroupId:        ec2.SecurityGroup{Ec2Api: ec2Api, Name: SSH_SECURITY_GROUP_NAME}.GetSecurityGroupId(),
 		InitializeSecurityGroupId: ec2.SecurityGroup{Ec2Api: ec2Api, Name: INITIALIZE_SECURITY_GROUP_NAME}.GetSecurityGroupId(),
-	}
-}
-
-func createAmiParam(instance *ec2Client.Instance, name string) ami.AmiParam {
-	return ami.AmiParam{
-		InstanceId: *(instance.InstanceId),
-		Name:       name,
 	}
 }
 
