@@ -21,7 +21,13 @@ func (ami Ami) Create(amiParam AmiParam) *string {
 
 	input := ami.createImageInput(amiParam)
 	resp, _ := ami.createImage(input)
-	return resp.ImageId
+	imageId := resp.ImageId
+
+	fmt.Println("Waiting for AMI to become available...")
+	waitInput := ami.createDescribeImagesInput(*imageId)
+	ami.waitUntilImageAvailable(waitInput)
+
+	return imageId
 }
 
 func (ami Ami) createImage(input *ec2.CreateImageInput) (*ec2.CreateImageOutput, error) {
@@ -51,4 +57,8 @@ func (ami Ami) createDescribeImagesInput(imageId string) *ec2.DescribeImagesInpu
 			aws.String(imageId),
 		},
 	}
+}
+
+func (ami Ami) waitUntilImageAvailable(input *ec2.DescribeImagesInput) {
+	ami.Ec2Api.WaitUntilImageAvailable(input)
 }
