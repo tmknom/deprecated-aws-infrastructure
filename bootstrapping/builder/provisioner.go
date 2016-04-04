@@ -12,32 +12,25 @@ type Provisioner struct {
 	Ec2Api ec2Client.EC2
 }
 
-type ProvisioningConfig struct {
-	Role           string
-	Key            string
-	ItamaePort     string
-	ServerspecPort string
-}
-
-func (p Provisioner) Provision(provisioningConfig ProvisioningConfig, publicIpAddress string) error {
-	recipe := "configuration/roles/" + provisioningConfig.Role + ".rb"
+func (p Provisioner) Provision(config Config, publicIpAddress string) error {
+	recipe := "configuration/roles/" + config.Role + ".rb"
 
 	// Itamaeでプロビジョニング
 	shell.Itamae{
 		Recipe:    recipe,
 		User:      EC2_USER,
-		Port:      provisioningConfig.ItamaePort,
-		Key:       provisioningConfig.Key,
+		Port:      config.ItamaePort,
+		Key:       config.Key,
 		IpAddress: publicIpAddress,
 	}.Execute()
 
 	// Serverspecでテスト
 	err := shell.Serverspec{
-		Role:         provisioningConfig.Role,
+		Role:         config.Role,
 		User:         EC2_USER,
 		SudoPassword: "",
-		Port:         provisioningConfig.ServerspecPort,
-		Key:          provisioningConfig.Key,
+		Port:         config.ServerspecPort,
+		Key:          config.Key,
 		IpAddress:    publicIpAddress,
 	}.Execute()
 
