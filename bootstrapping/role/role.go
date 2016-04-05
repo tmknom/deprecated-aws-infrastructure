@@ -1,5 +1,9 @@
 package role
 
+import (
+	"strings"
+)
+
 type Role string
 
 const (
@@ -9,4 +13,18 @@ const (
 
 func (r Role) String() string {
 	return string(r)
+}
+
+func (r Role) ToTag() string {
+	role := string(r)
+	return strings.ToUpper(role[:1]) + role[1:]
+}
+
+func (r Role) Parent() Role {
+	switch r {
+	case RAILS:
+		return BASE
+	default:
+		panic("No such parent role : " + r.String())
+	}
 }

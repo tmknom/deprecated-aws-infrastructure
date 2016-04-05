@@ -11,8 +11,19 @@ import (
 	"../tag"
 )
 
+const BASE_IMAGE_ID = "ami-f80e0596"
+
 type AmiBuilder struct {
 	Ec2Service *svc.EC2
+}
+
+func (ab AmiBuilder) SearchParent(role Role) string {
+	if role == BASE {
+		return BASE_IMAGE_ID
+	}
+
+	ami := ami.Ami{Ec2Api: *ab.Ec2Service}
+	return *ami.GetImageId(role.Parent().ToTag())
 }
 
 func (ab AmiBuilder) Build(instanceId ec2.InstanceId, role Role, parentAmiId string) {

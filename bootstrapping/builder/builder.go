@@ -18,12 +18,15 @@ type Builder struct {
 	Ssh  Ssh
 }
 
-func (b Builder) Build(parentAmiId string) {
+func (b Builder) Build() {
 	// Builderの作成
 	ec2Service := b.createEc2Service()
 	amiBuilder := AmiBuilder{Ec2Service: ec2Service}
 	ec2Builder := Ec2Builder{Ec2Service: ec2Service}
 	provisioner := Provisioner{}
+
+	// 事前準備
+	parentAmiId := amiBuilder.SearchParent(b.Role)
 
 	// EC2インスタンスを起動
 	instanceId, publicIpAddress, err := ec2Builder.Build(parentAmiId)
@@ -32,6 +35,7 @@ func (b Builder) Build(parentAmiId string) {
 		return
 	}
 
+	// プロビジョニング実行
 	provisionError := provisioner.Provision(b.Role, b.Ssh, publicIpAddress)
 	if provisionError != nil {
 		fmt.Println(provisionError.Error())

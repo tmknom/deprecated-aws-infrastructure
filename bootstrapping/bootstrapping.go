@@ -9,11 +9,7 @@ import (
 	. "./ssh"
 )
 
-const BASE_IMAGE_ID = "ami-f80e0596"
-
 func main() {
-	parentAmiId := BASE_IMAGE_ID
-
 	switch Role(os.Args[1]) {
 	case BASE:
 		Builder{
@@ -23,7 +19,7 @@ func main() {
 				ItamaePort:     "22",
 				ServerspecPort: os.Getenv("SSH_PORT"),
 			},
-		}.Build(parentAmiId)
+		}.Build()
 	case RAILS:
 		Builder{
 			Role: RAILS,
@@ -32,7 +28,7 @@ func main() {
 				ItamaePort:     os.Getenv("SSH_PORT"),
 				ServerspecPort: os.Getenv("SSH_PORT"),
 			},
-		}.Build(parentAmiId)
+		}.Build()
 	default:
 		fmt.Println("invalid argument, please input [ base, rails ]")
 	}
