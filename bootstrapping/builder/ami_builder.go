@@ -33,7 +33,7 @@ func (ab AmiBuilder) Build(instanceId ec2.InstanceId, role Role, parentAmiId str
 	// AMIの作成
 	amiParam := ami.AmiParam{
 		InstanceId: instanceId.String(),
-		Name:       role.String(),
+		Name:       role.ToTag(),
 	}
 	ami := ami.Ami{Ec2Api: *ab.Ec2Service}
 	imageId := ami.Create(amiParam)
@@ -46,7 +46,7 @@ func (ab AmiBuilder) Build(instanceId ec2.InstanceId, role Role, parentAmiId str
 	// AMIのタグの設定
 	amiTagParam := tag.AmiTagParam{
 		AmiId:       *imageId,
-		Role:        role.String(),
+		Role:        role.ToTag(),
 		CurrentTime: currentTime,
 		ParentAmiId: parentAmiId,
 	}

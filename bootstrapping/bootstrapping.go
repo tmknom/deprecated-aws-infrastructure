@@ -10,7 +10,17 @@ import (
 )
 
 func main() {
-	switch Role(os.Args[1]) {
+	if len(os.Args) != 2 {
+		fmt.Println("how to use : go run bootstrapping.go [base|rails]")
+		return
+	}
+
+	role := NewRole(os.Args[1])
+	handle(role)
+}
+
+func handle(role Role) {
+	switch role {
 	case BASE:
 		Builder{
 			Role: BASE,

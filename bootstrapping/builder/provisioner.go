@@ -12,11 +12,9 @@ const EC2_USER = "ec2-user"
 type Provisioner struct{}
 
 func (p Provisioner) Provision(role Role, ssh Ssh, publicIpAddress PublicIpAddress) error {
-	recipe := "configuration/roles/" + role.String() + ".rb"
-
 	// Itamaeでプロビジョニング
 	shell.Itamae{
-		Recipe:    recipe,
+		Recipe:    getRecipe(role),
 		User:      EC2_USER,
 		Port:      ssh.ItamaePort,
 		Key:       ssh.Key,
@@ -34,4 +32,8 @@ func (p Provisioner) Provision(role Role, ssh Ssh, publicIpAddress PublicIpAddre
 	}.Execute()
 
 	return err
+}
+
+func getRecipe(role Role) string {
+	return "configuration/roles/" + role.String() + ".rb"
 }

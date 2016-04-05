@@ -11,13 +11,17 @@ const (
 	RAILS Role = "rails"
 )
 
+func NewRole(value string) Role {
+	return Role(strings.ToLower(value))
+}
+
 func (r Role) String() string {
 	return string(r)
 }
 
 func (r Role) ToTag() string {
-	role := string(r)
-	return strings.ToUpper(role[:1]) + role[1:]
+	lower := strings.ToLower(string(r))
+	return strings.ToUpper(lower[:1]) + lower[1:]
 }
 
 func (r Role) Parent() Role {
