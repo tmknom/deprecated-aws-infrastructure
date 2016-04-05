@@ -15,7 +15,7 @@ type Ec2Builder struct {
 	Ec2Service *svc.EC2
 }
 
-func (eb Ec2Builder) Build(imageId string) (instanceId string, publicIpAddress string, err error) {
+func (eb Ec2Builder) Build(imageId string) (ec2.InstanceId, ec2.PublicIpAddress, error) {
 	param := ec2.Ec2InstanceParam{
 		ImageId:                   imageId,
 		KeyName:                   eb.getKeyName(),
@@ -28,7 +28,7 @@ func (eb Ec2Builder) Build(imageId string) (instanceId string, publicIpAddress s
 	return ec2Instance.Create(param)
 }
 
-func (eb Ec2Builder) Destroy(instanceId string) {
+func (eb Ec2Builder) Destroy(instanceId ec2.InstanceId) {
 	ec2Instance := ec2.Ec2Instance{Ec2Api: *eb.Ec2Service}
 	ec2Instance.Terminate(instanceId)
 }

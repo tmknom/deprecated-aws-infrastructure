@@ -15,13 +15,13 @@ type AmiBuilder struct {
 	Ec2Service *svc.EC2
 }
 
-func (ab AmiBuilder) Build(instanceId string, role Role, parentAmiId string) {
+func (ab AmiBuilder) Build(instanceId ec2.InstanceId, role Role, parentAmiId string) {
 	// EC2インスタンスを停止
 	ec2.Ec2Instance{Ec2Api: *ab.Ec2Service}.Stop(instanceId)
 
 	// AMIの作成
 	amiParam := ami.AmiParam{
-		InstanceId: instanceId,
+		InstanceId: instanceId.String(),
 		Name:       role.String(),
 	}
 	ami := ami.Ami{Ec2Api: *ab.Ec2Service}

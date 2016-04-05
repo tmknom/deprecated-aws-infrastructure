@@ -1,6 +1,7 @@
 package builder
 
 import (
+	. "../ec2"
 	. "../role"
 	"../shell"
 	. "../ssh"
@@ -10,7 +11,7 @@ const EC2_USER = "ec2-user"
 
 type Provisioner struct{}
 
-func (p Provisioner) Provision(role Role, ssh Ssh, publicIpAddress string) error {
+func (p Provisioner) Provision(role Role, ssh Ssh, publicIpAddress PublicIpAddress) error {
 	recipe := "configuration/roles/" + role.String() + ".rb"
 
 	// Itamaeでプロビジョニング
@@ -19,7 +20,7 @@ func (p Provisioner) Provision(role Role, ssh Ssh, publicIpAddress string) error
 		User:      EC2_USER,
 		Port:      ssh.ItamaePort,
 		Key:       ssh.Key,
-		IpAddress: publicIpAddress,
+		IpAddress: publicIpAddress.String(),
 	}.Execute()
 
 	// Serverspecでテスト
@@ -29,7 +30,7 @@ func (p Provisioner) Provision(role Role, ssh Ssh, publicIpAddress string) error
 		SudoPassword: "",
 		Port:         ssh.ServerspecPort,
 		Key:          ssh.Key,
-		IpAddress:    publicIpAddress,
+		IpAddress:    publicIpAddress.String(),
 	}.Execute()
 
 	return err
