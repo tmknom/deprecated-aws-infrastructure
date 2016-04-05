@@ -6,12 +6,16 @@ import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	svc "github.com/aws/aws-sdk-go/service/ec2"
+
+	. "../role"
+	. "../ssh"
 )
 
 const REGION = "ap-northeast-1"
 
 type Builder struct {
-	Config Config
+	Role Role
+	Ssh  Ssh
 }
 
 func (b Builder) Build(parentAmiId string) {
@@ -28,7 +32,7 @@ func (b Builder) Build(parentAmiId string) {
 		return
 	}
 
-	provisionError := provisioner.Provision(b.Config, publicIpAddress)
+	provisionError := provisioner.Provision(b.Role, b.Ssh, publicIpAddress)
 	if provisionError != nil {
 		fmt.Println(provisionError.Error())
 		ec2Builder.Destroy(instanceId)
@@ -38,7 +42,7 @@ func (b Builder) Build(parentAmiId string) {
 	// AMIの作成
 	amiBuilder.Build(
 		instanceId,
-		b.Config.Role,
+		b.Role,
 		parentAmiId,
 	)
 

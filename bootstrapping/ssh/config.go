@@ -1,7 +1,6 @@
-package builder
+package ssh
 
-type Config struct {
-	Role           string
+type Ssh struct {
 	Key            string
 	ItamaePort     string
 	ServerspecPort string
