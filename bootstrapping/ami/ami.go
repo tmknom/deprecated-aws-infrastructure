@@ -16,12 +16,24 @@ type AmiParam struct {
 	Name       string
 }
 
+func (ami Ami) GetImageId(role string) *string {
+	input := ami.createDescribeImagesInputByRoleTag(role)
+	resp, _ := ami.describeImages(input)
+	return resp.Images[0].ImageId
+}
+
 func (ami Ami) Create(amiParam AmiParam) *string {
 	fmt.Println("Creating the AMI: " + amiParam.InstanceId)
 
 	input := ami.createImageInput(amiParam)
 	resp, _ := ami.createImage(input)
-	return resp.ImageId
+	imageId := resp.ImageId
+
+	fmt.Println("Waiting for AMI to become available...")
+	waitInput := ami.createDescribeImagesInputByImageId(*imageId)
+	ami.waitUntilImageAvailable(waitInput)
+
+	return imageId
 }
 
 func (ami Ami) createImage(input *ec2.CreateImageInput) (*ec2.CreateImageOutput, error) {
@@ -33,4 +45,39 @@ func (ami Ami) createImageInput(param AmiParam) *ec2.CreateImageInput {
 		InstanceId: aws.String(param.InstanceId),
 		Name:       aws.String(param.Name),
 	}
+}
+
+func (ami Ami) GetSnapshotId(imageId string) *string {
+	input := ami.createDescribeImagesInputByImageId(imageId)
+	resp, _ := ami.describeImages(input)
+	return resp.Images[0].BlockDeviceMappings[0].Ebs.SnapshotId
+}
+
+func (ami Ami) describeImages(input *ec2.DescribeImagesInput) (*ec2.DescribeImagesOutput, error) {
+	return ami.Ec2Api.DescribeImages(input)
+}
+
+func (ami Ami) createDescribeImagesInputByImageId(imageId string) *ec2.DescribeImagesInput {
+	return &ec2.DescribeImagesInput{
+		ImageIds: []*string{
+			aws.String(imageId),
+		},
+	}
+}
+
+func (ami Ami) createDescribeImagesInputByRoleTag(role string) *ec2.DescribeImagesInput {
+	return &ec2.DescribeImagesInput{
+		Filters: []*ec2.Filter{
+			{
+				Name: aws.String("tag:Role"),
+				Values: []*string{
+					aws.String(role),
+				},
+			},
+		},
+	}
+}
+
+func (ami Ami) waitUntilImageAvailable(input *ec2.DescribeImagesInput) {
+	ami.Ec2Api.WaitUntilImageAvailable(input)
 }

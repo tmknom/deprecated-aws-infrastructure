@@ -1,13 +1,14 @@
 package shell
 
 import (
+	. "../role"
 	"fmt"
 	"os"
 	"os/exec"
 )
 
 type Serverspec struct {
-	Role         string
+	Role         Role
 	User         string
 	SudoPassword string
 	Port         string
@@ -19,7 +20,7 @@ func (s Serverspec) Execute() error {
 	fmt.Println("Test with serverspec: " + s.Role)
 	Shell{}.cdConfigurationPath()
 
-	os.Setenv("ROLE", s.Role)
+	os.Setenv("ROLE", s.Role.String())
 	os.Setenv("USER", s.User)
 	os.Setenv("PORT", s.Port)
 	os.Setenv("KEY_PATH", s.Key)

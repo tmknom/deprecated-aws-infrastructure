@@ -7,11 +7,10 @@ import (
 
 type Subnet struct {
 	Ec2Api ec2.EC2
-	Name   string
 }
 
-func (s Subnet) GetSubnetId() string {
-	input := s.createSubnetInput()
+func (s Subnet) GetSubnetId(name string) string {
+	input := s.createSubnetInput(name)
 	resp := s.describeSubnets(input)
 	return *(resp.Subnets[0].SubnetId)
 }
@@ -21,13 +20,13 @@ func (s Subnet) describeSubnets(input *ec2.DescribeSubnetsInput) *ec2.DescribeSu
 	return resp
 }
 
-func (s Subnet) createSubnetInput() *ec2.DescribeSubnetsInput {
+func (s Subnet) createSubnetInput(name string) *ec2.DescribeSubnetsInput {
 	return &ec2.DescribeSubnetsInput{
 		Filters: []*ec2.Filter{
 			{
 				Name: aws.String("tag:Name"),
 				Values: []*string{
-					aws.String(s.Name),
+					aws.String(name),
 				},
 			},
 		},
