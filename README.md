@@ -54,7 +54,23 @@ bundle exec rake spec
 $ git cloen git@github.com:tmknom/aws-infrastructure.git
 $ cd aws-infrastructure
 $ bundle install --path vendor/bundle
+$ pip install -r requirements.txt
+$ aws configure
+AWS Access Key ID [None]: AKIAIOSFODNN7EXAMPLE
+AWS Secret Access Key [None]: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+Default region name [None]: ap-northeast-1
+Default output format [None]: json
 ```
+
+### Bundler管理ライブラリ
+
+* Itamae
+* Serverspec
+
+### pip管理ライブラリ
+
+* AWS CLI
+* Fabric
 
 ## 初期セットアップ
 
@@ -62,11 +78,11 @@ $ bundle install --path vendor/bundle
 
 ## 依存ツール
 
-* AWS CLI
-* Itamae
-* Serverspec
-* Fabric
-* terraform
+* Ruby >= 2.3.0
+* Bundler >= 1.11.2
+* Python >= 2.7.11
+* pip >= 8.1.1
+* terraform >= 0.6.15
 
 ## 設計ドキュメント
 
