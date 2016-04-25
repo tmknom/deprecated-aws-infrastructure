@@ -53,6 +53,7 @@ bundle exec rake spec
 ```bash
 $ git cloen git@github.com:tmknom/aws-infrastructure.git
 $ cd aws-infrastructure
+$ bundle install --path vendor/bundle
 ```
 
 ## 初期セットアップ
