@@ -1,0 +1,16 @@
+# AWSユーザ設定
+export AWS_LOGIN_USER='xxxx'
+export AWS_CLI_USER='cli-xxxx'
+
+# SSH設定
+export SSH_PORT='xxxx'
+
+# DB設定
+export DATABASE_PORT='xxxx'
+export DATABASE_MASTER_USER_NAME='xxxx'
+export DATABASE_MASTER_USER_PASSWORD='xxxxxxxx'
+export DATABASE_INITIAL_PASSWORD='xxxxxxxx'
+
+# 共有可能な環境変数定義
+source $(git rev-parse --show-toplevel)/development/environment_variable/shared.sh
+
