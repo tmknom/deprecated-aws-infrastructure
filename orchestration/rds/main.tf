@@ -18,7 +18,7 @@ variable "engine" {
 }
 
 module "security_group" {
-  source = "../../terraform/module/security_group/source_security_group_id"
+  source = "../terraform/module/security_group/source_security_group_id"
 
   role = "${var.engine}"
   description = "allow MySQL"
@@ -30,7 +30,7 @@ module "security_group" {
 }
 
 module "rds" {
-  source = "../../terraform/module/rds"
+  source = "../terraform/module/rds"
 
   engine = "${var.engine}"
   environment = "${var.environment}"

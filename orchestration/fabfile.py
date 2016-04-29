@@ -31,15 +31,15 @@ def build_security_group():
   terraform_apply('security_group', tf_vars)
 
 @task
-def build_rds_production():
-  '''本番環境のRDS構築'''
+def build_rds():
+  '''RDS構築'''
   tf_vars = get_db_tf_vars(ENV_PRODUCTION)
-  terraform_apply('rds/production', tf_vars)
+  terraform_apply('rds', tf_vars)
 
 @task
 def change_password_rds_production():
   '''本番環境のRDSのパスワード変更'''
-  local('fab change_password:%s -f rds/cli/password_changer.py' % ('production-mysql'))
+  local('fab change_password:%s -f rds/password_changer.py' % ('production-mysql'))
 
 @task
 def build_vpc():
