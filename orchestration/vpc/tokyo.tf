@@ -1,5 +1,5 @@
 module "vpc" {
-  source = "../../../terraform/module/vpc"
+  source = "../terraform/module/vpc"
 
   environment = "Production"
   availability_zones = "ap-northeast-1a,ap-northeast-1c"
