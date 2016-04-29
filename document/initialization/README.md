@@ -92,49 +92,25 @@ $ fab build_user_external
 $ fab build_instance_profile
 ```
 
+
 ## VPCの作成
 
-### テスト環境
-
 ```bash
-$ fab build_vpc_testing
-```
-
-### 本番環境
-
-```bash
-$ fab build_vpc_production
+$ fab build_vpc
 ```
 
 
 ## セキュリティグループの作成
 
-### テスト環境
-
 ```bash
-$ fab build_sg_testing
-```
-
-### 本番環境
-
-```bash
-$ fab build_sg_production
+$ fab build_security_group
 ```
 
 
 ## RDSの作成
 
-### テスト環境
-
 ```bash
-$ fab build_rds_testing
-$ fab change_password_rds_testing
-```
-
-### 本番環境
-
-```bash
-$ fab build_rds_production
+$ fab build_rds
 $ fab change_password_rds_production
 ```
 
