@@ -25,48 +25,26 @@ def build_ec2_testing():
   terraform_apply('ec2/testing/tech_news', rails_tf_vars)
 
 @task
-def build_sg_production():
-  '''本番環境のセキュリティグループ構築'''
+def build_security_group():
+  '''セキュリティグループ構築'''
   tf_vars = get_tf_vars(ENV_PRODUCTION)
-  terraform_apply('security_group/production', tf_vars)
+  terraform_apply('security_group', tf_vars)
 
 @task
-def build_sg_testing():
-  '''テスト環境のセキュリティグループ構築'''
-  tf_vars = get_tf_vars(ENV_TESTING)
-  terraform_apply('security_group/testing', tf_vars)
-
-@task
-def build_rds_production():
-  '''本番環境のRDS構築'''
+def build_rds():
+  '''RDS構築'''
   tf_vars = get_db_tf_vars(ENV_PRODUCTION)
-  terraform_apply('rds/production', tf_vars)
-
-@task
-def build_rds_testing():
-  '''テスト環境のRDS構築'''
-  tf_vars = get_db_tf_vars(ENV_TESTING)
-  terraform_apply('rds/testing', tf_vars)
+  terraform_apply('rds', tf_vars)
 
 @task
 def change_password_rds_production():
   '''本番環境のRDSのパスワード変更'''
-  local('fab change_password:%s -f rds/cli/password_changer.py' % ('production-mysql'))
+  local('fab change_password:%s -f rds/password_changer.py' % ('production-mysql'))
 
 @task
-def change_password_rds_testing():
-  '''テスト環境のRDSのパスワード変更'''
-  local('fab change_password:%s -f rds/cli/password_changer.py' % ('testing-mysql'))
-
-@task
-def build_vpc_production():
-  '''本番環境のVPC構築'''
-  terraform_apply('vpc/production/tokyo')
-
-@task
-def build_vpc_testing():
-  '''テスト環境のVPC構築'''
-  terraform_apply('vpc/testing/tokyo')
+def build_vpc():
+  '''VPC構築'''
+  terraform_apply('vpc')
 
 @task
 def build_code_deploy():

@@ -1,8 +1,7 @@
 module "vpc" {
-  source = "../../../terraform/module/vpc"
+  source = "../terraform/module/vpc"
 
   environment = "Production"
-  region_name = "Tokyo"
   availability_zones = "ap-northeast-1a,ap-northeast-1c"
 
   vpc_cidr = "10.10.0.0/16"

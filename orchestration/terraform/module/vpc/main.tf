@@ -3,18 +3,16 @@ resource "aws_vpc" "vpc" {
   enable_dns_hostnames = "${var.enable_dns_hostnames}"
   enable_dns_support = "${var.enable_dns_support}"
   tags {
-    Name = "${var.environment}-${var.region_name}-VPC"
+    Name = "${var.environment}-VPC"
     Environment = "${var.environment}"
-    Region = "${var.region_name}"
   }
 }
 
 resource "aws_internet_gateway" "internet_gateway" {
   vpc_id = "${aws_vpc.vpc.id}"
   tags {
-    Name = "${var.environment}-${var.region_name}-InternetGateway"
+    Name = "${var.environment}-InternetGateway"
     Environment = "${var.environment}"
-    Region = "${var.region_name}"
   }
 }
 
@@ -27,9 +25,8 @@ resource "aws_route" "public_internet_gateway_route" {
 resource "aws_route_table" "public_route_table" {
   vpc_id = "${aws_vpc.vpc.id}"
   tags {
-    Name = "${var.environment}-${var.region_name}-${var.public_network}-RouteTable"
+    Name = "${var.environment}-${var.public_network}-RouteTable"
     Environment = "${var.environment}"
-    Region = "${var.region_name}"
     Network = "${var.public_network}"
   }
 }
@@ -37,9 +34,8 @@ resource "aws_route_table" "public_route_table" {
 resource "aws_route_table" "protected_route_table" {
   vpc_id = "${aws_vpc.vpc.id}"
   tags {
-    Name = "${var.environment}-${var.region_name}-${var.protected_network}-RouteTable"
+    Name = "${var.environment}-${var.protected_network}-RouteTable"
     Environment = "${var.environment}"
-    Region = "${var.region_name}"
     Network = "${var.protected_network}"
   }
 }
@@ -47,9 +43,8 @@ resource "aws_route_table" "protected_route_table" {
 resource "aws_route_table" "private_route_table" {
   vpc_id = "${aws_vpc.vpc.id}"
   tags {
-    Name = "${var.environment}-${var.region_name}-${var.private_network}-RouteTable"
+    Name = "${var.environment}-${var.private_network}-RouteTable"
     Environment = "${var.environment}"
-    Region = "${var.region_name}"
     Network = "${var.private_network}"
   }
 }
@@ -60,9 +55,8 @@ resource "aws_subnet" "public_subnet" {
   cidr_block = "${element(split(",", var.public_subnets), count.index)}"
   availability_zone = "${element(split(",", var.availability_zones), count.index % length(split(",", var.availability_zones)))}"
   tags {
-    Name = "${var.environment}-${var.region_name}-${var.public_network}-Subnet-${count.index}"
+    Name = "${var.environment}-${var.public_network}-Subnet-${count.index}"
     Environment = "${var.environment}"
-    Region = "${var.region_name}"
     Network = "${var.public_network}"
   }
   map_public_ip_on_launch = true
@@ -74,9 +68,8 @@ resource "aws_subnet" "protected_subnet" {
   cidr_block = "${element(split(",", var.protected_subnets), count.index)}"
   availability_zone = "${element(split(",", var.availability_zones), count.index % length(split(",", var.availability_zones)))}"
   tags {
-    Name = "${var.environment}-${var.region_name}-${var.protected_network}-Subnet-${count.index}"
+    Name = "${var.environment}-${var.protected_network}-Subnet-${count.index}"
     Environment = "${var.environment}"
-    Region = "${var.region_name}"
     Network = "${var.protected_network}"
   }
 }
@@ -87,9 +80,8 @@ resource "aws_subnet" "private_subnet" {
   cidr_block = "${element(split(",", var.private_subnets), count.index)}"
   availability_zone = "${element(split(",", var.availability_zones), count.index % length(split(",", var.availability_zones)))}"
   tags {
-    Name = "${var.environment}-${var.region_name}-${var.private_network}-Subnet-${count.index}"
+    Name = "${var.environment}-${var.private_network}-Subnet-${count.index}"
     Environment = "${var.environment}"
-    Region = "${var.region_name}"
     Network = "${var.private_network}"
   }
 }
