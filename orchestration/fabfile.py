@@ -25,10 +25,10 @@ def build_ec2_testing():
   terraform_apply('ec2/testing/tech_news', rails_tf_vars)
 
 @task
-def build_sg_production():
-  '''本番環境のセキュリティグループ構築'''
+def build_security_group():
+  '''セキュリティグループ構築'''
   tf_vars = get_tf_vars(ENV_PRODUCTION)
-  terraform_apply('security_group/production', tf_vars)
+  terraform_apply('security_group', tf_vars)
 
 @task
 def build_rds_production():
