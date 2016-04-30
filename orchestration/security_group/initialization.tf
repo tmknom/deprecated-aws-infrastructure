@@ -1,12 +1,11 @@
-# BaseAMI作成時に使用
-module "initialize" {
+module "initialization" {
   source = "../terraform/module/security_group/cidr_blocks"
 
-  role = "Initialize"
+  role = "Initialization"
   description = "allow initialize base ami"
-  environment = "${var.environment}"
+  environment = "${var.administration}"
 
   port = "22"
   cidr_block = "${var.administrator_ip_address}/32"
-  vpc_id = "${var.vpc_id}"
+  vpc_id = "${var.administration_vpc_id}"
 }
