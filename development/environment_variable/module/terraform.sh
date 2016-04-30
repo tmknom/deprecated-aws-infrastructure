@@ -24,7 +24,3 @@ export TF_VAR_db_port="$DATABASE_PORT"
 export TF_VAR_db_master_user_name="$DATABASE_MASTER_USER_NAME"
 # DB設定：初期パスはtfstateファイルに平文で書かれることに注意
 export TF_VAR_db_initial_password="$DATABASE_INITIAL_PASSWORD"
-
-# 管理用IPアドレス
-export TF_VAR_administrator_ip_address="$ADMINISTRATOR_IP_ADDRESS"
-
