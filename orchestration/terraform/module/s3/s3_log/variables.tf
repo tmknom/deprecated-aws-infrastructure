@@ -16,5 +16,5 @@ variable "acl" {
 }
 
 variable "environment" {
-  default = "Global"
+  default = "Administration"
 }

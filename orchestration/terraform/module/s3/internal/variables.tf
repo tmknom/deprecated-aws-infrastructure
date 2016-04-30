@@ -12,7 +12,7 @@ variable "log_identifier" {
 }
 
 variable "group" {
-  default = "Administration"
+  default = "Internal"
 }
 
 variable "acl" {
@@ -20,5 +20,5 @@ variable "acl" {
 }
 
 variable "environment" {
-  default = "Global"
+  default = "Administration"
 }

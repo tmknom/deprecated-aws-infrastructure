@@ -14,26 +14,24 @@
 
 ACLごとにざっくりしたグルーピングをする。
 
-* Administration
- * 管理用のファイルを保存するグループ
+* Internal
+ * 非公開ファイルを保存するグループ
+* External
+ * 公開ファイルを保存するグループ
 * Log
  * 各種ログ(S3のログ以外)を保存するグループ
 * S3Log
  * S3のログを保存するグループ
-* Publication
- * 公開用のファイルを保存するグループ
 
 
 ## Environmentタグ
 
 想定している環境を定義する。
 
-* Global
- * システム全体
+* Administration
+ * 管理者用環境
 * Production
  * 本番環境
-* Testing
- * テスト環境
 
 
 ## バケット名の命名規則
