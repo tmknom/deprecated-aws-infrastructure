@@ -13,7 +13,7 @@ NETWORK_PRIVATE = 'Private'
 def get_tf_vars(environment):
     vpc_id = get_vpc_id(environment)
     availability_zones = get_availability_zones()
-    result = ' TF_VAR_vpc_id=%s' % (vpc_id) \
+    result = ' TF_VAR_production_vpc_id=%s' % (vpc_id) \
              + ' TF_VAR_availability_zones=%s' % (availability_zones)
     return result
 
