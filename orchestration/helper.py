@@ -66,17 +66,22 @@ def get_latest_ami_id(role, aws_account_id):
     return result
 
 
-def get_db_tf_vars(environment):
-    db_subnet_ids = get_db_subnet_ids(environment)
-    db_source_security_group_id = get_db_source_security_group_id(environment)
+def get_db_tf_vars():
+    db_subnet_ids = get_db_subnet_ids()
+    db_source_security_group_id = get_db_source_security_group_id()
     result = get_tf_vars() \
              + ' TF_VAR_db_subnet_ids=%s' % (db_subnet_ids) \
              + ' TF_VAR_db_source_security_group_id=%s' % (db_source_security_group_id)
     return result
 
 
-def get_db_source_security_group_id(environment):
-    return get_security_group_id(environment, ROLE_RAILS)
+def get_db_source_security_group_id():
+    return get_security_group_id(ENVIRONMENT_PRODUCTION, ROLE_RAILS)
+
+
+def get_db_subnet_ids():
+    subnet_ids = get_subnet_ids(ENVIRONMENT_PRODUCTION, NETWORK_PRIVATE)
+    return ','.join(subnet_ids)
 
 
 def get_security_group_id(environment, role):
@@ -89,11 +94,6 @@ def get_security_group_id(environment, role):
               + " | jq -r '.SecurityGroups[].GroupId' "
     result = local(command, capture=True)
     return result
-
-
-def get_db_subnet_ids(environment):
-    subnet_ids = get_subnet_ids(environment, NETWORK_PRIVATE)
-    return ','.join(subnet_ids)
 
 
 def get_subnet_ids(environment, network):

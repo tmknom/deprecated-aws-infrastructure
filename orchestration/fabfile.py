@@ -37,7 +37,7 @@ def build_security_group():
 @task
 def build_rds():
     '''RDS構築'''
-    tf_vars = get_db_tf_vars(ENV_PRODUCTION)
+    tf_vars = get_db_tf_vars()
     terraform_apply('rds', tf_vars)
 
 
