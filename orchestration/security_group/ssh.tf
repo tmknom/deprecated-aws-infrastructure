@@ -1,13 +1,9 @@
-variable "environment" {
-  default = "Production"
-}
-
 module "ssh" {
   source = "../terraform/module/security_group/cidr_blocks"
 
   role = "SSH"
   description = "allow ssh only administrator"
-  environment = "${var.environment}"
+  environment = "${var.production}"
 
   port = "${var.ssh_port}"
   cidr_block = "${var.administrator_ip_address}/32"

@@ -3,6 +3,9 @@
 import json
 from fabric.api import *
 
+ENVIRONMENT_PRODUCTION = 'Production'
+ENVIRONMENT_ADMINISTRATION = 'Administration'
+
 ROLE_SSH = 'SSH'
 ROLE_RAILS = 'Rails'
 
@@ -10,10 +13,12 @@ NETWORK_PUBLIC = 'Public'
 NETWORK_PRIVATE = 'Private'
 
 
-def get_tf_vars(environment):
-    vpc_id = get_vpc_id(environment)
+def get_tf_vars():
+    production_vpc_id = get_vpc_id(ENVIRONMENT_PRODUCTION)
+    administration_vpc_id = get_vpc_id(ENVIRONMENT_ADMINISTRATION)
     availability_zones = get_availability_zones()
-    result = ' TF_VAR_production_vpc_id=%s' % (vpc_id) \
+    result = ' TF_VAR_production_vpc_id=%s' % (production_vpc_id) \
+             + ' TF_VAR_administration_vpc_id=%s' % (administration_vpc_id) \
              + ' TF_VAR_availability_zones=%s' % (availability_zones)
     return result
 
@@ -64,7 +69,7 @@ def get_latest_ami_id(role, aws_account_id):
 def get_db_tf_vars(environment):
     db_subnet_ids = get_db_subnet_ids(environment)
     db_source_security_group_id = get_db_source_security_group_id(environment)
-    result = get_tf_vars(environment) \
+    result = get_tf_vars() \
              + ' TF_VAR_db_subnet_ids=%s' % (db_subnet_ids) \
              + ' TF_VAR_db_source_security_group_id=%s' % (db_source_security_group_id)
     return result

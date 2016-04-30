@@ -3,9 +3,9 @@ module "initialize" {
 
   role = "Initialize"
   description = "allow initialize base ami"
-  environment = "${var.environment}"
+  environment = "${var.administration}"
 
   port = "22"
   cidr_block = "${var.administrator_ip_address}/32"
-  vpc_id = "${var.production_vpc_id}"
+  vpc_id = "${var.administration_vpc_id}"
 }

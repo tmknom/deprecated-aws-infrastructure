@@ -30,7 +30,7 @@ def build_ec2_testing():
 @task
 def build_security_group():
     '''セキュリティグループ構築'''
-    tf_vars = get_tf_vars(ENV_PRODUCTION)
+    tf_vars = get_tf_vars()
     terraform_apply('security_group', tf_vars)
 
 
