@@ -126,9 +126,6 @@ def get_vpc_id(environment):
 
 
 def get_aws_account_id():
-    command = "aws cloudtrail describe-trails" \
-              + " | jq '.trailList[] | select(.IsMultiRegionTrail == true)' " \
-              + " | jq -r '.TrailARN' " \
-              + " | cut -d: -f5 "
+    command = "aws sts get-caller-identity | jq -r .Account"
     result = local(command, capture=True)
     return result
