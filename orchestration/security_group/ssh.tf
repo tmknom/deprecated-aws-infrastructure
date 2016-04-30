@@ -6,7 +6,7 @@ module "ssh" {
   environment = "${var.production}"
 
   port = "${var.ssh_port}"
-  cidr_block = "${var.administrator_ip_address}/32"
+  cidr_block = "${var.localhost_cidr_block}"
   vpc_id = "${var.production_vpc_id}"
 }
 
@@ -18,6 +18,6 @@ module "administration_ssh" {
   environment = "${var.administration}"
 
   port = "${var.ssh_port}"
-  cidr_block = "${var.administrator_ip_address}/32"
+  cidr_block = "${var.localhost_cidr_block}"
   vpc_id = "${var.administration_vpc_id}"
 }
