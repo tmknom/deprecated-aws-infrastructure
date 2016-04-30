@@ -13,3 +13,9 @@ from security_group import ssh
 def ssh_authorize():
     '''現在のアドレスからSSH許可'''
     ssh.authorize()
+
+
+@task
+def ssh_revoke():
+    '''SSH許可の取り消し'''
+    ssh.revoke()
