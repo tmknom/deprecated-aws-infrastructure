@@ -5,7 +5,7 @@ variable "identifier" {
 }
 
 module "s3_administration" {
-  source = "../../terraform/module/s3/administration"
+  source = "../../terraform/module/s3/internal"
 
   identifier = "${var.identifier}"
   suffix = "${var.s3_suffix}"
