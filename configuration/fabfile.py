@@ -68,7 +68,8 @@ def execute_itamae(role, user_name, ssh_port, ssh_key_path):
               + " -p %s " % (ssh_port) \
               + " -i %s " % (ssh_key_path) \
               + " -h %s " % (env.hosts[0])
-    local(command)
+    with lcd(get_current_dir()):
+        local(command)
 
 
 def serverspec(role):
@@ -89,10 +90,16 @@ def execute_serverspec(role, user_name, ssh_port, ssh_key_path):
               + " SUDO_PASSWORD='' " \
               + " SPEC_OPTS='--color --format documentation' " \
               + " bundle exec rake spec"
-    local(command)
+    with lcd(get_current_dir()):
+        local(command)
 
 
 def get_env(key):
     command = "echo $%s" % (key)
     result = local(command, capture=True)
     return result
+
+
+def get_current_dir():
+    import os
+    return os.path.abspath(os.path.dirname(__file__))
