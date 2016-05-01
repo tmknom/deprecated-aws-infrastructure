@@ -3,12 +3,15 @@
 # direnv edit .
 #
 
+# SSH設定
+export SSH_PORT='xxxx'
+export SSH_USER_NAME='xxxx'
+export SSH_PUBLIC_KEY_FULL_PATH='/full/path/to/key.pub'
+export SSH_SHADOW_PASSWORD='xxxxxxxx'
+
 # AWSユーザ設定
 export AWS_LOGIN_USER='xxxx'
 export AWS_CLI_USER='cli-xxxx'
-
-# SSH設定
-export SSH_PORT='xxxx'
 
 # AWSキーペア（秘密鍵）
 export SSH_INITIALIZE_KEY_PATH='xxxx.pem'
