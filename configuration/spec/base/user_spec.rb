@@ -5,6 +5,6 @@ describe 'user' do
     it { should exist }
     it { should have_login_shell '/bin/bash' }
     it { should belong_to_group 'wheel' }
-    it { should have_authorized_key ENV['SSH_PUBLIC_KEY'].strip }
+    it { should have_authorized_key File.read(ENV['SSH_PUBLIC_KEY_FULL_PATH']).strip }
   end
 end

@@ -1,14 +1,14 @@
 # User settings
 USER_NAME = ENV['SSH_USER_NAME']
-PASSWORD = ENV['SSH_USER_PASSWORD']
-SSH_PUBLIC_KEY = ENV['SSH_PUBLIC_KEY']
+SSH_SHADOW_PASSWORD = ENV['SSH_SHADOW_PASSWORD']
+SSH_PUBLIC_KEY_FULL_PATH = ENV['SSH_PUBLIC_KEY_FULL_PATH']
 
 # Constant definition
 WHEEL_GROUP = '10'
 
 # Add user
 user USER_NAME do
-  password PASSWORD
+  password SSH_SHADOW_PASSWORD
   gid WHEEL_GROUP
 end
 
@@ -20,7 +20,7 @@ directory "/home/#{USER_NAME}/.ssh" do
 end
 
 file "/home/#{USER_NAME}/.ssh/authorized_keys" do
-  content SSH_PUBLIC_KEY
+  content File.read(SSH_PUBLIC_KEY_FULL_PATH)
   owner USER_NAME
   group WHEEL_GROUP
   mode '600'
