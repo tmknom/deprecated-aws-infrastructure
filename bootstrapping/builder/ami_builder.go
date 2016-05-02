@@ -6,12 +6,11 @@ import (
 	svc "github.com/aws/aws-sdk-go/service/ec2"
 
 	"../ami"
+	. "../constant"
 	"../ec2"
 	. "../role"
 	"../tag"
 )
-
-const BASE_IMAGE_ID = "ami-f80e0596"
 
 type AmiBuilder struct {
 	Ec2Service *svc.EC2

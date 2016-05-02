@@ -5,21 +5,20 @@ import (
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/ec2"
-)
 
-const BASE_INSTANCE_TYPE = "t2.micro"
-const BASE_VOLUME_SIZE = 8
+	. "../constant"
+)
 
 type Ec2Instance struct {
 	Ec2Api ec2.EC2
 }
 
 type Ec2InstanceParam struct {
-	ImageId                   string
-	KeyName                   string
-	SubnetId                  string
-	SshSecurityGroupId        string
-	InitializeSecurityGroupId string
+	ImageId                       string
+	KeyName                       string
+	SubnetId                      string
+	SshSecurityGroupId            string
+	InitializationSecurityGroupId string
 }
 
 type PublicIpAddress string
@@ -78,7 +77,7 @@ func (ei Ec2Instance) createRunInstancesInput(param Ec2InstanceParam) *ec2.RunIn
 				DeviceIndex:              aws.Int64(0),
 				SubnetId:                 aws.String(param.SubnetId),
 				Groups: []*string{
-					aws.String(param.InitializeSecurityGroupId),
+					aws.String(param.InitializationSecurityGroupId),
 					aws.String(param.SshSecurityGroupId),
 				},
 			},

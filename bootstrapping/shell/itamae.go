@@ -1,21 +1,19 @@
 package shell
 
 import (
+	. "../role"
 	"fmt"
 	"os/exec"
 )
 
 type Itamae struct {
-	Recipe    string
-	User      string
-	Port      string
-	Key       string
+	Role      Role
 	IpAddress string
 }
 
 func (i Itamae) Execute() {
-	fmt.Println("Provisioning with itamae: " + i.Recipe)
-	Shell{}.cdProjectRoot()
-	cmd := exec.Command("itamae", "ssh", i.Recipe, "-u", i.User, "-p", i.Port, "-i", i.Key, "-h", i.IpAddress)
+	fmt.Println("Provisioning with itamae: " + i.Role)
+	cmd := exec.Command("fab", i.Role.String(), "-H", i.IpAddress)
+	Shell{}.cdConfigurationPath()
 	Shell{Command: *cmd}.executeCommand()
 }

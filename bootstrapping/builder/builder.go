@@ -7,15 +7,12 @@ import (
 	"github.com/aws/aws-sdk-go/aws/session"
 	svc "github.com/aws/aws-sdk-go/service/ec2"
 
+	. "../constant"
 	. "../role"
-	. "../ssh"
 )
-
-const REGION = "ap-northeast-1"
 
 type Builder struct {
 	Role Role
-	Ssh  Ssh
 }
 
 func (b Builder) Build() {
@@ -36,7 +33,7 @@ func (b Builder) Build() {
 	}
 
 	// プロビジョニング実行
-	provisionError := provisioner.Provision(b.Role, b.Ssh, publicIpAddress)
+	provisionError := provisioner.Provision(b.Role, publicIpAddress)
 	if provisionError != nil {
 		fmt.Println(provisionError.Error())
 		ec2Builder.Destroy(instanceId)
@@ -55,5 +52,5 @@ func (b Builder) Build() {
 }
 
 func (b Builder) createEc2Service() *svc.EC2 {
-	return svc.New(session.New(), &aws.Config{Region: aws.String(REGION)})
+	return svc.New(session.New(), &aws.Config{Region: aws.String(DEFAULT_REGION)})
 }

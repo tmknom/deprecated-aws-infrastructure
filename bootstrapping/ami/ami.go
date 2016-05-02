@@ -26,7 +26,10 @@ func (ami Ami) Create(amiParam AmiParam) *string {
 	fmt.Println("Creating the AMI: " + amiParam.InstanceId)
 
 	input := ami.createImageInput(amiParam)
-	resp, _ := ami.createImage(input)
+	resp, err := ami.createImage(input)
+	if err != nil {
+		fmt.Println(err.Error())
+	}
 	imageId := resp.ImageId
 
 	fmt.Println("Waiting for AMI to become available...")
