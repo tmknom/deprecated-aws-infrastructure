@@ -60,6 +60,9 @@ func (ei Ec2Instance) createRunInstancesInput(param Ec2InstanceParam) *ec2.RunIn
 		MaxCount:     aws.Int64(1),
 		MinCount:     aws.Int64(1),
 		InstanceType: aws.String(BASE_INSTANCE_TYPE),
+		IamInstanceProfile: &ec2.IamInstanceProfileSpecification{
+			Name: aws.String(INITIALIZATION_INSTANCE_PROFILE),
+		},
 		BlockDeviceMappings: []*ec2.BlockDeviceMapping{
 			{
 				DeviceName: aws.String("/dev/xvda"),
