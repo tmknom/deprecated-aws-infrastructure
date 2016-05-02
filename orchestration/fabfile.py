@@ -54,6 +54,7 @@ def build_code_deploy():
 @task
 def build_instance_profile():
     '''InstanceProfileの構築'''
+    terraform_apply('instance_profile/initialization')
     terraform_apply('instance_profile/rails')
 
 
