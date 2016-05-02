@@ -8,14 +8,12 @@ import (
 	svc "github.com/aws/aws-sdk-go/service/ec2"
 
 	. "../role"
-	. "../ssh"
 )
 
 const REGION = "ap-northeast-1"
 
 type Builder struct {
 	Role Role
-	Ssh  Ssh
 }
 
 func (b Builder) Build() {
@@ -36,7 +34,7 @@ func (b Builder) Build() {
 	}
 
 	// プロビジョニング実行
-	provisionError := provisioner.Provision(b.Role, b.Ssh, publicIpAddress)
+	provisionError := provisioner.Provision(b.Role, publicIpAddress)
 	if provisionError != nil {
 		fmt.Println(provisionError.Error())
 		ec2Builder.Destroy(instanceId)

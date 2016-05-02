@@ -8,9 +8,6 @@ import (
 
 type Itamae struct {
 	Role      Role
-	User      string
-	Port      string
-	Key       string
 	IpAddress string
 }
 

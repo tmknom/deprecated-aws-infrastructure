@@ -7,12 +7,8 @@ import (
 )
 
 type Serverspec struct {
-	Role         Role
-	User         string
-	SudoPassword string
-	Port         string
-	Key          string
-	IpAddress    string
+	Role      Role
+	IpAddress string
 }
 
 func (s Serverspec) Execute() error {
