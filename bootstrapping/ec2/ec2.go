@@ -5,10 +5,9 @@ import (
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/ec2"
-)
 
-const BASE_INSTANCE_TYPE = "t2.micro"
-const BASE_VOLUME_SIZE = 8
+	. "../constant"
+)
 
 type Ec2Instance struct {
 	Ec2Api ec2.EC2

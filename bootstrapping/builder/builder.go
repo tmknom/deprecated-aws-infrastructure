@@ -7,10 +7,9 @@ import (
 	"github.com/aws/aws-sdk-go/aws/session"
 	svc "github.com/aws/aws-sdk-go/service/ec2"
 
+	. "../constant"
 	. "../role"
 )
-
-const REGION = "ap-northeast-1"
 
 type Builder struct {
 	Role Role
@@ -53,5 +52,5 @@ func (b Builder) Build() {
 }
 
 func (b Builder) createEc2Service() *svc.EC2 {
-	return svc.New(session.New(), &aws.Config{Region: aws.String(REGION)})
+	return svc.New(session.New(), &aws.Config{Region: aws.String(DEFAULT_REGION)})
 }

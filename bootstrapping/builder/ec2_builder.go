@@ -3,13 +3,9 @@ package builder
 import (
 	svc "github.com/aws/aws-sdk-go/service/ec2"
 
+	. "../constant"
 	"../ec2"
 )
-
-const SUBNET_NAME = "Administration-Public-Subnet-0"
-const SSH_SECURITY_GROUP_NAME = "Administration-SSH-SecurityGroup"
-const INITIALIZATION_SECURITY_GROUP_NAME = "Administration-Initialization-SecurityGroup"
-const INITIALIZATION_KEY_NAME = "initialization"
 
 type Ec2Builder struct {
 	Ec2Service *svc.EC2
