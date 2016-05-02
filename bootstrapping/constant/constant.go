@@ -14,6 +14,7 @@ const (
 	SSH_SECURITY_GROUP_NAME            = "Administration-SSH-SecurityGroup"
 	INITIALIZATION_SECURITY_GROUP_NAME = "Administration-Initialization-SecurityGroup"
 	INITIALIZATION_KEY_NAME            = "initialization"
+	INITIALIZATION_INSTANCE_PROFILE    = "InitializationInstanceProfile"
 	BASE_INSTANCE_TYPE                 = "t2.micro"
 	BASE_VOLUME_SIZE                   = 8
 )
