@@ -15,11 +15,11 @@ type Ec2Instance struct {
 }
 
 type Ec2InstanceParam struct {
-	ImageId                   string
-	KeyName                   string
-	SubnetId                  string
-	SshSecurityGroupId        string
-	InitializeSecurityGroupId string
+	ImageId                       string
+	KeyName                       string
+	SubnetId                      string
+	SshSecurityGroupId            string
+	InitializationSecurityGroupId string
 }
 
 type PublicIpAddress string
@@ -78,7 +78,7 @@ func (ei Ec2Instance) createRunInstancesInput(param Ec2InstanceParam) *ec2.RunIn
 				DeviceIndex:              aws.Int64(0),
 				SubnetId:                 aws.String(param.SubnetId),
 				Groups: []*string{
-					aws.String(param.InitializeSecurityGroupId),
+					aws.String(param.InitializationSecurityGroupId),
 					aws.String(param.SshSecurityGroupId),
 				},
 			},
