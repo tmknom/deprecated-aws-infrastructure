@@ -53,13 +53,7 @@ bundle exec rake spec
 ```bash
 $ git cloen git@github.com:tmknom/aws-infrastructure.git
 $ cd aws-infrastructure
-$ bundle install --path vendor/bundle
-$ pip install -r requirements.txt
-$ aws configure
-AWS Access Key ID [None]: AKIAIOSFODNN7EXAMPLE
-AWS Secret Access Key [None]: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
-Default region name [None]: ap-northeast-1
-Default output format [None]: json
+$ make
 ```
 
 ### Bundler管理ライブラリ
