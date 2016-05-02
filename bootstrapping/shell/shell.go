@@ -45,11 +45,15 @@ func (s Shell) executeCommand() (err error) {
 }
 
 func (s Shell) cdConfigurationPath() {
-	os.Chdir("./configuration")
+	os.Chdir(s.getConfigurationPath())
 }
 
 func (s Shell) cdProjectRoot() {
 	os.Chdir(s.getProjectRoot())
+}
+
+func (s Shell) getConfigurationPath() string {
+	return s.getProjectRoot() + "/configuration"
 }
 
 func (s Shell) getProjectRoot() string {

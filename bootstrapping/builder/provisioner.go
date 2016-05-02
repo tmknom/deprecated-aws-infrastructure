@@ -14,7 +14,7 @@ type Provisioner struct{}
 func (p Provisioner) Provision(role Role, ssh Ssh, publicIpAddress PublicIpAddress) error {
 	// Itamaeでプロビジョニング
 	shell.Itamae{
-		Recipe:    getRecipe(role),
+		Role:      role,
 		User:      EC2_USER,
 		Port:      ssh.ItamaePort,
 		Key:       ssh.Key,
@@ -32,8 +32,4 @@ func (p Provisioner) Provision(role Role, ssh Ssh, publicIpAddress PublicIpAddre
 	}.Execute()
 
 	return err
-}
-
-func getRecipe(role Role) string {
-	return "configuration/roles/" + role.String() + ".rb"
 }

@@ -67,7 +67,7 @@ func (tag Tag) createAmiTags(param AmiTagParam) []*ec2.Tag {
 		tag.createTag("Name", param.Role+"-"+param.CurrentTime.Format("20060102-150405")),
 		tag.createTag("Role", param.Role),
 		tag.createTag("Created", strconv.FormatInt(param.CurrentTime.Unix(), 10)),
-		tag.createTag("ParentAmiName", param.ParentAmiId),
+		tag.createTag("ParentAmiId", param.ParentAmiId),
 	}
 }
 
