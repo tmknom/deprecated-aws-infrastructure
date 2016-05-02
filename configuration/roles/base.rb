@@ -19,4 +19,5 @@ include_recipe '../cookbooks/monit/default.rb'
 # AWS
 include_recipe '../cookbooks/cloud_init/default.rb'
 include_recipe '../cookbooks/cloud_watch/default.rb'
+include_recipe '../cookbooks/code_deploy/default.rb'
 #include_recipe '../cookbooks/ec2_user/default.rb' # ec2-user自体を削除するため必ず最後に実行する
