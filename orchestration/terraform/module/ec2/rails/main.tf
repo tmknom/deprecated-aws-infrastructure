@@ -4,8 +4,11 @@ resource "aws_instance" "rails" {
   ami = "${var.ami_id}"
   subnet_id = "${var.subnet_id}"
   instance_type = "${var.instance_type}"
-  iam_instance_profile ="${var.instance_profile}"
-  security_groups = ["${var.security_group_id}", "${var.ssh_security_group_id}"]
+  iam_instance_profile = "${var.instance_profile}"
+  security_groups = [
+    "${var.security_group_id}",
+    "${var.ssh_security_group_id}"
+  ]
 
   associate_public_ip_address = true
   disable_api_termination = false
@@ -17,11 +20,10 @@ resource "aws_instance" "rails" {
   }
 
   tags {
-    Name = "${var.environment}-${var.role}-${var.cluster}-${var.application}-${count.index}"
+    Name = "${var.environment}-${var.role}-${var.application}-${count.index}"
 
     Environment = "${var.environment}"
     Application = "${var.application}"
-    Cluster = "${var.cluster}"
     Role = "${var.role}"
 
     DeploymentGroup = "${var.deployment_group}"

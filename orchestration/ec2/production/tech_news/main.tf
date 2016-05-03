@@ -28,7 +28,6 @@ module "rails_instance" {
 
   environment = "${var.environment}"
   application = "${var.application}"
-  cluster = "default"
   deployment_group = "${lower(var.environment)}-${var.application}"
   created = "${var.created}"
 }

@@ -32,9 +32,6 @@ variable "environment" {
 variable "application" {
 }
 
-variable "cluster" {
-}
-
 variable "deployment_group" {
 }
 
