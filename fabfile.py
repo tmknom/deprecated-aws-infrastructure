@@ -6,6 +6,9 @@
 
 from fabric.api import *
 
+from operation.fabfile import sg_authorize
+from operation.fabfile import sg_revoke
+
 BOOTSTRAPPING = 'bootstrapping'
 
 BASE_ROLE = 'base'
