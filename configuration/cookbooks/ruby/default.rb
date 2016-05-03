@@ -26,8 +26,8 @@ execute 'install ruby' do
     source #{RBENV_SHELL}
     #{RBENV} install #{RUBY_VERSION}
     #{RBENV} global #{RUBY_VERSION}
-    gem update --system --no-document
-    gem update --no-document
+    gem update --system --no-document --force
+    gem update --no-document --force
   EOL
 end
 
