@@ -104,4 +104,8 @@ def get_ssh_port_env():
 
 def get_current_ip_address():
     import urllib2
-    return urllib2.urlopen('http://inet-ip.info/ip').read()
+    try:
+        return urllib2.urlopen('http://inet-ip.info/ip').read()
+    except:
+        import json
+        return json.loads(urllib2.urlopen('http://httpbin.org/ip').read())['origin']
