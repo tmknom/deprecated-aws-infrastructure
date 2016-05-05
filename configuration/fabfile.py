@@ -19,7 +19,7 @@ DEFAULT_SSH_PORT = '22'
 
 @task
 def itamae_base():
-    '''base コンフィギュレーション（初回）'''
+    '''base コンフィギュレーション（初回） [-H <ip_address>]'''
     execute_itamae(
         BASE_ROLE,
         EC2_USER,
@@ -30,38 +30,38 @@ def itamae_base():
 
 @task
 def itamae_rails():
-    '''rails コンフィギュレーション'''
+    '''rails コンフィギュレーション [-H <ip_address>]'''
     itamae(RAILS_ROLE)
 
 
 @task
 def itamae_tech_news():
-    '''tech_news コンフィギュレーション'''
+    '''tech_news コンフィギュレーション [-H <ip_address>]'''
     itamae(TECH_NEWS_ROLE)
 
 
 # base は初回実行時とSSHのポートが異なるため、特別に実装している（base以外は不要）
 @task
 def itamae_re_base():
-    '''base コンフィギュレーション（２回目以降）'''
+    '''base コンフィギュレーション（２回目以降） [-H <ip_address>]'''
     itamae(BASE_ROLE)
 
 
 @task
 def spec_base():
-    '''base のServerspec実行'''
+    '''base のServerspec実行 [-H <ip_address>]'''
     serverspec(BASE_ROLE)
 
 
 @task
 def spec_rails():
-    '''rails のServerspec実行'''
+    '''rails のServerspec実行 [-H <ip_address>]'''
     serverspec(RAILS_ROLE)
 
 
 @task
 def spec_tech_news():
-    '''tech_news のServerspec実行'''
+    '''tech_news のServerspec実行 [-H <ip_address>]'''
     serverspec(TECH_NEWS_ROLE)
 
 
