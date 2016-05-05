@@ -19,6 +19,7 @@ BOOTSTRAPPING = 'bootstrapping'
 
 BASE_ROLE = 'base'
 RAILS_ROLE = 'rails'
+TECH_NEWS_ROLE = 'tech_news'
 
 
 @task
@@ -31,6 +32,12 @@ def ami_base():
 def ami_rails():
     '''Rails AMI の作成'''
     ami(RAILS_ROLE)
+
+
+@task
+def ami_tech_news():
+    '''TechNews AMI の作成'''
+    ami(TECH_NEWS_ROLE)
 
 
 def ami(role):
