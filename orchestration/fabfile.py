@@ -9,14 +9,19 @@ from fabric.api import *
 from terraform.cli.cli_helper import *
 from helper import *
 
-ENV_PRODUCTION = 'Production'
-
 
 @task
 def build_ec2_production():
     '''本番環境のEC2構築'''
-    rails_tf_vars = get_ec2_tf_vars(ENV_PRODUCTION, 'Rails')
-    terraform_apply('ec2/production/tech_news', rails_tf_vars)
+    tf_vars = get_ec2_tf_vars(ENVIRONMENT_PRODUCTION, ROLE_RAILS, TECH_NEWS)
+    terraform_apply('ec2/production/tech_news', tf_vars)
+
+
+@task
+def build_ec2_testing():
+    '''テスト環境のEC2構築'''
+    tf_vars = get_ec2_tf_vars(ENVIRONMENT_PRODUCTION, ROLE_RAILS, TECH_NEWS)
+    terraform_apply('ec2/testing/tech_news', tf_vars)
 
 
 @task

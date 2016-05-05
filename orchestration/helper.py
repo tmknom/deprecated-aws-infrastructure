@@ -12,6 +12,8 @@ ROLE_RAILS = 'Rails'
 NETWORK_PUBLIC = 'Public'
 NETWORK_PRIVATE = 'Private'
 
+TECH_NEWS = 'TechNews'
+
 
 def get_tf_vars():
     production_vpc_id = get_vpc_id(ENVIRONMENT_PRODUCTION)
@@ -23,9 +25,9 @@ def get_tf_vars():
     return result
 
 
-def get_ec2_tf_vars(environment, role):
+def get_ec2_tf_vars(environment, role, application):
     aws_account_id = get_aws_account_id()
-    ami_id = get_latest_ami_id(role, aws_account_id)
+    ami_id = get_latest_ami_id(application, aws_account_id)
     subnet_id = get_ec2_subnet_ids(environment)
     security_group_id = get_security_group_id(environment, role)
     ssh_security_group_id = get_security_group_id(environment, ROLE_SSH)
