@@ -59,6 +59,12 @@ def spec_rails():
     serverspec(RAILS_ROLE)
 
 
+@task
+def spec_tech_news():
+    '''tech_news のServerspec実行'''
+    serverspec(TECH_NEWS_ROLE)
+
+
 def itamae(role):
     execute_itamae(
         role,

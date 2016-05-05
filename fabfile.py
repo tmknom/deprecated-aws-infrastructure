@@ -11,6 +11,7 @@ from configuration.fabfile import itamae_rails
 from configuration.fabfile import itamae_tech_news
 from configuration.fabfile import spec_base
 from configuration.fabfile import spec_rails
+from configuration.fabfile import spec_tech_news
 from operation.fabfile import sg_authorize
 from operation.fabfile import sg_revoke
 
