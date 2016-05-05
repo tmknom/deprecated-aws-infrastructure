@@ -17,7 +17,7 @@ DEFAULT_SSH_PORT = '22'
 
 
 @task
-def base():
+def itamae_base():
     '''base コンフィギュレーション（初回）'''
     execute_itamae(
         BASE_ROLE,
@@ -28,14 +28,14 @@ def base():
 
 
 @task
-def rails():
+def itamae_rails():
     '''rails コンフィギュレーション'''
     itamae(RAILS_ROLE)
 
 
 # base は初回実行時とSSHのポートが異なるため、特別に実装している（base以外は不要）
 @task
-def re_base():
+def itamae_re_base():
     '''base コンフィギュレーション（２回目以降）'''
     itamae(BASE_ROLE)
 
