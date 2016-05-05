@@ -8,6 +8,7 @@ from fabric.api import *
 
 from configuration.fabfile import itamae_base
 from configuration.fabfile import itamae_rails
+from configuration.fabfile import itamae_tech_news
 from configuration.fabfile import spec_base
 from configuration.fabfile import spec_rails
 from operation.fabfile import sg_authorize
