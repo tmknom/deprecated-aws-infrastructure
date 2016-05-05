@@ -13,7 +13,7 @@ type Itamae struct {
 
 func (i Itamae) Execute() {
 	fmt.Println("Provisioning with itamae: " + i.Role)
-	cmd := exec.Command("fab", i.Role.String(), "-H", i.IpAddress)
+	cmd := exec.Command("fab", "itamae_"+i.Role.String(), "-H", i.IpAddress)
 	Shell{}.cdConfigurationPath()
 	Shell{Command: *cmd}.executeCommand()
 }
