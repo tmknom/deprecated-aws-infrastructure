@@ -7,8 +7,9 @@ import (
 type Role string
 
 const (
-	BASE  Role = "base"
-	RAILS Role = "rails"
+	BASE      Role = "base"
+	RAILS     Role = "rails"
+	TECH_NEWS Role = "tech_news"
 )
 
 func NewRole(value string) Role {
@@ -20,14 +21,17 @@ func (r Role) String() string {
 }
 
 func (r Role) ToTag() string {
-	lower := strings.ToLower(string(r))
-	return strings.ToUpper(lower[:1]) + lower[1:]
+	underscoreToSpace := strings.Replace(string(r), "_", " ", -1)
+	toTitled := strings.Title(underscoreToSpace)
+	return strings.Replace(toTitled, " ", "", -1)
 }
 
 func (r Role) Parent() Role {
 	switch r {
 	case RAILS:
 		return BASE
+	case TECH_NEWS:
+		return RAILS
 	default:
 		panic("No such parent role : " + r.String())
 	}

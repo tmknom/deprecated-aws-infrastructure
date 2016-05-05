@@ -11,6 +11,7 @@ from fabric.api import *
 
 BASE_ROLE = 'base'
 RAILS_ROLE = 'rails'
+TECH_NEWS_ROLE = 'tech_news'
 
 EC2_USER = 'ec2-user'
 DEFAULT_SSH_PORT = '22'
@@ -33,6 +34,12 @@ def itamae_rails():
     itamae(RAILS_ROLE)
 
 
+@task
+def itamae_tech_news():
+    '''tech_news コンフィギュレーション'''
+    itamae(TECH_NEWS_ROLE)
+
+
 # base は初回実行時とSSHのポートが異なるため、特別に実装している（base以外は不要）
 @task
 def itamae_re_base():
@@ -50,6 +57,12 @@ def spec_base():
 def spec_rails():
     '''rails のServerspec実行'''
     serverspec(RAILS_ROLE)
+
+
+@task
+def spec_tech_news():
+    '''tech_news のServerspec実行'''
+    serverspec(TECH_NEWS_ROLE)
 
 
 def itamae(role):
