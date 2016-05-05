@@ -29,17 +29,20 @@ func (ab AmiBuilder) Build(instanceId ec2.InstanceId, role Role, parentAmiId str
 	// EC2インスタンスを停止
 	ec2.Ec2Instance{Ec2Api: *ab.Ec2Service}.Stop(instanceId)
 
+	// 現時刻の取得
+	currentTime := time.Now()
+
 	// AMIの作成
 	amiParam := ami.AmiParam{
-		InstanceId: instanceId.String(),
-		Name:       role.ToTag(),
+		InstanceId:  instanceId.String(),
+		Name:        role.ToTag(),
+		CurrentTime: currentTime,
 	}
 	ami := ami.Ami{Ec2Api: *ab.Ec2Service}
 	imageId := ami.Create(amiParam)
 
 	// タグの設定の準備
 	snapshotId := ami.GetSnapshotId(*imageId)
-	currentTime := time.Now()
 	tagClient := tag.Tag{Ec2Api: *ab.Ec2Service}
 
 	// AMIのタグの設定

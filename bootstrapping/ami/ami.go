@@ -2,6 +2,7 @@ package ami
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/ec2"
@@ -12,8 +13,9 @@ type Ami struct {
 }
 
 type AmiParam struct {
-	InstanceId string
-	Name       string
+	InstanceId  string
+	Name        string
+	CurrentTime time.Time
 }
 
 func (ami Ami) GetImageId(role string) *string {
@@ -46,7 +48,7 @@ func (ami Ami) createImage(input *ec2.CreateImageInput) (*ec2.CreateImageOutput,
 func (ami Ami) createImageInput(param AmiParam) *ec2.CreateImageInput {
 	return &ec2.CreateImageInput{
 		InstanceId: aws.String(param.InstanceId),
-		Name:       aws.String(param.Name),
+		Name:       aws.String(param.Name + "-" + param.CurrentTime.Format("20060102-150405")),
 	}
 }
 
