@@ -11,7 +11,7 @@ variable "security_group_id" {}     # 実行時に動的に環境変数定義 : 
 variable "ssh_security_group_id" {} # 実行時に動的に環境変数定義 : TF_VAR_ssh_security_group_id
 variable "created" {}               # 実行時に動的に環境変数定義 : TF_VAR_created
 
-module "rails_instance" {
+module "testing_tech_news" {
   source = "../../../terraform/module/ec2/rails"
 
   instance_count = "1"
