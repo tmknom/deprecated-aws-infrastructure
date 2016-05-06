@@ -25,6 +25,11 @@ def build_testing():
     create_instance_tag(instance_id)
 
 
+def stop_testing():
+    instance_id = get_instance_id(ENVIRONMENT_TESTING, ROLE_RAILS, APPLICATION_TECH_NEWS)
+    stop_instances(instance_id)
+
+
 def remove_testing():
     instance_id = get_instance_id(ENVIRONMENT_TESTING, ROLE_RAILS, APPLICATION_TECH_NEWS)
     terminate_instances(instance_id)
@@ -101,6 +106,13 @@ def create_tags(instance_id, tag_key, tag_value):
               + " --resources %s " % (instance_id) \
               + " --tags Key=%s,Value=%s " % (tag_key, tag_value)
     local(command)
+
+
+def stop_instances(instance_id):
+    command = "aws ec2 stop-instances " \
+              + " --instance-ids %s " % (instance_id)
+    result = local(command, capture=True)
+    return result
 
 
 def terminate_instances(instance_id):
