@@ -38,7 +38,8 @@ def terraform_destroy(resource_dir, tf_vars=''):
 
 
 def execute_terraform(resource_dir, tf_vars, command):
-    with lcd('%s' % (resource_dir)):
+    tf_dir = get_current_dir() + '/../../' + resource_dir
+    with lcd('%s' % (tf_dir)):
         remote_config(resource_dir)
         local('terraform remote pull')
         local('terraform get')
@@ -65,3 +66,8 @@ def get_s3_suffix():
     command = 'echo $TF_VAR_s3_suffix'
     result = local(command, capture=True)
     return result
+
+
+def get_current_dir():
+    import os
+    return os.path.abspath(os.path.dirname(__file__))
