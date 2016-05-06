@@ -23,6 +23,6 @@ describe 'nginx' do
     it { should be_owned_by 'root' }
     it { should be_grouped_into 'root' }
     it { should be_mode 600 }
-    its(:content) { should match /server unix:\/home\/ec2-user\/tmp\/pids\/unicorn\.sock;$/ }
+    its(:content) { should match /server unix:\/var\/run\/app\/unicorn\.sock;$/ }
   end
 end
