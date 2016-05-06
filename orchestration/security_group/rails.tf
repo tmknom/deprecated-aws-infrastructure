@@ -5,7 +5,7 @@ module "rails" {
   description = "allow http anywhere"
   environment = "${var.production}"
 
-  port = "3000"
+  port = "80"
   cidr_block = "0.0.0.0/0"
   vpc_id = "${var.production_vpc_id}"
 }
