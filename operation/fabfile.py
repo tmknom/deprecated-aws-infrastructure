@@ -35,6 +35,12 @@ def ec2_re_build_testing():
 
 
 @task
+def ec2_start_testing():
+    '''テスト環境のEC2開始'''
+    ec2.start_testing()
+
+
+@task
 def ec2_stop_testing():
     '''テスト環境のEC2停止'''
     ec2.stop_testing()
