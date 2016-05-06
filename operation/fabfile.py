@@ -7,6 +7,7 @@
 from fabric.api import *
 
 from security_group import security_group
+from ec2 import ec2
 
 
 @task
@@ -19,3 +20,9 @@ def sg_authorize():
 def sg_revoke():
     '''管理者VPCへのアクセス許可の取り消し'''
     security_group.revoke()
+
+
+@task
+def ec2_build_testing():
+    '''テスト環境のEC2構築'''
+    ec2.build_testing()
