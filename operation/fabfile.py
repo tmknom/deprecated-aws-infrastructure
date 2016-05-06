@@ -26,3 +26,9 @@ def sg_revoke():
 def ec2_build_testing():
     '''テスト環境のEC2構築'''
     ec2.build_testing()
+
+
+@task
+def ec2_remove_testing():
+    '''テスト環境のEC2削除'''
+    ec2.remove_testing()

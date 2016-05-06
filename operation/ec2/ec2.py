@@ -20,6 +20,11 @@ def build_testing():
     create_instance_tag(instance_id)
 
 
+def remove_testing():
+    instance_id = get_instance_id(ENVIRONMENT_TESTING, ROLE_RAILS, APPLICATION_TECH_NEWS)
+    terminate_instances(instance_id)
+
+
 def create_instance():
     ami_id = get_ami_id(ROLE_TECH_NEWS)
     subnet_id = get_subnet_id(ENVIRONMENT_PRODUCTION, NETWORK_PUBLIC)
@@ -91,3 +96,22 @@ def create_tags(instance_id, tag_key, tag_value):
               + " --resources %s " % (instance_id) \
               + " --tags Key=%s,Value=%s " % (tag_key, tag_value)
     local(command)
+
+
+def terminate_instances(instance_id):
+    command = "aws ec2 terminate-instances " \
+              + " --instance-ids %s " % (instance_id)
+    result = local(command, capture=True)
+    return result
+
+
+def get_instance_id(environment, role, application):
+    name = '-'.join([environment, role, application])
+    command = "aws ec2 describe-instances " \
+              + " --filters " \
+              + " 'Name=tag-key,Values=Name' " \
+              + " 'Name=tag-value,Values=%s' " % (name) \
+              + " 'Name=instance-state-name,Values=running' " \
+              + " | jq -r '.Reservations[].Instances[].InstanceId' "
+    result = local(command, capture=True)
+    return result
