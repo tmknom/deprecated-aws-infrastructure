@@ -15,6 +15,11 @@ NETWORK_PUBLIC = 'Public'
 APPLICATION_TECH_NEWS = 'tech-news'
 
 
+def re_build_testing():
+    remove_testing()
+    build_testing()
+
+
 def build_testing():
     instance_id = create_instance()
     create_instance_tag(instance_id)
