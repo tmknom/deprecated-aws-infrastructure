@@ -19,5 +19,6 @@ from operation.fabfile import sg_authorize
 from operation.fabfile import sg_revoke
 from operation.fabfile import ec2_build_testing
 from operation.fabfile import ec2_re_build_testing
+from operation.fabfile import ec2_start_testing
 from operation.fabfile import ec2_stop_testing
 from operation.fabfile import ec2_remove_testing

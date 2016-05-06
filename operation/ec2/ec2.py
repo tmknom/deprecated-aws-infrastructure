@@ -25,6 +25,11 @@ def build_testing():
     create_instance_tag(instance_id)
 
 
+def start_testing():
+    instance_id = get_instance_id(ENVIRONMENT_TESTING, ROLE_RAILS, APPLICATION_TECH_NEWS)
+    start_instances(instance_id)
+
+
 def stop_testing():
     instance_id = get_instance_id(ENVIRONMENT_TESTING, ROLE_RAILS, APPLICATION_TECH_NEWS)
     stop_instances(instance_id)
@@ -108,6 +113,13 @@ def create_tags(instance_id, tag_key, tag_value):
     local(command)
 
 
+def start_instances(instance_id):
+    command = "aws ec2 start-instances " \
+              + " --instance-ids %s " % (instance_id)
+    result = local(command, capture=True)
+    return result
+
+
 def stop_instances(instance_id):
     command = "aws ec2 stop-instances " \
               + " --instance-ids %s " % (instance_id)
@@ -128,7 +140,7 @@ def get_instance_id(environment, role, application):
               + " --filters " \
               + " 'Name=tag-key,Values=Name' " \
               + " 'Name=tag-value,Values=%s' " % (name) \
-              + " 'Name=instance-state-name,Values=running' " \
+              + " 'Name=instance-state-name,Values=running,stopped' " \
               + " | jq -r '.Reservations[].Instances[].InstanceId' "
     result = local(command, capture=True)
     return result
