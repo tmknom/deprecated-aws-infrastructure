@@ -18,6 +18,10 @@ variable "production" {
   default = "Production"
 }
 
+variable "testing" {
+  default = "Testing"
+}
+
 variable "administration" {
   default = "Administration"
 }
