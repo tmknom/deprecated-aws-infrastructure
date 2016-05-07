@@ -31,12 +31,14 @@ def get_ec2_tf_vars(environment, role, application):
     ami_id = get_latest_ami_id(application, aws_account_id)
     subnet_id = get_ec2_subnet_ids(environment)
     security_group_id = get_security_group_id(environment, role)
+    rds_security_group_id = get_security_group_id(environment, ROLE_MYSQL_CLIENT)
     ssh_security_group_id = get_security_group_id(environment, ROLE_SSH)
     created = get_created()
 
     result = ' TF_VAR_ami_id=%s' % (ami_id) \
              + ' TF_VAR_subnet_id=%s' % (subnet_id) \
              + ' TF_VAR_security_group_id=%s' % (security_group_id) \
+             + ' TF_VAR_rds_security_group_id=%s' % (rds_security_group_id) \
              + ' TF_VAR_ssh_security_group_id=%s' % (ssh_security_group_id) \
              + ' TF_VAR_created=%s' % (created)
     return result

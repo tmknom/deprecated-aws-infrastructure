@@ -7,6 +7,7 @@ resource "aws_instance" "rails" {
   iam_instance_profile = "${var.instance_profile}"
   security_groups = [
     "${var.security_group_id}",
+    "${var.rds_security_group_id}",
     "${var.ssh_security_group_id}"
   ]
 

@@ -20,10 +20,13 @@ variable "instance_profile" {
 variable "security_group_id" {
 }
 
-variable "volume_size" {
+variable "rds_security_group_id" {
 }
 
 variable "ssh_security_group_id" {
+}
+
+variable "volume_size" {
 }
 
 variable "environment" {
