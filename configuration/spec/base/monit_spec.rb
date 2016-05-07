@@ -29,13 +29,21 @@ describe 'monit' do
     end
   end
 
-  describe 'sshd config' do
+  describe 'config' do
     describe file('/etc/monit.d/sshd.conf') do
       it { should be_file }
       it { should be_owned_by 'root' }
       it { should be_grouped_into 'root' }
       it { should be_mode 600 }
       its(:content) { should match /^check\s+process\s+sshd\s+with\s+pidfile\s+\/var\/run\/sshd\.pid$/ }
+    end
+
+    describe file('/etc/monit.d/crond.conf') do
+      it { should be_file }
+      it { should be_owned_by 'root' }
+      it { should be_grouped_into 'root' }
+      it { should be_mode 600 }
+      its(:content) { should match /^check\s+process\s+crond\s+with\s+pidfile\s+\/var\/run\/crond\.pid$/ }
     end
   end
 end

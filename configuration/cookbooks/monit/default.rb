@@ -17,6 +17,13 @@ remote_file '/etc/monit.d/sshd.conf' do
   mode '0600'
 end
 
+remote_file '/etc/monit.d/crond.conf' do
+  source 'files/etc/monit.d/crond.conf'
+  owner 'root'
+  group 'root'
+  mode '0600'
+end
+
 execute 'set cron monit' do
   not_if 'cat /var/spool/cron/root | grep "/usr/bin/monit monitor all"'
   command <<-EOL
