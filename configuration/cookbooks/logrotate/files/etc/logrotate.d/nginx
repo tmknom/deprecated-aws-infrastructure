@@ -2,10 +2,15 @@
     create 0644 nginx nginx
     daily
     rotate 30
+
     missingok
     notifempty
+
+    dateext
+
     compress
     delaycompress
+
     sharedscripts
     postrotate
         /etc/init.d/nginx reopen_logs
