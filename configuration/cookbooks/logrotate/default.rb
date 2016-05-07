@@ -11,3 +11,10 @@ remote_file '/etc/logrotate.d/syslog' do
   group 'root'
   mode '0644'
 end
+
+remote_file '/etc/logrotate.d/monit' do
+  source 'files/etc/logrotate.d/monit'
+  owner 'root'
+  group 'root'
+  mode '0644'
+end

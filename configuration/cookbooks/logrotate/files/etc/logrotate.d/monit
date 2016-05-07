@@ -1,0 +1,13 @@
+/var/log/monit {
+    weekly
+    rotate 12
+    missingok
+    notifempty
+    compress
+    delaycompress
+    size 100k
+    create 0644 root root
+    postrotate
+        /usr/bin/pkill -HUP -U root -x monit > /dev/null 2>&1 || :
+    endscript
+}
