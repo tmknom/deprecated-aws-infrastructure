@@ -8,6 +8,7 @@ package 'http://rpms.famillecollet.com/enterprise/remi-release-6.rpm' do
 end
 
 execute 'disable remi' do
+  only_if "cat /etc/yum.repos.d/remi.repo | grep enabled | grep -v 0"
   command 'sed -i \'s/enabled\s=\s1/enabled=0/g\' /etc/yum.repos.d/remi.repo'
 end
 
@@ -18,5 +19,6 @@ package 'http://pkgs.repoforge.org/rpmforge-release/rpmforge-release-0.5.3-1.el6
 end
 
 execute 'disable rpmforge' do
+  only_if "cat /etc/yum.repos.d/rpmforge.repo | grep enabled | grep -v 0"
   command 'sed -i \'s/enabled\s=\s1/enabled=0/g\' /etc/yum.repos.d/rpmforge.repo'
 end

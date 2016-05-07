@@ -5,5 +5,6 @@ execute 'backup /etc/sudoers' do
 end
 
 execute 'enable sudo wheel' do
+  not_if "cat /etc/sudoers | grep '^%wheel'"
   command 'sed -i \'s/^# %wheel\(\s\+ALL=(ALL)\s\+ALL$\)/%wheel\1/\' /etc/sudoers'
 end
