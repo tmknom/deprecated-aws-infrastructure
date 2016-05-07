@@ -8,6 +8,7 @@ ENVIRONMENT_PRODUCTION = 'Production'
 
 ROLE_SSH = 'SSH'
 ROLE_RAILS = 'Rails'
+ROLE_MYSQL_CLIENT = 'MySQLClient'
 ROLE_TECH_NEWS = 'TechNews'
 
 NETWORK_PUBLIC = 'Public'
@@ -43,9 +44,10 @@ def remove_testing():
 def create_instance():
     ami_id = get_ami_id(ROLE_TECH_NEWS)
     subnet_id = get_subnet_id(ENVIRONMENT_PRODUCTION, NETWORK_PUBLIC)
-    security_group_id = get_security_group_id(ENVIRONMENT_PRODUCTION, ROLE_RAILS)
+    security_group_id = get_security_group_id(ENVIRONMENT_TESTING, ROLE_RAILS)
     ssh_security_group_id = get_security_group_id(ENVIRONMENT_PRODUCTION, ROLE_SSH)
-    return run_instances(ami_id, subnet_id, security_group_id, ssh_security_group_id)
+    rds_security_group_id = get_security_group_id(ENVIRONMENT_PRODUCTION, ROLE_MYSQL_CLIENT)
+    return run_instances(ami_id, subnet_id, security_group_id, ssh_security_group_id, rds_security_group_id)
 
 
 def create_instance_tag(instance_id):
@@ -56,11 +58,11 @@ def create_instance_tag(instance_id):
     create_tags(instance_id, 'Roles', ROLE_RAILS)
 
 
-def run_instances(ami_id, subnet_id, security_group_id, ssh_security_group_id):
+def run_instances(ami_id, subnet_id, security_group_id, ssh_security_group_id, rds_security_group_id):
     command = "aws ec2 run-instances  " \
               + " --image-id %s " % (ami_id) \
               + " --subnet-id %s " % (subnet_id) \
-              + " --security-group-ids %s %s " % (security_group_id, ssh_security_group_id) \
+              + " --security-group-ids %s %s %s " % (security_group_id, ssh_security_group_id, rds_security_group_id) \
               + " --instance-type t2.micro " \
               + " --iam-instance-profile Name=RailsInstanceProfile " \
               + " --associate-public-ip-address " \
