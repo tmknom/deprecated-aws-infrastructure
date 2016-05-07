@@ -8,6 +8,7 @@ ENVIRONMENT_ADMINISTRATION = 'Administration'
 
 ROLE_SSH = 'SSH'
 ROLE_RAILS = 'Rails'
+ROLE_MYSQL_CLIENT = 'MySQLClient'
 
 NETWORK_PUBLIC = 'Public'
 NETWORK_PRIVATE = 'Private'
@@ -78,7 +79,7 @@ def get_db_tf_vars():
 
 
 def get_db_source_security_group_id():
-    return get_security_group_id(ENVIRONMENT_PRODUCTION, ROLE_RAILS)
+    return get_security_group_id(ENVIRONMENT_PRODUCTION, ROLE_MYSQL_CLIENT)
 
 
 def get_db_subnet_ids():
