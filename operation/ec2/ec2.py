@@ -44,7 +44,7 @@ def remove_testing():
 def create_instance():
     ami_id = get_ami_id(ROLE_TECH_NEWS)
     subnet_id = get_subnet_id(ENVIRONMENT_PRODUCTION, NETWORK_PUBLIC)
-    security_group_id = get_security_group_id(ENVIRONMENT_PRODUCTION, ROLE_RAILS)
+    security_group_id = get_security_group_id(ENVIRONMENT_TESTING, ROLE_RAILS)
     ssh_security_group_id = get_security_group_id(ENVIRONMENT_PRODUCTION, ROLE_SSH)
     rds_security_group_id = get_security_group_id(ENVIRONMENT_PRODUCTION, ROLE_MYSQL_CLIENT)
     return run_instances(ami_id, subnet_id, security_group_id, ssh_security_group_id, rds_security_group_id)
