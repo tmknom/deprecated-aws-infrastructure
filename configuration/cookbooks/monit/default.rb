@@ -1,3 +1,5 @@
+# https://blog.cloudpack.jp/2011/08/11/server-news-centos6-monit-install/
+
 package 'monit' do
   action :install
 end
@@ -26,6 +28,13 @@ end
 
 remote_file '/etc/monit.d/ntpd.conf' do
   source 'files/etc/monit.d/ntpd.conf'
+  owner 'root'
+  group 'root'
+  mode '0600'
+end
+
+remote_file '/etc/monit.d/rsyslog.conf' do
+  source 'files/etc/monit.d/rsyslog.conf'
   owner 'root'
   group 'root'
   mode '0600'
