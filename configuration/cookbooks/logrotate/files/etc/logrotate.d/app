@@ -1,0 +1,22 @@
+/var/log/app/*log {
+    create 0644 ec2-user ec2-user
+    daily
+    rotate 30
+
+    missingok
+    notifempty
+
+    size 10M
+    dateext
+
+    compress
+    delaycompress
+
+    lastaction
+        unicorn_pid=/var/run/app/unicorn.pid
+        test -s $unicorn_pid && kill -USR1 "$(cat $unicorn_pid)"
+
+        sidekiq_pid=/var/run/app/sidekiq.pid
+        test -s $sidekiq_pid && kill -USR2 "$(cat $sidekiq_pid)"
+    endscript
+}
