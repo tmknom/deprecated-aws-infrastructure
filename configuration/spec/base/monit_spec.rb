@@ -45,5 +45,13 @@ describe 'monit' do
       it { should be_mode 600 }
       its(:content) { should match /^check\s+process\s+crond\s+with\s+pidfile\s+\/var\/run\/crond\.pid$/ }
     end
+
+    describe file('/etc/monit.d/ntpd.conf') do
+      it { should be_file }
+      it { should be_owned_by 'root' }
+      it { should be_grouped_into 'root' }
+      it { should be_mode 600 }
+      its(:content) { should match /^check\s+process\s+ntpd\s+with\s+pidfile\s+\/var\/run\/ntpd\.pid$/ }
+    end
   end
 end
