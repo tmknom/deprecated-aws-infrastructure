@@ -14,6 +14,7 @@ include_recipe '../cookbooks/command_log/default.rb'
 include_recipe '../cookbooks/monit/default.rb'
 
 # general
+include_recipe '../cookbooks/logrotate/default.rb'
 #include_recipe '../cookbooks/swap/default.rb'
 
 # AWS
