@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 APPLICATION_USER = 'ec2-user'
+APPLICATION_USER_HOME = ENV['APPLICATION_USER_HOME']
 
 describe 'directory' do
   describe file('/var/log/app') do
@@ -19,7 +20,7 @@ describe 'directory' do
 end
 
 describe 'environment variables' do
-  describe file('/home/ec2-user/.bashrc') do
+  describe file("#{APPLICATION_USER_HOME}/.bashrc") do
     its(:content) { should match /^export\s+DATABASE_HOST=/ }
     its(:content) { should match /^export\s+DATABASE_PORT=/ }
     its(:content) { should match /^export\s+DATABASE_DB=/ }
