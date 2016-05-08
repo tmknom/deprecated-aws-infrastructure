@@ -103,7 +103,7 @@ def get_ami_id(role):
               + " --filters " \
               + " 'Name=tag-key,Values=Role' " \
               + " 'Name=tag-value,Values=%s' " % (role) \
-              + " | jq -r '.Images[].ImageId' "
+              + " | jq -r '.Images | sort_by(.CreationDate) | reverse | .[0].ImageId' "
     result = local(command, capture=True)
     return result
 
