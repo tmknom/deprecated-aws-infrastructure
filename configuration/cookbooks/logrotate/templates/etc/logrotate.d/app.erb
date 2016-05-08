@@ -1,5 +1,5 @@
 /var/log/app/*log {
-    create 0644 ec2-user ec2-user
+    create 0644 <%= @application_user_name %> <%= @application_user_name %>
     daily
     rotate 30
 

@@ -9,6 +9,10 @@ export SSH_USER_NAME='xxxx'
 export SSH_PUBLIC_KEY_FULL_PATH='/full/path/to/key.pub'
 export SSH_SHADOW_PASSWORD='xxxxxxxx'
 
+# アプリケーションユーザ設定
+export APPLICATION_USER_NAME='xxxx'
+export APPLICATION_USER_HOME='xxxx'
+
 # AWSユーザ設定
 export AWS_LOGIN_USER='xxxx'
 export AWS_CLI_USER='cli-xxxx'
