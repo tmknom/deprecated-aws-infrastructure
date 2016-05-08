@@ -5,4 +5,5 @@ APPLICATION_USER_HOME = ENV['APPLICATION_USER_HOME']
 # Add user
 user APPLICATION_USER_NAME do
   home APPLICATION_USER_HOME
+  shell '/sbin/nologin'
 end
