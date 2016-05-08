@@ -1,3 +1,4 @@
+APPLICATION_USER_NAME = ENV['APPLICATION_USER_NAME']
 APPLICATION_USER_HOME = ENV['APPLICATION_USER_HOME']
 
 package 'nginx' do
@@ -8,8 +9,9 @@ service 'nginx' do
   action [:enable, :start]
 end
 
-remote_file '/etc/nginx/nginx.conf' do
-  source 'files/etc/nginx/nginx.conf'
+template '/etc/nginx/nginx.conf' do
+  source 'templates/etc/nginx/nginx.conf.erb'
+  variables(application_user_name: APPLICATION_USER_NAME)
   owner 'root'
   group 'root'
   mode '0600'
