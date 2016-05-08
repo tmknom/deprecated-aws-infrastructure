@@ -6,14 +6,14 @@ APPLICATION_USER_HOME = ENV['APPLICATION_USER_HOME']
 describe 'directory' do
   describe file('/var/log/app') do
     it { should be_directory }
-    it { should be_mode 777 }
+    it { should be_mode 700 }
     it { should be_owned_by APPLICATION_USER_NAME }
     it { should be_grouped_into APPLICATION_USER_NAME }
   end
 
   describe file('/var/run/app') do
     it { should be_directory }
-    it { should be_mode 777 }
+    it { should be_mode 700 }
     it { should be_owned_by APPLICATION_USER_NAME }
     it { should be_grouped_into APPLICATION_USER_NAME }
   end
