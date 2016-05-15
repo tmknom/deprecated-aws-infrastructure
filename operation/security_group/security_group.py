@@ -21,6 +21,7 @@ def authorize():
     revoke()
     current_ip_address = get_current_ip_address()
     authorize_security_group(current_ip_address, ENVIRONMENT_ADMINISTRATION, ROLE_INITIALIZATION)
+    authorize_security_group(current_ip_address, ENVIRONMENT_ADMINISTRATION, ROLE_RAILS)
     authorize_security_group(current_ip_address, ENVIRONMENT_ADMINISTRATION, ROLE_SSH)
     authorize_security_group(current_ip_address, ENVIRONMENT_PRODUCTION, ROLE_SSH)
     authorize_security_group(current_ip_address, ENVIRONMENT_TESTING, ROLE_RAILS)
@@ -28,6 +29,7 @@ def authorize():
 
 def revoke():
     revoke_security_group(ENVIRONMENT_ADMINISTRATION, ROLE_INITIALIZATION)
+    revoke_security_group(ENVIRONMENT_ADMINISTRATION, ROLE_RAILS)
     revoke_security_group(ENVIRONMENT_ADMINISTRATION, ROLE_SSH)
     revoke_security_group(ENVIRONMENT_PRODUCTION, ROLE_SSH)
     revoke_security_group(ENVIRONMENT_TESTING, ROLE_RAILS)
