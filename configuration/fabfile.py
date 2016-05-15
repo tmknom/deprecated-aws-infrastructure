@@ -12,9 +12,13 @@ from fabric.api import *
 BASE_ROLE = 'base'
 RAILS_ROLE = 'rails'
 TECH_NEWS_ROLE = 'tech_news'
+VAGRANT_ROLE = 'vagrant'
 
 EC2_USER = 'ec2-user'
+VAGRANT_USER = 'vagrant'
+
 DEFAULT_SSH_PORT = '22'
+VAGRANT_IP_ADDRESS = '192.168.100.11'
 
 
 @task
@@ -45,6 +49,25 @@ def itamae_tech_news():
 def itamae_re_base():
     '''base コンフィギュレーション（２回目以降） [-H <ip_address>]'''
     itamae(BASE_ROLE)
+
+
+@task
+def itamae_vagrant():
+    '''vagrant コンフィギュレーション'''
+    env.hosts = [VAGRANT_IP_ADDRESS]
+    private_key = get_vagrant_private_key()
+    execute_itamae(
+        VAGRANT_ROLE,
+        VAGRANT_USER,
+        DEFAULT_SSH_PORT,
+        private_key
+    )
+
+
+def get_vagrant_private_key():
+    command = "vagrant ssh-config | grep IdentityFile | cut -d ' ' -f 4- | tr -d '\"'"
+    result = local(command, capture=True)
+    return result
 
 
 @task
