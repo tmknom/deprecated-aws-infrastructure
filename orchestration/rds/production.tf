@@ -13,7 +13,7 @@ module "security_group" {
   environment = "${var.production}"
 
   port = "${var.db_port}"
-  source_security_group_id = "${var.db_source_security_group_id}"
+  source_security_group_id = "${var.production_db_source_security_group_id}"
   vpc_id = "${var.production_vpc_id}"
 }
 
@@ -27,7 +27,7 @@ module "rds" {
   master_user_name = "${var.db_master_user_name}"
   master_user_password = "${var.db_initial_password}"
 
-  subnet_ids = "${var.db_subnet_ids}"
+  subnet_ids = "${var.production_db_subnet_ids}"
   security_group_id = "${module.security_group.id}"
 
   availability_zone = "${element(split(",", var.availability_zones), 1)}"

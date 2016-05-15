@@ -72,20 +72,24 @@ def get_latest_ami_id(role, aws_account_id):
 
 
 def get_db_tf_vars():
-    db_subnet_ids = get_db_subnet_ids()
-    db_source_security_group_id = get_db_source_security_group_id()
+    production_db_subnet_ids = get_db_subnet_ids(ENVIRONMENT_PRODUCTION)
+    production_db_source_security_group_id = get_db_source_security_group_id(ENVIRONMENT_PRODUCTION)
+    administration_db_subnet_ids = get_db_subnet_ids(ENVIRONMENT_ADMINISTRATION)
+    administration_db_source_security_group_id = get_db_source_security_group_id(ENVIRONMENT_ADMINISTRATION)
     result = get_tf_vars() \
-             + ' TF_VAR_db_subnet_ids=%s' % (db_subnet_ids) \
-             + ' TF_VAR_db_source_security_group_id=%s' % (db_source_security_group_id)
+             + ' TF_VAR_administration_db_subnet_ids=%s' % (administration_db_subnet_ids) \
+             + ' TF_VAR_administration_db_source_security_group_id=%s' % (administration_db_source_security_group_id) \
+             + ' TF_VAR_production_db_subnet_ids=%s' % (production_db_subnet_ids) \
+             + ' TF_VAR_production_db_source_security_group_id=%s' % (production_db_source_security_group_id)
     return result
 
 
-def get_db_source_security_group_id():
-    return get_security_group_id(ENVIRONMENT_PRODUCTION, ROLE_MYSQL_CLIENT)
+def get_db_source_security_group_id(environment):
+    return get_security_group_id(environment, ROLE_MYSQL_CLIENT)
 
 
-def get_db_subnet_ids():
-    subnet_ids = get_subnet_ids(ENVIRONMENT_PRODUCTION, NETWORK_PRIVATE)
+def get_db_subnet_ids(environment):
+    subnet_ids = get_subnet_ids(environment, NETWORK_PRIVATE)
     return ','.join(subnet_ids)
 
 
