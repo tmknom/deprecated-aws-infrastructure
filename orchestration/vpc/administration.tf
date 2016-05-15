@@ -8,5 +8,5 @@ module "administration" {
 
   public_subnets = "192.168.0.0/24"
   protected_subnets = ""
-  private_subnets = ""
+  private_subnets = "192.168.128.0/24,192.168.129.0/24"
 }
