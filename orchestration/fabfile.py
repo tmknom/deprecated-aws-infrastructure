@@ -32,12 +32,6 @@ def build_rds():
 
 
 @task
-def change_password_rds_production():
-    '''本番環境のRDSのパスワード変更'''
-    local('fab change_password:%s -f rds/password_changer.py' % ('production-mysql'))
-
-
-@task
 def build_vpc():
     '''VPC構築'''
     terraform_apply('vpc')

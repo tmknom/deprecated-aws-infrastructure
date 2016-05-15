@@ -1,12 +1,21 @@
 # -*- encoding:utf-8 -*-
 
 from fabric.api import *
+from fabric.contrib.console import *
 
 
-@task
-def change_password(db_instance_identifier):
-    '''RDSのパスワード変更'''
-    db_password = get_env('DATABASE_MASTER_USER_PASSWORD')
+def change_production():
+    change('production-mysql', 'DATABASE_MASTER_USER_PASSWORD_PRODUCTION')
+
+
+def change_administration():
+    change('administration-mysql', 'DATABASE_MASTER_USER_PASSWORD_ADMINISTRATION')
+
+
+def change(db_instance_identifier, env_db_password):
+    if not confirm("%s のパスワードを変更します。本当に実行しますか？" % (db_instance_identifier)):
+        abort('パスワードの変更を中止しました。')
+    db_password = get_env(env_db_password)
     execute_modify_password(db_instance_identifier, db_password)
 
 
