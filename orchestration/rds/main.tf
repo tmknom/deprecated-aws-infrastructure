@@ -14,6 +14,10 @@ variable "engine" {
   default = "MySQL"
 }
 
+variable "storage_size" {
+  default = 15
+}
+
 module "security_group" {
   source = "../terraform/module/security_group/source_security_group_id"
 
@@ -40,7 +44,7 @@ module "rds" {
   security_group_id = "${module.security_group.id}"
 
   availability_zone = "${element(split(",", var.availability_zones), 1)}"
-  storage_size = 5
+  storage_size = "${var.storage_size}"
   backup_retention_period = 5
   multi_az = false
 }
