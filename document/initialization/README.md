@@ -109,15 +109,21 @@ $ fab build_security_group
 
 ## RDSの作成
 
+### インスタンス構築
+
 ```bash
 $ fab build_rds
-$ fab change_password_rds_production
+```
+
+### パスワード変更
+
+```bash
+$ fab rds_production_password_change -f ../operation/fabfile.py
+$ fab rds_administration_password_change -f ../operation/fabfile.py
 ```
 
 
 ## EC2の作成
-
-### 本番環境
 
 ```bash
 $ fab build_ec2_production
