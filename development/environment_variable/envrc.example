@@ -24,7 +24,8 @@ export SSH_INITIALIZE_KEY_PATH='xxxx.pem'
 export DATABASE_HOST='xxxx'
 export DATABASE_PORT='xxxx'
 export DATABASE_MASTER_USER_NAME='xxxx'
-export DATABASE_MASTER_USER_PASSWORD='xxxxxxxx'
+export DATABASE_MASTER_USER_PASSWORD_PRODUCTION='xxxxxxxx'
+export DATABASE_MASTER_USER_PASSWORD_ADMINISTRATION='xxxxxxxx'
 export DATABASE_INITIAL_PASSWORD='xxxxxxxx'
 
 # アプリ固有：tech_news
