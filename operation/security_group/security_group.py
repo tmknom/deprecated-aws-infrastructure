@@ -4,11 +4,11 @@ import json
 from fabric.api import *
 
 ENVIRONMENT_PRODUCTION = 'Production'
-ENVIRONMENT_TESTING = 'Testing'
 ENVIRONMENT_ADMINISTRATION = 'Administration'
 
 ROLE_SSH = 'SSH'
 ROLE_RAILS = 'Rails'
+ROLE_INTERNAL_RAILS = 'InternalRails'
 ROLE_INITIALIZATION = 'Initialization'
 
 DEFAULT_SSH_PORT = '22'
@@ -23,16 +23,16 @@ def authorize():
     authorize_security_group(current_ip_address, ENVIRONMENT_ADMINISTRATION, ROLE_INITIALIZATION)
     authorize_security_group(current_ip_address, ENVIRONMENT_ADMINISTRATION, ROLE_RAILS)
     authorize_security_group(current_ip_address, ENVIRONMENT_ADMINISTRATION, ROLE_SSH)
+    authorize_security_group(current_ip_address, ENVIRONMENT_PRODUCTION, ROLE_INTERNAL_RAILS)
     authorize_security_group(current_ip_address, ENVIRONMENT_PRODUCTION, ROLE_SSH)
-    authorize_security_group(current_ip_address, ENVIRONMENT_TESTING, ROLE_RAILS)
 
 
 def revoke():
     revoke_security_group(ENVIRONMENT_ADMINISTRATION, ROLE_INITIALIZATION)
     revoke_security_group(ENVIRONMENT_ADMINISTRATION, ROLE_RAILS)
     revoke_security_group(ENVIRONMENT_ADMINISTRATION, ROLE_SSH)
+    revoke_security_group(ENVIRONMENT_PRODUCTION, ROLE_INTERNAL_RAILS)
     revoke_security_group(ENVIRONMENT_PRODUCTION, ROLE_SSH)
-    revoke_security_group(ENVIRONMENT_TESTING, ROLE_RAILS)
 
 
 def authorize_security_group(current_ip_address, environment, role):
@@ -94,6 +94,8 @@ def get_port(role):
     if role == ROLE_INITIALIZATION:
         return DEFAULT_SSH_PORT
     elif role == ROLE_RAILS:
+        return HTTP_PORT
+    elif role == ROLE_INTERNAL_RAILS:
         return HTTP_PORT
     else:
         return get_ssh_port_env()
