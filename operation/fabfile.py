@@ -13,6 +13,22 @@ from rds import rds_password
 
 
 @task
+def prepare():
+    '''開発環境の準備'''
+    ec2_start_testing()
+    sg_authorize()
+    rds_start_administration()
+
+
+@task
+def clear():
+    '''開発環境の後片付け'''
+    sg_revoke()
+    ec2_stop_testing()
+    rds_stop_administration()
+
+
+@task
 def sg_authorize():
     '''現在のアドレスから管理者VPCへのアクセス許可'''
     security_group.authorize()
