@@ -13,7 +13,7 @@ from helper import *
 @task
 def build_ec2_production():
     '''本番環境のEC2構築'''
-    tf_vars = get_ec2_tf_vars(ENVIRONMENT_PRODUCTION, ROLE_RAILS, TECH_NEWS)
+    tf_vars = get_ec2_tf_vars(ENVIRONMENT_PRODUCTION, ROLE_INTERNAL_RAILS, TECH_NEWS)
     terraform_apply('ec2/production/tech_news', tf_vars)
 
 
