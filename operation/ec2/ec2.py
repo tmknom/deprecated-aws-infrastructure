@@ -1,6 +1,8 @@
 # -*- encoding:utf-8 -*-
 
+import base64
 import json
+
 from fabric.api import *
 
 ENVIRONMENT_TESTING = 'Testing'
@@ -48,7 +50,8 @@ def create_instance():
     security_group_id = get_security_group_id(ENVIRONMENT_ADMINISTRATION, ROLE_RAILS)
     ssh_security_group_id = get_security_group_id(ENVIRONMENT_ADMINISTRATION, ROLE_SSH)
     rds_security_group_id = get_security_group_id(ENVIRONMENT_ADMINISTRATION, ROLE_MYSQL_CLIENT)
-    return run_instances(ami_id, subnet_id, security_group_id, ssh_security_group_id, rds_security_group_id)
+    user_data = create_user_data()
+    return run_instances(ami_id, subnet_id, security_group_id, ssh_security_group_id, rds_security_group_id, user_data)
 
 
 def create_instance_tag(instance_id):
@@ -59,11 +62,12 @@ def create_instance_tag(instance_id):
     create_tags(instance_id, 'Roles', ROLE_RAILS)
 
 
-def run_instances(ami_id, subnet_id, security_group_id, ssh_security_group_id, rds_security_group_id):
+def run_instances(ami_id, subnet_id, security_group_id, ssh_security_group_id, rds_security_group_id, user_data):
     command = "aws ec2 run-instances  " \
               + " --image-id %s " % (ami_id) \
               + " --subnet-id %s " % (subnet_id) \
               + " --security-group-ids %s %s %s " % (security_group_id, ssh_security_group_id, rds_security_group_id) \
+              + " --user-data %s " % (user_data) \
               + " --instance-type t2.micro " \
               + " --iam-instance-profile Name=RailsInstanceProfile " \
               + " --associate-public-ip-address " \
@@ -73,6 +77,15 @@ def run_instances(ami_id, subnet_id, security_group_id, ssh_security_group_id, r
               + " | jq -r '.Instances[].InstanceId' "
     result = local(command, capture=True)
     return result
+
+
+def create_user_data():
+    user_home = get_local_env('APPLICATION_USER_HOME')
+    database_host = get_local_env('DATABASE_HOST_ADMINISTRATION')
+    shell = "#!/bin/bash\n" \
+            + "echo 'export DATABASE_HOST=%s' >> %s/.bashrc" % (database_host, user_home)
+    base64_shell = base64.b64encode(shell)
+    return base64_shell
 
 
 def get_subnet_id(environment, network):
@@ -147,3 +160,7 @@ def get_instance_id(environment, role, application):
               + " | jq -r '.Reservations[].Instances[].InstanceId' "
     result = local(command, capture=True)
     return result
+
+
+def get_local_env(env_name):
+    return local('echo $%s' % (env_name), capture=True)
