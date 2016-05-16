@@ -8,6 +8,7 @@ from fabric.api import *
 
 from security_group import security_group
 from ec2 import ec2
+from rds import rds
 from rds import rds_password
 
 
@@ -51,6 +52,18 @@ def ec2_stop_testing():
 def ec2_remove_testing():
     '''テスト環境のEC2削除'''
     ec2.remove_testing()
+
+
+@task
+def rds_start_administration():
+    '''Administration 環境の RDS 起動'''
+    rds.start_administration()
+
+
+@task
+def rds_stop_administration():
+    '''Administration 環境の RDS 停止'''
+    rds.stop_administration()
 
 
 @task
