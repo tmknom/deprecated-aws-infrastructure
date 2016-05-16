@@ -10,6 +10,18 @@ module "rails" {
   vpc_id = "${var.production_vpc_id}"
 }
 
+module "internal_rails" {
+  source = "../terraform/module/security_group/cidr_blocks"
+
+  role = "InternalRails"
+  description = "allow http only administrator"
+  environment = "${var.production}"
+
+  port = "80"
+  cidr_block = "${var.localhost_cidr_block}"
+  vpc_id = "${var.production_vpc_id}"
+}
+
 module "testing_rails" {
   source = "../terraform/module/security_group/cidr_blocks"
 
