@@ -26,5 +26,6 @@ describe 'nginx' do
     it { should be_mode 600 }
     its(:content) { should match /server unix:\/var\/run\/app\/unicorn\.sock;$/ }
     its(:content) { should match /^\s+root #{ENV['APPLICATION_USER_HOME']}\/current\/public;$/ }
+    its(:content) { should match /^\s+listen\s+\[::\]:80\s+ipv6only=on\s+default_server;$/ }
   end
 end

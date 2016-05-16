@@ -5,7 +5,7 @@ upstream unicorn {
 server {
 
     listen       80 default_server;
-    listen       [::]:80 default_server;
+    listen       [::]:80 ipv6only=on default_server;
     server_name  localhost;
 
     include /etc/nginx/default.d/*.conf;
