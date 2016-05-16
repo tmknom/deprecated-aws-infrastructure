@@ -19,6 +19,13 @@ NETWORK_PUBLIC = 'Public'
 APPLICATION_TECH_NEWS = 'tech-news'
 
 
+def list():
+    command = "aws ec2 describe-instances " \
+              + " | jq '.Reservations[].Instances[] " \
+              + " | {Name: (.Tags[] | select(.Key==\"Name\").Value), PublicIpAddress}' "
+    local(command)
+
+
 def re_build_testing():
     remove_testing()
     build_testing()

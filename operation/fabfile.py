@@ -25,6 +25,12 @@ def sg_revoke():
 
 
 @task
+def ec2_list():
+    '''EC2の一覧表示'''
+    ec2.list()
+
+
+@task
 def ec2_build_testing():
     '''テスト環境のEC2構築'''
     ec2.build_testing()

@@ -17,6 +17,7 @@ from configuration.fabfile import spec_rails
 from configuration.fabfile import spec_tech_news
 from operation.fabfile import sg_authorize
 from operation.fabfile import sg_revoke
+from operation.fabfile import ec2_list
 from operation.fabfile import ec2_build_testing
 from operation.fabfile import ec2_re_build_testing
 from operation.fabfile import ec2_start_testing
