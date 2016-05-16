@@ -4,7 +4,6 @@ import json
 from fabric.api import *
 
 ENVIRONMENT_PRODUCTION = 'Production'
-ENVIRONMENT_TESTING = 'Testing'
 ENVIRONMENT_ADMINISTRATION = 'Administration'
 
 ROLE_SSH = 'SSH'
@@ -26,7 +25,6 @@ def authorize():
     authorize_security_group(current_ip_address, ENVIRONMENT_ADMINISTRATION, ROLE_SSH)
     authorize_security_group(current_ip_address, ENVIRONMENT_PRODUCTION, ROLE_INTERNAL_RAILS)
     authorize_security_group(current_ip_address, ENVIRONMENT_PRODUCTION, ROLE_SSH)
-    authorize_security_group(current_ip_address, ENVIRONMENT_TESTING, ROLE_RAILS)
 
 
 def revoke():
@@ -35,7 +33,6 @@ def revoke():
     revoke_security_group(ENVIRONMENT_ADMINISTRATION, ROLE_SSH)
     revoke_security_group(ENVIRONMENT_PRODUCTION, ROLE_INTERNAL_RAILS)
     revoke_security_group(ENVIRONMENT_PRODUCTION, ROLE_SSH)
-    revoke_security_group(ENVIRONMENT_TESTING, ROLE_RAILS)
 
 
 def authorize_security_group(current_ip_address, environment, role):
