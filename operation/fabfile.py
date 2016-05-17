@@ -41,6 +41,18 @@ def sg_revoke():
 
 
 @task
+def sg_authorize_http():
+    '''現在のアドレスからHTTPへのアクセス許可'''
+    security_group.authorize_http()
+
+
+@task
+def sg_revoke_http():
+    '''HTTPへのアクセス許可の取り消し'''
+    security_group.revoke_http()
+
+
+@task
 def ec2_list():
     '''EC2の一覧表示'''
     ec2.list()
