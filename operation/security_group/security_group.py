@@ -17,6 +17,16 @@ HTTP_PORT = '80'
 LOCALHOST_CIDR_BLOCK = '127.0.0.1/32'
 
 
+def authorize_http():
+    revoke_http()
+    current_ip_address = get_current_ip_address()
+    authorize_security_group(current_ip_address, ENVIRONMENT_PRODUCTION, ROLE_INTERNAL_RAILS)
+
+
+def revoke_http():
+    revoke_security_group(ENVIRONMENT_PRODUCTION, ROLE_INTERNAL_RAILS)
+
+
 def authorize():
     revoke()
     current_ip_address = get_current_ip_address()
