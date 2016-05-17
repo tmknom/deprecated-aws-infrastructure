@@ -5,7 +5,7 @@ resource "aws_instance" "rails" {
   subnet_id = "${var.subnet_id}"
   instance_type = "${var.instance_type}"
   iam_instance_profile = "${var.instance_profile}"
-  security_groups = [
+  vpc_security_group_ids = [
     "${var.security_group_id}",
     "${var.rds_security_group_id}",
     "${var.ssh_security_group_id}"
