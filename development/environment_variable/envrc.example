@@ -29,12 +29,6 @@ export DATABASE_MASTER_USER_PASSWORD_PRODUCTION='xxxxxxxx'
 export DATABASE_MASTER_USER_PASSWORD_ADMINISTRATION='xxxxxxxx'
 export DATABASE_INITIAL_PASSWORD='xxxxxxxx'
 
-# アプリ固有：tech_news
-export TECH_NEWS_DATABASE_DB='xxxx'
-export TECH_NEWS_DATABASE_USER_NAME='xxxx'
-export TECH_NEWS_DATABASE_USER_PASSWORD='xxxxxxxx'
-export TECH_NEWS_SECRET_KEY_BASE='xxxx'
-
 # 共有可能な環境変数定義
 source $(git rev-parse --show-toplevel)/development/environment_variable/shared.sh
 
