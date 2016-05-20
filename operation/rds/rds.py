@@ -16,12 +16,10 @@ INSTANCE_TYPE = 'db.t2.micro'
 AVAILABILITY_ZONE = 'ap-northeast-1c'
 
 
-@task
 def start_administration():
     start(ADMINISTRATION_DB_INSTANCE_IDENTIFIER)
 
 
-@task
 def stop_administration():
     stop(ADMINISTRATION_DB_INSTANCE_IDENTIFIER)
 
