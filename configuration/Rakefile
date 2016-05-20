@@ -8,6 +8,7 @@ ROLES = {
     'base' => [:base],
     'rails' => [:rails, :base],
     'tech_news' => [:tech_news, :rails, :base],
+    'wonderful_world' => [:wonderful_world, :rails, :base],
 }
 
 namespace :spec do
