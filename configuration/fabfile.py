@@ -12,6 +12,7 @@ from fabric.api import *
 BASE_ROLE = 'base'
 RAILS_ROLE = 'rails'
 TECH_NEWS_ROLE = 'tech_news'
+WONDERFUL_WORLD_ROLE = 'wonderful_world'
 VAGRANT_ROLE = 'vagrant'
 
 EC2_USER = 'ec2-user'
@@ -20,8 +21,8 @@ VAGRANT_USER = 'vagrant'
 DEFAULT_SSH_PORT = '22'
 
 VAGRANT_IP_ADDRESS = {
-    'tech-news': '192.168.100.10',
-    'wonderful-world': '192.168.100.11',
+    TECH_NEWS_ROLE: '192.168.100.10',
+    WONDERFUL_WORLD_ROLE: '192.168.100.11',
 }
 
 
@@ -48,6 +49,12 @@ def itamae_tech_news():
     itamae(TECH_NEWS_ROLE)
 
 
+@task
+def itamae_wonderful_world():
+    '''wonderful_world コンフィギュレーション [-H <ip_address>]'''
+    itamae(WONDERFUL_WORLD_ROLE)
+
+
 # base は初回実行時とSSHのポートが異なるため、特別に実装している（base以外は不要）
 @task
 def itamae_re_base():
@@ -56,18 +63,18 @@ def itamae_re_base():
 
 
 @task
-def itamae_vagrant_tech_news():
+def vagrant_itamae_tech_news():
     '''vagrant(tech-news) コンフィギュレーション'''
-    itamae_vagrant('tech-news')
+    vagrant_itamae(TECH_NEWS_ROLE)
 
 
 @task
-def itamae_vagrant_wonderful_world():
+def vagrant_itamae_wonderful_world():
     '''vagrant(wonderful-world) コンフィギュレーション'''
-    itamae_vagrant('wonderful-world')
+    vagrant_itamae(WONDERFUL_WORLD_ROLE)
 
 
-def itamae_vagrant(application_name):
+def vagrant_itamae(application_name):
     env.hosts = [VAGRANT_IP_ADDRESS[application_name]]
     private_key = get_vagrant_private_key()
     execute_itamae(
@@ -100,6 +107,12 @@ def spec_rails():
 def spec_tech_news():
     '''tech_news のServerspec実行 [-H <ip_address>]'''
     serverspec(TECH_NEWS_ROLE)
+
+
+@task
+def spec_wonderful_world():
+    '''wonderful_world のServerspec実行 [-H <ip_address>]'''
+    serverspec(WONDERFUL_WORLD_ROLE)
 
 
 def itamae(role):
