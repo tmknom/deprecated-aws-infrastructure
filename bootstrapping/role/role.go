@@ -7,9 +7,10 @@ import (
 type Role string
 
 const (
-	BASE      Role = "base"
-	RAILS     Role = "rails"
-	TECH_NEWS Role = "tech_news"
+	BASE            Role = "base"
+	RAILS           Role = "rails"
+	TECH_NEWS       Role = "tech_news"
+	WONDERFUL_WORLD Role = "wonderful_world"
 )
 
 func NewRole(value string) Role {
@@ -31,6 +32,8 @@ func (r Role) Parent() Role {
 	case RAILS:
 		return BASE
 	case TECH_NEWS:
+		return RAILS
+	case WONDERFUL_WORLD:
 		return RAILS
 	default:
 		panic("No such parent role : " + r.String())

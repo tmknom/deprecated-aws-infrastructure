@@ -18,8 +18,18 @@ class ApplicationEnvironment
 end
 
 class ApplicationEnvironmentFilePath
-  def self.get(application_name)
-    project_root = `git rev-parse --show-toplevel`.chomp
-    "#{project_root}/../#{application_name}/.envrc"
+  def self.github(application_name)
+    "#{self.project_root}/../#{application_name}/.envrc"
   end
+
+  def self.bitbucket(application_name)
+    "#{self.project_root}/../../bitbucket/#{application_name}/.envrc"
+  end
+
+  private
+
+  def self.project_root
+    `git rev-parse --show-toplevel`.chomp
+  end
+
 end
