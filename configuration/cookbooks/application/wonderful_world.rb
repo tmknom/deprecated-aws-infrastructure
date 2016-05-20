@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/application_helper.rb'
 
-file_path = ApplicationEnvironmentFilePath.github('tech-news')
+file_path = ApplicationEnvironmentFilePath.bitbucket('wonderful-world')
 application_env = ApplicationEnvironment.new(file_path)
 
 # RDS
