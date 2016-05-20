@@ -13,10 +13,12 @@ ROLE_SSH = 'SSH'
 ROLE_RAILS = 'Rails'
 ROLE_MYSQL_CLIENT = 'MySQLClient'
 ROLE_TECH_NEWS = 'TechNews'
+ROLE_WONDERFUL_WORLD = 'WonderfulWorld'
 
 NETWORK_PUBLIC = 'Public'
 
 APPLICATION_TECH_NEWS = 'tech-news'
+APPLICATION_WONDERFUL_WORLD = 'wonderful-world'
 
 
 def list():
@@ -26,33 +28,70 @@ def list():
     local(command)
 
 
-def re_build_testing():
-    remove_testing()
-    build_testing()
+def re_build_tech_news():
+    remove_tech_news()
+    build_tech_news()
 
 
-def build_testing():
-    instance_id = create_instance()
-    create_instance_tag(instance_id)
+def build_tech_news():
+    build(APPLICATION_TECH_NEWS, ROLE_TECH_NEWS)
 
 
-def start_testing():
-    instance_id = get_instance_id(ENVIRONMENT_TESTING, ROLE_RAILS, APPLICATION_TECH_NEWS)
+def start_tech_news():
+    start(APPLICATION_TECH_NEWS)
+
+
+def stop_tech_news():
+    stop(APPLICATION_TECH_NEWS)
+
+
+def remove_tech_news():
+    remove(APPLICATION_TECH_NEWS)
+
+
+def re_build_wonderful_world():
+    remove_wonderful_world()
+    build_wonderful_world()
+
+
+def build_wonderful_world():
+    build(APPLICATION_WONDERFUL_WORLD, ROLE_WONDERFUL_WORLD)
+
+
+def start_wonderful_world():
+    start(APPLICATION_WONDERFUL_WORLD)
+
+
+def stop_wonderful_world():
+    stop(APPLICATION_WONDERFUL_WORLD)
+
+
+def remove_wonderful_world():
+    remove(APPLICATION_WONDERFUL_WORLD)
+
+
+def build(application, role):
+    instance_id = create_instance(role)
+    create_instance_tag(instance_id, application)
+
+
+def start(application):
+    instance_id = get_instance_id(ENVIRONMENT_TESTING, ROLE_RAILS, application)
     start_instances(instance_id)
 
 
-def stop_testing():
-    instance_id = get_instance_id(ENVIRONMENT_TESTING, ROLE_RAILS, APPLICATION_TECH_NEWS)
+def stop(application):
+    instance_id = get_instance_id(ENVIRONMENT_TESTING, ROLE_RAILS, application)
     stop_instances(instance_id)
 
 
-def remove_testing():
-    instance_id = get_instance_id(ENVIRONMENT_TESTING, ROLE_RAILS, APPLICATION_TECH_NEWS)
+def remove(application):
+    instance_id = get_instance_id(ENVIRONMENT_TESTING, ROLE_RAILS, application)
     terminate_instances(instance_id)
 
 
-def create_instance():
-    ami_id = get_ami_id(ROLE_TECH_NEWS)
+def create_instance(role):
+    ami_id = get_ami_id(role)
     subnet_id = get_subnet_id(ENVIRONMENT_ADMINISTRATION, NETWORK_PUBLIC)
     security_group_id = get_security_group_id(ENVIRONMENT_ADMINISTRATION, ROLE_RAILS)
     ssh_security_group_id = get_security_group_id(ENVIRONMENT_ADMINISTRATION, ROLE_SSH)
@@ -61,11 +100,11 @@ def create_instance():
     return run_instances(ami_id, subnet_id, security_group_id, ssh_security_group_id, rds_security_group_id, user_data)
 
 
-def create_instance_tag(instance_id):
-    create_tags(instance_id, 'Application', APPLICATION_TECH_NEWS)
-    create_tags(instance_id, 'DeploymentGroup', '-'.join([ENVIRONMENT_TESTING, APPLICATION_TECH_NEWS]).lower())
+def create_instance_tag(instance_id, application):
+    create_tags(instance_id, 'Application', application)
+    create_tags(instance_id, 'DeploymentGroup', '-'.join([ENVIRONMENT_TESTING, application]).lower())
     create_tags(instance_id, 'Environment', ENVIRONMENT_TESTING)
-    create_tags(instance_id, 'Name', '-'.join([ENVIRONMENT_TESTING, ROLE_RAILS, APPLICATION_TECH_NEWS]))
+    create_tags(instance_id, 'Name', '-'.join([ENVIRONMENT_TESTING, ROLE_RAILS, application]))
     create_tags(instance_id, 'Roles', ROLE_RAILS)
 
 

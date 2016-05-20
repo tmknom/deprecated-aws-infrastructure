@@ -13,18 +13,18 @@ from rds import rds_password
 
 
 @task
-def prepare():
-    '''開発環境の準備'''
-    ec2_start_testing()
+def prepare_tech_news():
+    '''開発環境(tech-news)の準備'''
+    ec2_start_tech_news()
     sg_authorize()
     rds_start_administration()
 
 
 @task
-def clear():
-    '''開発環境の後片付け'''
+def clear_tech_news():
+    '''開発環境(tech-news)の後片付け'''
     sg_revoke()
-    ec2_stop_testing()
+    ec2_stop_tech_news()
     rds_stop_administration()
 
 
@@ -59,33 +59,63 @@ def ec2_list():
 
 
 @task
-def ec2_build_testing():
-    '''テスト環境のEC2構築'''
-    ec2.build_testing()
+def ec2_build_tech_news():
+    '''テスト環境(tech-news)のEC2構築'''
+    ec2.build_tech_news()
 
 
 @task
-def ec2_re_build_testing():
-    '''テスト環境のEC2再構築'''
-    ec2.re_build_testing()
+def ec2_re_build_tech_news():
+    '''テスト環境(tech-news)のEC2再構築'''
+    ec2.re_build_tech_news()
 
 
 @task
-def ec2_start_testing():
-    '''テスト環境のEC2開始'''
-    ec2.start_testing()
+def ec2_start_tech_news():
+    '''テスト環境(tech-news)のEC2開始'''
+    ec2.start_tech_news()
 
 
 @task
-def ec2_stop_testing():
-    '''テスト環境のEC2停止'''
-    ec2.stop_testing()
+def ec2_stop_tech_news():
+    '''テスト環境(tech-news)のEC2停止'''
+    ec2.stop_tech_news()
 
 
 @task
-def ec2_remove_testing():
-    '''テスト環境のEC2削除'''
-    ec2.remove_testing()
+def ec2_remove_tech_news():
+    '''テスト環境(tech-news)のEC2削除'''
+    ec2.remove_tech_news()
+
+
+@task
+def ec2_build_wonderful_world():
+    '''テスト環境(wonderful-world)のEC2構築'''
+    ec2.build_wonderful_world()
+
+
+@task
+def ec2_re_build_wonderful_world():
+    '''テスト環境(wonderful-world)のEC2再構築'''
+    ec2.re_build_wonderful_world()
+
+
+@task
+def ec2_start_wonderful_world():
+    '''テスト環境(wonderful-world)のEC2開始'''
+    ec2.start_wonderful_world()
+
+
+@task
+def ec2_stop_wonderful_world():
+    '''テスト環境(wonderful-world)のEC2停止'''
+    ec2.stop_wonderful_world()
+
+
+@task
+def ec2_remove_wonderful_world():
+    '''テスト環境(wonderful-world)のEC2削除'''
+    ec2.remove_wonderful_world()
 
 
 @task
