@@ -1,5 +1,7 @@
 require File.dirname(__FILE__) + '/application_helper.rb'
-application_env = ApplicationEnvironment.new('tech-news')
+
+file_path = ApplicationEnvironmentFilePath.get('tech-news')
+application_env = ApplicationEnvironment.new(file_path)
 
 # RDS
 DATABASE_HOST = ENV['DATABASE_HOST']

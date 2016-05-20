@@ -1,7 +1,5 @@
 class ApplicationEnvironment
-  def initialize(application_name)
-    project_root = `git rev-parse --show-toplevel`.chomp
-    file_path = "#{project_root}/../#{application_name}/.envrc"
+  def initialize(file_path)
     envrc = File.read(file_path, encoding: Encoding::UTF_8)
 
     @app_env = {}
@@ -16,5 +14,12 @@ class ApplicationEnvironment
 
   def get(key)
     return @app_env[key]
+  end
+end
+
+class ApplicationEnvironmentFilePath
+  def self.get(application_name)
+    project_root = `git rev-parse --show-toplevel`.chomp
+    "#{project_root}/../#{application_name}/.envrc"
   end
 end
