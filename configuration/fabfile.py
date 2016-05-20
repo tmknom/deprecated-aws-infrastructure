@@ -18,7 +18,11 @@ EC2_USER = 'ec2-user'
 VAGRANT_USER = 'vagrant'
 
 DEFAULT_SSH_PORT = '22'
-VAGRANT_IP_ADDRESS = '192.168.100.10'
+
+VAGRANT_IP_ADDRESS = {
+    'tech-news': '192.168.100.10',
+    'wonderful-world': '192.168.100.11',
+}
 
 
 @task
@@ -52,9 +56,19 @@ def itamae_re_base():
 
 
 @task
-def itamae_vagrant():
-    '''vagrant コンフィギュレーション'''
-    env.hosts = [VAGRANT_IP_ADDRESS]
+def itamae_vagrant_tech_news():
+    '''vagrant(tech-news) コンフィギュレーション'''
+    itamae_vagrant('tech-news')
+
+
+@task
+def itamae_vagrant_wonderful_world():
+    '''vagrant(wonderful-world) コンフィギュレーション'''
+    itamae_vagrant('wonderful-world')
+
+
+def itamae_vagrant(application_name):
+    env.hosts = [VAGRANT_IP_ADDRESS[application_name]]
     private_key = get_vagrant_private_key()
     execute_itamae(
         VAGRANT_ROLE,
