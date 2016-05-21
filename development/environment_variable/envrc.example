@@ -6,6 +6,7 @@
 # SSH設定
 export SSH_PORT='xxxx'
 export SSH_USER_NAME='xxxx'
+export SSH_PRIVATE_KEY_FULL_PATH='/full/path/to/key'
 export SSH_PUBLIC_KEY_FULL_PATH='/full/path/to/key.pub'
 export SSH_SHADOW_PASSWORD='xxxxxxxx'
 
@@ -22,7 +23,7 @@ export SSH_INITIALIZE_KEY_PATH='xxxx.pem'
 
 # DB設定
 export DATABASE_HOST_ADMINISTRATION='xxxx'
-export DATABASE_HOST='xxxx'
+export DATABASE_HOST_PRODUCTION='xxxx'
 export DATABASE_PORT='xxxx'
 export DATABASE_MASTER_USER_NAME='xxxx'
 export DATABASE_MASTER_USER_PASSWORD_PRODUCTION='xxxxxxxx'
