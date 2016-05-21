@@ -6,12 +6,16 @@
 
 from fabric.api import *
 
-from operation.fabfile import prepare
-from operation.fabfile import clear
+from operation.fabfile import prepare_tech_news
+from operation.fabfile import clear_tech_news
+from operation.fabfile import prepare_wonderful_world
+from operation.fabfile import clear_wonderful_world
 from operation.fabfile import sg_authorize_http
 from operation.fabfile import ec2_list
-from operation.fabfile import ec2_build_testing
-from operation.fabfile import ec2_re_build_testing
+from operation.fabfile import tech_news_build
+from operation.fabfile import tech_news_re_build
+from operation.fabfile import wonderful_world_build
+from operation.fabfile import wonderful_world_re_build
 
 
 @task
