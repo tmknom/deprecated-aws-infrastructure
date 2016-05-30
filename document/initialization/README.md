@@ -36,13 +36,24 @@ $ fab terraform_plan:s3/terraform
 ```
 
 
-## CloudTrailの有効化
+## S3 のバケット作成
 
-先にバケットを作っておかないとエラーになるため、
-最初にバケットを作成して、それからCloudTrail自体を作成する。
+### CloudTrail用のS3バケット定義
 
 ```bash
 $ fab build_s3_cloud_trail
+```
+
+### デプロイ用のS3バケット定義
+
+```bash
+$ fab build_s3_deployment
+```
+
+
+## CloudTrailの有効化
+
+```bash
 $ fab build_cloud_trail
 ```
 
