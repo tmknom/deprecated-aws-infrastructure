@@ -4,6 +4,15 @@
     {
       "Effect": "Allow",
       "Action": [
+        "s3:GetObject"
+      ],
+      "Resource": [
+        "arn:aws:s3:::${identifier}-${suffix}/*"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
         "cloudwatch:PutMetricData",
         "ec2:DescribeTags"
       ],
