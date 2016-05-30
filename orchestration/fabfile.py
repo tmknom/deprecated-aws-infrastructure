@@ -59,6 +59,7 @@ def build_user_cli():
 @task
 def build_user_external():
     '''AWS外部用システムユーザの構築'''
+    terraform_apply('iam_user/external/wercker')
     terraform_apply('iam_user/external/circle_ci')
 
 
