@@ -4,6 +4,8 @@
 
 * terraform
  * tfstateファイルを保存
+* deployment
+ * デプロイ関連のファイルを保存
 * s3-log
  * S3のログを保存
 * cloud-trail
