@@ -95,6 +95,12 @@ def build_s3_deployment():
 
 
 @task
+def build_s3_temporary():
+    '''temporary バケットの構築'''
+    terraform_apply('s3/temporary')
+
+
+@task
 def build_cloud_trail():
     '''CloudTrailの構築'''
     terraform_apply('cloud_trail')

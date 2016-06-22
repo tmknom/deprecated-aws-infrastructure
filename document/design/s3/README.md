@@ -6,6 +6,8 @@
  * tfstateファイルを保存
 * deployment
  * デプロイ関連のファイルを保存
+* temporary
+ * 一時ファイルを保存（公開される）
 * s3-log
  * S3のログを保存
 * cloud-trail

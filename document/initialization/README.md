@@ -50,6 +50,12 @@ $ fab build_s3_cloud_trail
 $ fab build_s3_deployment
 ```
 
+### 一時保存用のS3バケット定義
+
+```bash
+$ fab build_s3_temporary
+```
+
 
 ## CloudTrailの有効化
 
