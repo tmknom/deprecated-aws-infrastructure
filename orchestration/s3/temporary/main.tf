@@ -10,5 +10,13 @@ module "s3_administration" {
   identifier = "${var.identifier}"
   suffix = "${var.s3_suffix}"
 
-  policy = "${file("policy.json")}"
+  policy = "${template_file.policy_json.rendered}"
+}
+
+resource "template_file" "policy_json" {
+  template = "${file("policy.json.tpl")}"
+  vars {
+    identifier = "${var.identifier}"
+    suffix = "${var.s3_suffix}"
+  }
 }
