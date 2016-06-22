@@ -15,6 +15,7 @@ NETWORK_PUBLIC = 'Public'
 NETWORK_PRIVATE = 'Private'
 
 TECH_NEWS = 'TechNews'
+WONDERFUL_WORLD = 'WonderfulWorld'
 
 
 def get_tf_vars():
