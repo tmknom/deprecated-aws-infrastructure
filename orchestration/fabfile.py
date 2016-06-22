@@ -11,10 +11,17 @@ from helper import *
 
 
 @task
-def build_ec2_production():
-    '''本番環境のEC2構築'''
+def build_ec2_tech_news():
+    '''tech_news のEC2構築'''
     tf_vars = get_ec2_tf_vars(ENVIRONMENT_PRODUCTION, ROLE_INTERNAL_RAILS, TECH_NEWS)
     terraform_apply('ec2/production/tech_news', tf_vars)
+
+
+@task
+def build_ec2_wonderful_world():
+    '''wonderful_world のEC2構築'''
+    tf_vars = get_ec2_tf_vars(ENVIRONMENT_PRODUCTION, ROLE_INTERNAL_RAILS, WONDERFUL_WORLD)
+    terraform_apply('ec2/production/wonderful_world', tf_vars)
 
 
 @task
