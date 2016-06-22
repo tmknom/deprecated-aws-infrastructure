@@ -4,10 +4,13 @@ class ApplicationEnvironment
 
     @app_env = {}
     envrc.each_line do |line|
-      if not line.chomp.empty?
-        key = line.match(/^export\s+(.+?)=["|']/)[1]
-        value = line.match(/=["|'](.+?)["|']$/)[1]
-        @app_env.store(key.to_sym, value)
+      if (not line.chomp.empty?) and (not line.start_with?('#'))
+        begin
+          key = line.match(/^export\s+(.+?)=["|']/)[1]
+          value = line.match(/=["|'](.+?)["|']$/)[1]
+          @app_env.store(key.to_sym, value)
+        rescue => e
+        end
       end
     end
   end
