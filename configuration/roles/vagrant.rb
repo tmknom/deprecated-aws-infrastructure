@@ -5,14 +5,15 @@ include_recipe '../cookbooks/rpm_package/default.rb'
 # rails
 include_recipe '../cookbooks/mysql_client/default.rb'
 include_recipe '../cookbooks/nodejs/default.rb'
+include_recipe '../cookbooks/phantomjs/default.rb'
 include_recipe '../cookbooks/redis/default.rb'
 include_recipe '../cookbooks/ruby/default.rb'
 include_recipe '../cookbooks/user/rails.rb'
 include_recipe '../cookbooks/nginx/default.rb'
 
-# tech-news
+# wonderful-world
 include_recipe '../cookbooks/application/default.rb'
-include_recipe '../cookbooks/application/tech_news.rb'
+include_recipe '../cookbooks/application/wonderful_world.rb'
 
 # vagrant only
 include_recipe '../cookbooks/mysql_server/default.rb'
