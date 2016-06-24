@@ -13,7 +13,7 @@ def change_administration():
 
 
 def change_production_us():
-    change('production-mysql', 'DATABASE_MASTER_USER_PASSWORD_PRODUCTION_US', 'us-east-1')
+    change('production-mysql', 'DATABASE_MASTER_USER_PASSWORD_PRODUCTION_US', 'us-west-1')
 
 
 def change(db_instance_identifier, env_db_password, region='ap-northeast-1'):

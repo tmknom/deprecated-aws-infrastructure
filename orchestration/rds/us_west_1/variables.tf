@@ -1,5 +1,5 @@
 provider "aws" {
-  region = "us-east-1"
+  region = "us-west-1"
 }
 
 variable "db_port" {}             # .bash_profileに環境変数定義 : TF_VAR_db_port

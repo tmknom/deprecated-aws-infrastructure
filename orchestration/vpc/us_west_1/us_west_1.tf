@@ -1,12 +1,12 @@
 provider "aws" {
-  region = "us-east-1"
+  region = "us-west-1"
 }
 
-module "us_east" {
+module "us_west_1" {
   source = "../../terraform/module/vpc"
 
   environment = "Production"
-  availability_zones = "us-east-1a,us-east-1b"
+  availability_zones = "us-west-1b,us-west-1c"
 
   vpc_cidr = "10.20.0.0/16"
 
