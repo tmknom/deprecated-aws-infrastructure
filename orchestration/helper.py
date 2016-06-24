@@ -3,7 +3,7 @@
 import json
 from fabric.api import *
 
-REGION_US = 'us-east-1'
+REGION_US = 'us-west-1'
 REGION_JP = 'ap-northeast-1'
 
 ENVIRONMENT_PRODUCTION = 'Production'

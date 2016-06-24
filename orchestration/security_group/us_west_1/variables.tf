@@ -1,5 +1,5 @@
 provider "aws" {
-  region = "us-east-1"
+  region = "us-west-1"
 }
 
 # 実行時に動的に環境変数定義 : TF_VAR_production_vpc_id
