@@ -7,7 +7,8 @@
         "s3:GetObject"
       ],
       "Resource": [
-        "arn:aws:s3:::${identifier}-${suffix}/*"
+        "arn:aws:s3:::${identifier}-${suffix}/*",
+        "arn:aws:s3:::${identifier}-us-west-1-${suffix}/*"
       ]
     },
     {
