@@ -156,3 +156,9 @@ def rds_production_password_change():
 def rds_administration_password_change():
     '''Administration 環境のRDSのパスワード変更'''
     rds_password.change_administration()
+
+
+@task
+def rds_production_us_password_change():
+    '''USのProduction 環境のRDSのパスワード変更'''
+    rds_password.change_production_us()
