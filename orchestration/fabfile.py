@@ -46,6 +46,13 @@ def build_rds():
 
 
 @task
+def build_rds_us():
+    '''USのRDS構築'''
+    tf_vars = get_db_tf_vars('us-east-1')
+    terraform_apply('rds/us_east', tf_vars)
+
+
+@task
 def build_vpc():
     '''VPC構築'''
     terraform_apply('vpc')

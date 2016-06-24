@@ -73,12 +73,12 @@ def get_latest_ami_id(role, aws_account_id):
     return result
 
 
-def get_db_tf_vars():
-    production_db_subnet_ids = get_db_subnet_ids(ENVIRONMENT_PRODUCTION)
-    production_db_source_security_group_id = get_db_source_security_group_id(ENVIRONMENT_PRODUCTION)
-    administration_db_subnet_ids = get_db_subnet_ids(ENVIRONMENT_ADMINISTRATION)
-    administration_db_source_security_group_id = get_db_source_security_group_id(ENVIRONMENT_ADMINISTRATION)
-    result = get_tf_vars() \
+def get_db_tf_vars(region='ap-northeast-1'):
+    production_db_subnet_ids = get_db_subnet_ids(ENVIRONMENT_PRODUCTION, region)
+    production_db_source_security_group_id = get_db_source_security_group_id(ENVIRONMENT_PRODUCTION, region)
+    administration_db_subnet_ids = get_db_subnet_ids(ENVIRONMENT_ADMINISTRATION, region)
+    administration_db_source_security_group_id = get_db_source_security_group_id(ENVIRONMENT_ADMINISTRATION, region)
+    result = get_tf_vars(region) \
              + ' TF_VAR_administration_db_subnet_ids=%s' % (administration_db_subnet_ids) \
              + ' TF_VAR_administration_db_source_security_group_id=%s' % (administration_db_source_security_group_id) \
              + ' TF_VAR_production_db_subnet_ids=%s' % (production_db_subnet_ids) \
@@ -86,17 +86,18 @@ def get_db_tf_vars():
     return result
 
 
-def get_db_source_security_group_id(environment):
-    return get_security_group_id(environment, ROLE_MYSQL_CLIENT)
+def get_db_source_security_group_id(environment, region):
+    return get_security_group_id(environment, ROLE_MYSQL_CLIENT, region)
 
 
-def get_db_subnet_ids(environment):
-    subnet_ids = get_subnet_ids(environment, NETWORK_PRIVATE)
+def get_db_subnet_ids(environment, region):
+    subnet_ids = get_subnet_ids(environment, NETWORK_PRIVATE, region)
     return ','.join(subnet_ids)
 
 
-def get_security_group_id(environment, role):
+def get_security_group_id(environment, role, region):
     command = "aws ec2 describe-security-groups " \
+              + " --region %s " % (region) \
               + " --filters " \
               + " 'Name=tag-key,Values=Environment' " \
               + " 'Name=tag-value,Values=%s' " % (environment) \
@@ -107,8 +108,9 @@ def get_security_group_id(environment, role):
     return result
 
 
-def get_subnet_ids(environment, network):
+def get_subnet_ids(environment, network, region):
     command = "aws ec2 describe-subnets " \
+              + " --region %s " % (region) \
               + " --filters " \
               + " 'Name=tag-key,Values=Environment' " \
               + " 'Name=tag-value,Values=%s' " % (environment) \
@@ -119,7 +121,7 @@ def get_subnet_ids(environment, network):
     return json.loads(result)
 
 
-def get_availability_zones(region='ap-northeast-1'):
+def get_availability_zones(region):
     command = "aws ec2 describe-availability-zones " \
               + " --region %s " % (region) \
               + " | jq '.AvailabilityZones' | jq 'map(.ZoneName)' "
@@ -127,7 +129,7 @@ def get_availability_zones(region='ap-northeast-1'):
     return ','.join(json.loads(result))
 
 
-def get_vpc_id(environment, region='ap-northeast-1'):
+def get_vpc_id(environment, region):
     command = "aws ec2 describe-vpcs " \
               + " --region %s " % (region) \
               + " --filters " \
