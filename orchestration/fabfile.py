@@ -20,7 +20,7 @@ def build_ec2_tech_news():
 @task
 def build_ec2_wonderful_world():
     '''wonderful_world のEC2構築'''
-    tf_vars = get_ec2_tf_vars(ENVIRONMENT_PRODUCTION, ROLE_INTERNAL_RAILS, WONDERFUL_WORLD)
+    tf_vars = get_ec2_tf_vars(ENVIRONMENT_PRODUCTION, ROLE_RAILS, WONDERFUL_WORLD, REGION_US)
     terraform_apply('ec2/production/wonderful_world', tf_vars)
 
 
@@ -34,7 +34,7 @@ def build_security_group():
 @task
 def build_security_group_us():
     '''USのセキュリティグループ構築'''
-    tf_vars = get_tf_vars('us-east-1')
+    tf_vars = get_tf_vars(REGION_US)
     terraform_apply('security_group/us_east', tf_vars)
 
 
@@ -48,7 +48,7 @@ def build_rds():
 @task
 def build_rds_us():
     '''USのRDS構築'''
-    tf_vars = get_db_tf_vars('us-east-1')
+    tf_vars = get_db_tf_vars(REGION_US)
     terraform_apply('rds/us_east', tf_vars)
 
 

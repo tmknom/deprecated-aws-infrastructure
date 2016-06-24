@@ -3,6 +3,9 @@
 import json
 from fabric.api import *
 
+REGION_US = 'us-east-1'
+REGION_JP = 'ap-northeast-1'
+
 ENVIRONMENT_PRODUCTION = 'Production'
 ENVIRONMENT_ADMINISTRATION = 'Administration'
 
@@ -18,7 +21,7 @@ TECH_NEWS = 'TechNews'
 WONDERFUL_WORLD = 'WonderfulWorld'
 
 
-def get_tf_vars(region='ap-northeast-1'):
+def get_tf_vars(region=REGION_JP):
     production_vpc_id = get_vpc_id(ENVIRONMENT_PRODUCTION, region)
     administration_vpc_id = get_vpc_id(ENVIRONMENT_ADMINISTRATION, region)
     availability_zones = get_availability_zones(region)
@@ -28,13 +31,13 @@ def get_tf_vars(region='ap-northeast-1'):
     return result
 
 
-def get_ec2_tf_vars(environment, role, application):
+def get_ec2_tf_vars(environment, role, application, region=REGION_JP):
     aws_account_id = get_aws_account_id()
-    ami_id = get_latest_ami_id(application, aws_account_id)
-    subnet_id = get_ec2_subnet_ids(environment)
-    security_group_id = get_security_group_id(environment, role)
-    rds_security_group_id = get_security_group_id(environment, ROLE_MYSQL_CLIENT)
-    ssh_security_group_id = get_security_group_id(environment, ROLE_SSH)
+    ami_id = get_latest_ami_id(application, aws_account_id, region)
+    subnet_id = get_ec2_subnet_ids(environment, region)
+    security_group_id = get_security_group_id(environment, role, region)
+    rds_security_group_id = get_security_group_id(environment, ROLE_MYSQL_CLIENT, region)
+    ssh_security_group_id = get_security_group_id(environment, ROLE_SSH, region)
     created = get_created()
 
     result = ' TF_VAR_ami_id=%s' % (ami_id) \
@@ -51,13 +54,14 @@ def get_created():
     return datetime.now().strftime("%s")
 
 
-def get_ec2_subnet_ids(environment):
-    subnet_ids = get_subnet_ids(environment, NETWORK_PUBLIC)
+def get_ec2_subnet_ids(environment, region):
+    subnet_ids = get_subnet_ids(environment, NETWORK_PUBLIC, region)
     return subnet_ids[1]
 
 
-def get_latest_ami_id(role, aws_account_id):
+def get_latest_ami_id(role, aws_account_id, region):
     command = 'aws ec2 describe-images' \
+              + " --region %s " % (region) \
               + ' --filters ' \
               + ' "Name=owner-id,Values=' + aws_account_id + '"' \
               + ' "Name=tag:Role,Values=' + role + '"' \
@@ -73,7 +77,7 @@ def get_latest_ami_id(role, aws_account_id):
     return result
 
 
-def get_db_tf_vars(region='ap-northeast-1'):
+def get_db_tf_vars(region=REGION_JP):
     production_db_subnet_ids = get_db_subnet_ids(ENVIRONMENT_PRODUCTION, region)
     production_db_source_security_group_id = get_db_source_security_group_id(ENVIRONMENT_PRODUCTION, region)
     administration_db_subnet_ids = get_db_subnet_ids(ENVIRONMENT_ADMINISTRATION, region)
