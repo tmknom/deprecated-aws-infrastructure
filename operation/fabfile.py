@@ -8,6 +8,7 @@ from fabric.api import *
 
 from security_group import security_group
 from ec2 import ec2
+from ami import ami
 from rds import rds
 from rds import rds_password
 
@@ -132,6 +133,12 @@ def wonderful_world_stop():
 def wonderful_world_remove():
     '''テスト環境(wonderful-world)のEC2削除'''
     ec2.remove_wonderful_world()
+
+
+@task
+def sync_ami_wonderful_world():
+    '''WonderfulWorldAMI の海外リージョンへ同期'''
+    ami.sync_wonderful_world()
 
 
 @task
