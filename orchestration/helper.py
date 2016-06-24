@@ -14,6 +14,8 @@ ROLE_RAILS = 'Rails'
 ROLE_MYSQL_CLIENT = 'MySQLClient'
 ROLE_INTERNAL_RAILS = 'InternalRails'
 
+IAM_ROLE_CODE_DEPLOY = 'CodeDeployRole'
+
 NETWORK_PUBLIC = 'Public'
 NETWORK_PRIVATE = 'Private'
 
@@ -97,6 +99,19 @@ def get_db_source_security_group_id(environment, region):
 def get_db_subnet_ids(environment, region):
     subnet_ids = get_subnet_ids(environment, NETWORK_PRIVATE, region)
     return ','.join(subnet_ids)
+
+
+def get_code_deploy_tf_vars():
+    role_arn = get_role_arn(IAM_ROLE_CODE_DEPLOY)
+    result = ' TF_VAR_code_deploy_role_arn=%s' % (role_arn)
+    return result
+
+
+def get_role_arn(iam_role):
+    command = "aws iam list-roles " \
+              + " | jq -r '.Roles[] | select(.RoleName == \"%s\") | .Arn' " % (iam_role)
+    result = local(command, capture=True)
+    return result
 
 
 def get_security_group_id(environment, role, region):

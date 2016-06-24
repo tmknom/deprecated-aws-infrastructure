@@ -71,6 +71,13 @@ def build_code_deploy():
 
 
 @task
+def build_code_deploy_us():
+    '''USのCodeDeploy構築'''
+    tf_vars = get_code_deploy_tf_vars()
+    terraform_apply('code_deploy/us_west_1', tf_vars)
+
+
+@task
 def build_instance_profile():
     '''InstanceProfileの構築'''
     terraform_apply('instance_profile/initialization')
