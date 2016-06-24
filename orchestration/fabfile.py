@@ -32,6 +32,13 @@ def build_security_group():
 
 
 @task
+def build_security_group_us():
+    '''USのセキュリティグループ構築'''
+    tf_vars = get_tf_vars('us-east-1')
+    terraform_apply('security_group/us_east', tf_vars)
+
+
+@task
 def build_rds():
     '''RDS構築'''
     tf_vars = get_db_tf_vars()
@@ -46,7 +53,7 @@ def build_vpc():
 
 @task
 def build_vpc_us():
-    '''VPC構築'''
+    '''USのVPC構築'''
     terraform_apply('vpc/us_east')
 
 

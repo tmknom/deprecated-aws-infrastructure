@@ -18,10 +18,10 @@ TECH_NEWS = 'TechNews'
 WONDERFUL_WORLD = 'WonderfulWorld'
 
 
-def get_tf_vars():
-    production_vpc_id = get_vpc_id(ENVIRONMENT_PRODUCTION)
-    administration_vpc_id = get_vpc_id(ENVIRONMENT_ADMINISTRATION)
-    availability_zones = get_availability_zones()
+def get_tf_vars(region='ap-northeast-1'):
+    production_vpc_id = get_vpc_id(ENVIRONMENT_PRODUCTION, region)
+    administration_vpc_id = get_vpc_id(ENVIRONMENT_ADMINISTRATION, region)
+    availability_zones = get_availability_zones(region)
     result = ' TF_VAR_production_vpc_id=%s' % (production_vpc_id) \
              + ' TF_VAR_administration_vpc_id=%s' % (administration_vpc_id) \
              + ' TF_VAR_availability_zones=%s' % (availability_zones)
@@ -119,15 +119,17 @@ def get_subnet_ids(environment, network):
     return json.loads(result)
 
 
-def get_availability_zones():
+def get_availability_zones(region='ap-northeast-1'):
     command = "aws ec2 describe-availability-zones " \
+              + " --region %s " % (region) \
               + " | jq '.AvailabilityZones' | jq 'map(.ZoneName)' "
     result = local(command, capture=True)
     return ','.join(json.loads(result))
 
 
-def get_vpc_id(environment):
+def get_vpc_id(environment, region='ap-northeast-1'):
     command = "aws ec2 describe-vpcs " \
+              + " --region %s " % (region) \
               + " --filters " \
               + " 'Name=tag-key,Values=Environment' " \
               + " 'Name=tag-value,Values=%s' " % (environment) \
