@@ -45,6 +45,12 @@ def build_vpc():
 
 
 @task
+def build_vpc_us():
+    '''VPC構築'''
+    terraform_apply('vpc/us_east')
+
+
+@task
 def build_code_deploy():
     '''CodeDeploy構築'''
     terraform_apply('code_deploy')
