@@ -4,7 +4,7 @@ file_path = ApplicationEnvironmentFilePath.bitbucket('wonderful-world')
 application_env = ApplicationEnvironment.new(file_path)
 
 # RDS
-DATABASE_HOST = ENV['DATABASE_HOST_PRODUCTION']
+DATABASE_HOST = ENV['DATABASE_HOST_PRODUCTION_US']
 DATABASE_PORT = ENV['DATABASE_PORT']
 
 BASH_RC = "#{ENV['APPLICATION_USER_HOME']}/.bashrc"
