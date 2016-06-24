@@ -3,6 +3,9 @@
 import json
 from fabric.api import *
 
+REGION_JP = 'ap-northeast-1'
+REGION_US = 'us-west-1'
+
 ENVIRONMENT_PRODUCTION = 'Production'
 ENVIRONMENT_ADMINISTRATION = 'Administration'
 
@@ -35,6 +38,7 @@ def authorize():
     authorize_security_group(current_ip_address, ENVIRONMENT_ADMINISTRATION, ROLE_SSH)
     authorize_security_group(current_ip_address, ENVIRONMENT_PRODUCTION, ROLE_INTERNAL_RAILS)
     authorize_security_group(current_ip_address, ENVIRONMENT_PRODUCTION, ROLE_SSH)
+    authorize_security_group(current_ip_address, ENVIRONMENT_PRODUCTION, ROLE_SSH, REGION_US)
 
 
 def revoke():
@@ -43,25 +47,27 @@ def revoke():
     revoke_security_group(ENVIRONMENT_ADMINISTRATION, ROLE_SSH)
     revoke_security_group(ENVIRONMENT_PRODUCTION, ROLE_INTERNAL_RAILS)
     revoke_security_group(ENVIRONMENT_PRODUCTION, ROLE_SSH)
+    revoke_security_group(ENVIRONMENT_PRODUCTION, ROLE_SSH, REGION_US)
 
 
-def authorize_security_group(current_ip_address, environment, role):
-    security_group_id = get_security_group_id(environment, role)
+def authorize_security_group(current_ip_address, environment, role, region=REGION_JP):
+    security_group_id = get_security_group_id(environment, role, region)
     port = get_port(role)
-    authorize_security_group_ingress(current_ip_address, security_group_id, port)
+    authorize_security_group_ingress(current_ip_address, security_group_id, port, region)
 
 
-def revoke_security_group(environment, role):
-    security_group_id = get_security_group_id(environment, role)
+def revoke_security_group(environment, role, region=REGION_JP):
+    security_group_id = get_security_group_id(environment, role, region)
     port = get_port(role)
-    cidr_blocks = get_cidr_blocks(security_group_id)
+    cidr_blocks = get_cidr_blocks(security_group_id, region)
     for cidr_block in cidr_blocks:
         if cidr_block != LOCALHOST_CIDR_BLOCK:
-            revoke_security_group_ingress(cidr_block, security_group_id, port)
+            revoke_security_group_ingress(cidr_block, security_group_id, port, region)
 
 
-def authorize_security_group_ingress(current_ip_address, security_group_id, port):
+def authorize_security_group_ingress(current_ip_address, security_group_id, port, region):
     command = "aws ec2 authorize-security-group-ingress " \
+              + " --region %s " % (region) \
               + " --protocol tcp " \
               + " --group-id %s " % (security_group_id) \
               + " --port %s " % (port) \
@@ -70,8 +76,9 @@ def authorize_security_group_ingress(current_ip_address, security_group_id, port
     return result
 
 
-def revoke_security_group_ingress(cidr_block, security_group_id, port):
+def revoke_security_group_ingress(cidr_block, security_group_id, port, region):
     command = "aws ec2 revoke-security-group-ingress " \
+              + " --region %s " % (region) \
               + " --protocol tcp " \
               + " --group-id %s " % (security_group_id) \
               + " --port %s " % (port) \
@@ -80,8 +87,9 @@ def revoke_security_group_ingress(cidr_block, security_group_id, port):
     return result
 
 
-def get_security_group_id(environment, role):
+def get_security_group_id(environment, role, region):
     command = "aws ec2 describe-security-groups " \
+              + " --region %s " % (region) \
               + " --filters " \
               + " 'Name=tag-key,Values=Environment' " \
               + " 'Name=tag-value,Values=%s' " % (environment) \
@@ -92,8 +100,9 @@ def get_security_group_id(environment, role):
     return result
 
 
-def get_cidr_blocks(security_group_id):
+def get_cidr_blocks(security_group_id, region):
     command = "aws ec2 describe-security-groups " \
+              + " --region %s " % (region) \
               + " --group-ids %s " % (security_group_id) \
               + " | jq '.SecurityGroups[0].IpPermissions[0].IpRanges | map(.CidrIp)' "
     result = local(command, capture=True)
