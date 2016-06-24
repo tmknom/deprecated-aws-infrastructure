@@ -101,6 +101,7 @@ def build_user_external():
 def build_s3_log():
     '''s3-log バケットの構築'''
     terraform_apply('s3/s3_log')
+    terraform_apply('s3/s3_log/us_west_1')
 
 
 @task
