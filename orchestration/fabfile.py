@@ -100,8 +100,8 @@ def build_user_external():
 @task
 def build_s3_log():
     '''s3-log バケットの構築'''
-    terraform_apply('s3/s3_log')
     terraform_apply('s3/s3_log/us_west_1')
+    terraform_apply('s3/s3_log')
 
 
 @task
@@ -119,6 +119,7 @@ def build_s3_cloud_trail():
 @task
 def build_s3_deployment():
     '''deployment バケットの構築'''
+    terraform_apply('s3/deployment/us_west_1')
     terraform_apply('s3/deployment')
 
 
