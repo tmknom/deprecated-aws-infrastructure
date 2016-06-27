@@ -5,6 +5,9 @@ import json
 
 from fabric.api import *
 
+REGION_US = 'us-west-1'
+REGION_JP = 'ap-northeast-1'
+
 ENVIRONMENT_TESTING = 'Testing'
 ENVIRONMENT_PRODUCTION = 'Production'
 ENVIRONMENT_ADMINISTRATION = 'Administration'
@@ -22,9 +25,15 @@ APPLICATION_WONDERFUL_WORLD = 'wonderful-world'
 
 
 def list():
+    print(list_by_region(REGION_US))
+    print(list_by_region(REGION_JP))
+
+
+def list_by_region(region):
     command = "aws ec2 describe-instances " \
+              + " --region %s " % (region) \
               + " | jq '.Reservations[].Instances[] " \
-              + " | {Name: (.Tags[] | select(.Key==\"Name\").Value), PublicIpAddress}' "
+              + " | {Name: (.Tags[] | select(.Key==\"Name\").Value), PublicIpAddress: select(.PublicIpAddress!=null).PublicIpAddress, PrivateIpAddress}' "
     local(command)
 
 
