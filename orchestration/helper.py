@@ -79,6 +79,24 @@ def get_latest_ami_id(role, aws_account_id, region):
     return result
 
 
+def get_elb_tf_vars(environment, region=REGION_JP):
+    public_subnet_ids = get_public_subnet_ids(environment, region)
+    elb_security_groups = get_elb_security_groups(environment, region)
+    result = get_tf_vars(region) \
+             + ' TF_VAR_public_subnet_ids=%s' % (public_subnet_ids) \
+             + ' TF_VAR_elb_security_groups=%s' % (elb_security_groups)
+    return result
+
+
+def get_elb_security_groups(environment, region):
+    return get_security_group_id(environment, ROLE_RAILS, region)
+
+
+def get_public_subnet_ids(environment, region):
+    subnet_ids = get_subnet_ids(environment, NETWORK_PUBLIC, region)
+    return ','.join(subnet_ids)
+
+
 def get_db_tf_vars(region=REGION_JP):
     production_db_subnet_ids = get_db_subnet_ids(ENVIRONMENT_PRODUCTION, region)
     production_db_source_security_group_id = get_db_source_security_group_id(ENVIRONMENT_PRODUCTION, region)

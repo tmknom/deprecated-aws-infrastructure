@@ -25,6 +25,13 @@ def build_ec2_wonderful_world():
 
 
 @task
+def build_elb_wonderful_world():
+    '''wonderful_world のELB構築'''
+    tf_vars = get_elb_tf_vars(ENVIRONMENT_PRODUCTION, REGION_US)
+    terraform_apply('elb/wonderful_world', tf_vars)
+
+
+@task
 def build_security_group():
     '''セキュリティグループ構築'''
     tf_vars = get_tf_vars()
