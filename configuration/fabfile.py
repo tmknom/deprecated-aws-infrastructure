@@ -11,6 +11,7 @@ from fabric.api import *
 
 BASE_ROLE = 'base'
 RAILS_ROLE = 'rails'
+HUBOT_ROLE = 'hubot'
 TECH_NEWS_ROLE = 'tech_news'
 WONDERFUL_WORLD_ROLE = 'wonderful_world'
 VAGRANT_ROLE = 'vagrant'
@@ -53,6 +54,12 @@ def itamae_tech_news():
 def itamae_wonderful_world():
     '''wonderful_world コンフィギュレーション [-H <ip_address>]'''
     itamae(WONDERFUL_WORLD_ROLE)
+
+
+@task
+def itamae_hubot():
+    '''hubot コンフィギュレーション [-H <ip_address>]'''
+    itamae(HUBOT_ROLE)
 
 
 # base は初回実行時とSSHのポートが異なるため、特別に実装している（base以外は不要）
