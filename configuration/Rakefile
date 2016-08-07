@@ -7,6 +7,7 @@ task :default => :spec
 ROLES = {
     'base' => [:base],
     'rails' => [:rails, :base],
+    'hubot' => [:hubot, :base],
     'tech_news' => [:tech_news, :rails, :base],
     'wonderful_world' => [:wonderful_world, :rails, :base],
 }

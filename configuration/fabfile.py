@@ -111,6 +111,12 @@ def spec_rails():
 
 
 @task
+def spec_hubot():
+    '''hubot のServerspec実行 [-H <ip_address>]'''
+    serverspec(HUBOT_ROLE)
+
+
+@task
 def spec_tech_news():
     '''tech_news のServerspec実行 [-H <ip_address>]'''
     serverspec(TECH_NEWS_ROLE)
