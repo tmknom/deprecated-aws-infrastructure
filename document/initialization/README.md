@@ -155,3 +155,19 @@ $ fab build_ec2_production
 $ fab build_code_deploy
 ```
 
+
+## KMSの作成
+
+### マスターキーの作成
+
+```
+$ aws kms create-key
+```
+
+### マスターキーの設定
+
+環境変数「ENCRYPTION_DATA_MASTER_KEY_ID」にキーIDをセットしてから実行。
+
+```bash
+$ fab build_kms_encryption_data
+```

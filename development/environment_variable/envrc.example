@@ -32,6 +32,9 @@ export DATABASE_MASTER_USER_PASSWORD_ADMINISTRATION='xxxxxxxx'
 export DATABASE_MASTER_USER_PASSWORD_PRODUCTION_US='xxxxxxxx'
 export DATABASE_INITIAL_PASSWORD='xxxxxxxx'
 
+# KMS設定
+export ENCRYPTION_DATA_MASTER_KEY_ID='xxxx'
+
 # 共有可能な環境変数定義
 source $(git rev-parse --show-toplevel)/development/environment_variable/shared.sh
 
