@@ -8,6 +8,7 @@ from fabric.api import *
 
 from terraform.cli.cli_helper import *
 from helper import *
+from kms.kms import *
 
 
 @task
@@ -134,6 +135,12 @@ def build_s3_deployment():
 def build_s3_temporary():
     '''temporary バケットの構築'''
     terraform_apply('s3/temporary')
+
+
+@task
+def build_kms_encryption_data():
+    '''encryption-dataのKMS構築'''
+    build_kms(ENCRYPTION_DATA_MASTER_KEY_PARAMS)
 
 
 @task
