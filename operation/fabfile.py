@@ -11,6 +11,7 @@ from ec2 import ec2
 from ami import ami
 from rds import rds
 from rds import rds_password
+from encryption import encryption
 
 
 @task
@@ -169,3 +170,9 @@ def rds_administration_password_change():
 def rds_production_us_password_change():
     '''USのProduction 環境のRDSのパスワード変更'''
     rds_password.change_production_us()
+
+
+@task
+def update_slack_token(slack_token):
+    '''Slackのトークンをアップデート [:slack_token]'''
+    encryption.update_slack_token(slack_token)
