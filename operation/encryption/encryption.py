@@ -7,6 +7,9 @@ import boto3
 # 暗号化済みSlackトークン
 SLACK_ENCRYPTED_TOKEN = 'slack/encrypted_token'
 
+# 暗号化済みGitHubトークン
+GITHUB_ENCRYPTED_TOKEN = 'github/encrypted_token'
+
 # 暗号化マスターキー
 ENCRYPTION_DATA_MASTER_KEY_ID = 'ENCRYPTION_DATA_MASTER_KEY_ID'
 # 暗号化データ保存バケット
@@ -15,6 +18,10 @@ ENCRYPTION_DATA_BUCKET = 'ENCRYPTION_DATA_BUCKET'
 
 def update_slack_token(slack_token):
     encrypt_and_upload_s3(slack_token, SLACK_ENCRYPTED_TOKEN)
+
+
+def update_github_token(github_token):
+    encrypt_and_upload_s3(github_token, GITHUB_ENCRYPTED_TOKEN)
 
 
 def encrypt_and_upload_s3(plaintext, object_name):

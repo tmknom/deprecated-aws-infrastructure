@@ -176,3 +176,9 @@ def rds_production_us_password_change():
 def update_slack_token(slack_token):
     '''Slackのトークンをアップデート [:slack_token]'''
     encryption.update_slack_token(slack_token)
+
+
+@task
+def update_github_token(github_token):
+    '''GitHubのトークンをアップデート [:github_token]'''
+    encryption.update_github_token(github_token)
